@@ -11,12 +11,13 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up ()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('user_token')->unique();
+            $table->string('oauth_token')->unique();
+            $table->string('oauth_id')->unique();
             $table->string('sns');
             $table->rememberToken();
             $table->timestamps();
@@ -28,7 +29,7 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down ()
     {
         Schema::dropIfExists('users');
     }
