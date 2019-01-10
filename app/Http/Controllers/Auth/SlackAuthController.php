@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-//use Illuminate\Http\Request;
+use App\User;
+use Auth;
+use Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class SlackAuthController extends Controller
 {
+    use AuthenticatesUsers;
+
     protected $scope = [
                             'identity.basic',
                             'identity.email',
@@ -29,31 +34,26 @@ class SlackAuthController extends Controller
             return redirect('auth/slack');
         }
 
-        \Log::info($user->token);
         $authUser = $this->findOrCreateUser($user);
+        Auth::login($authUser, true);
 
-//        Auth::login($authUser, true);
-
-        return redirect('/home');
-//        return redirect()->route('home');
+        return redirect()->route('home');
     }
 
 
     private function findOrCreateUser($slackUser)
     {
-//        dd($slackUser);
-//        $authUser = User::where('twitter_id', $twitterUser->id)->first();
-//
-//        if ($authUser){
-//            return $authUser;
-//        }
-//
-//        return User::create([
-//            'name' => $twitterUser->name,
-//            'handle' => $twitterUser->nickname,
-//            'twitter_id' => $twitterUser->id,
-//            'avatar' => $twitterUser->avatar_original
-//        ]);
+        $authUser = User::where('user_token', $slackUser->token)->first();
+
+        if ($authUser){
+            return $authUser;
+        }
+
+        return User::create([
+            'name'       => $slackUser->name,
+            'user_token' => $slackUser->token,
+            'sns'        => 'slack',
+        ]);
     }
 
     public function logout()
