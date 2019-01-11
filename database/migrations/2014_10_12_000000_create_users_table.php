@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('oauth_token')->unique();
             $table->string('oauth_id')->unique();
+            $table->string('avatar');
             $table->string('sns');
             $table->rememberToken();
             $table->timestamps();

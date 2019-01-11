@@ -13,12 +13,10 @@ class SlackAuthController extends Controller
     use AuthenticatesUsers;
 
     protected $scope = [
-            'identity.basic',
-            //            'identity.email',
-            //            'identity.team',
-            //            'identity.avatar',
+            'emoji:read',
+            'users.profile:read',
+            'users.profile:write',
     ];
-
 
     public function redirectToProvider ()
     {
@@ -32,6 +30,7 @@ class SlackAuthController extends Controller
             $user = \Socialite::driver('slack')->user();
         }
         catch (\Exception $e) {
+            \Log::error($e);
             return redirect('auth/slack');
         }
 
@@ -45,15 +44,13 @@ class SlackAuthController extends Controller
     private function findOrCreateUser ($slackUser)
     {
         $authUser = User::where('oauth_token', $slackUser->token)->first();
-
-        if ($authUser) {
-            return $authUser;
-        }
+        if ($authUser) return $authUser;
 
         return User::create([
                 'name'        => $slackUser->name,
                 'oauth_token' => $slackUser->token,
                 'oauth_id'    => $slackUser->id,
+                'avatar'      => $slackUser['user']['image_512'],
                 'sns'         => 'slack',
         ]);
     }
