@@ -18,22 +18,16 @@ class Slack extends Model
         $this->token  = \Auth::user()->oauth_token;
     }
 
-    private function httpGet ($action)
+    private function httpGet ($action, $param = '')
     {
-        $url = "{$this->base_url}/{$action}?token={$this->token}";
+        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
         $res = $this->client->get($url);
         return json_decode($res->getBody(), true);
     }
 
-    private function getUrlString ($paramsAsJson)
+    private function httpPost ($action, $param = '')
     {
-        $json = json_encode($paramsAsJson);
-        return urlencode($json);
-    }
-
-    private function httpPost ($action, $params)
-    {
-        $url = "{$this->base_url}/{$action}?token={$this->token}&$params";
+        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
         $res = $this->client->post($url);
         return json_decode($res->getBody(), true);
 
@@ -54,16 +48,26 @@ class Slack extends Model
         return $this->httpGet('users.list');
     }
 
+    public function usersInfo ($user_id)
+    {
+        // https://api.slack.com/methods/users.info/test
+        return $this->httpGet('users.info', "&user={$user_id}");
+    }
+
     public function usersProfileSet ($status_text = '', $status_emoji = '')
     {
-        $params = [];
+        // https://api.slack.com/methods/users.profile.set/test
+        // {"status_text":"test","status_emoji":":100:"}
+        // profile=%7B%22status_text%22%3A%22test%22%2C%22status_emoji%22%3A%22%3A100%3A%22%7D
+        $params = [
+                'status_text'       => $status_text,
+                'status_emoji'      => $status_emoji,
+                'status_expiration' => strtotime(date('Y/m/d 23:59:59')),
+        ];
+
         if (empty($status_text) && empty($status_emoji)) return ['ok' => false, 'error' => 'params not exist'];
-
-        if (!empty($status_text)) $params['status_text'] = $status_text;
-        if (!empty($status_emoji)) $params['status_emoji'] = $status_emoji;
-
-        $query = $this->getUrlString($params);
-        return $this->httpPost('users.profile.set', "profile={$query}");
+        $query = to_query($params);
+        return $this->httpPost('users.profile.set', "&profile={$query}");
     }
 
     public function test ()
