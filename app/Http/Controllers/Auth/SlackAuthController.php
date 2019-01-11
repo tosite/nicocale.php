@@ -13,24 +13,24 @@ class SlackAuthController extends Controller
     use AuthenticatesUsers;
 
     protected $scope = [
-                            'identity.basic',
-                            'identity.email',
-                            'identity.team',
-                            'identity.avatar'
-                        ];
+            'emoji:read',
+            'users.profile:read',
+            'users.profile:write',
+    ];
 
-
-    public function redirectToProvider()
+    public function redirectToProvider ()
     {
         return \Socialite::driver('slack')->scopes($this->scope)->redirect();
     }
 
 
-    public function handleProviderCallback()
+    public function handleProviderCallback ()
     {
         try {
             $user = \Socialite::driver('slack')->user();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
+            \Log::error($e);
             return redirect('auth/slack');
         }
 
@@ -41,27 +41,27 @@ class SlackAuthController extends Controller
     }
 
 
-    private function findOrCreateUser($slackUser)
+    private function findOrCreateUser ($slackUser)
     {
-        $authUser = User::where('user_token', $slackUser->token)->first();
-
-        if ($authUser){
-            return $authUser;
-        }
+        $authUser = User::where('oauth_token', $slackUser->token)->first();
+        if ($authUser) return $authUser;
 
         return User::create([
-            'name'       => $slackUser->name,
-            'user_token' => $slackUser->token,
-            'sns'        => 'slack',
+                'name'        => $slackUser->name,
+                'oauth_token' => $slackUser->token,
+                'oauth_id'    => $slackUser->id,
+                'avatar'      => $slackUser['user']['image_512'],
+                'sns'         => 'slack',
         ]);
     }
 
-    public function logout()
+    public function logout ()
     {
         Auth::logout();
         return redirect()->route('login');
     }
-    public function __construct()
+
+    public function __construct ()
     {
         $this->middleware('guest')->except('logout');
     }
