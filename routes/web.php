@@ -15,16 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/home', function () {
-//    echo "logged in.";
-//    $user = Socialite::driver('slack')->userFromToken('xxxx ref:storage/logs/laravel-xxxx.log');
-//    dd($user);
-//});
-
 Route::get('auth/slack',          'Auth\SlackAuthController@redirectToProvider');
 Route::get('auth/slack/callback', 'Auth\SlackAuthController@handleProviderCallback');
 Route::get('auth/slack/logout',   'Auth\SlackAuthController@logout');
 
 Auth::routes();
 
+Route::resource('teams', 'TeamController', ['only' => ['index', 'store', 'update']]);
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/sl', function () {
+//    $m = new \App\Slack;
+//    dd($m->usersInfo());
+    dd(\App\Slack::usersInfo());
+    $r = $m->usersProfileSet('APIでステータスセットしました', ':100:');
+});
