@@ -16,8 +16,15 @@ class TeamUser extends Model
         return $this->belongsTo('App\Team', 'team_id', 'id');
     }
 
-    public function scopeSlackTeamId ($query, $slack_team_id)
+    public function scopeSlackTeamId ($query)
     {
-        return $query->where('slack_team_id', $slack_team_id);
+        dd($this->slack_team_id);
+//        return $query->where('slack_team_id', $slack_team_id);
+    }
+
+    public function scopeJoinedTeams ($query)
+    {
+        $id = \App\Slack::usersInfo()->team_id;
+        return $query->where('slack_team_id', $id);
     }
 }
