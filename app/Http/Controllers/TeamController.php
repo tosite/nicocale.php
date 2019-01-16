@@ -38,20 +38,22 @@ class TeamController extends Controller
      */
     public function store (Request $request)
     {
-        $in = $request->input();
+        $in         = $request->input();
         $slack_user = \App\Slack::usersInfo();
         \App\Team::createWithTeamUser(['name' => $in['name'], 'avatar' => 'png', 'slack_team_id' => $slack_user->team_id]);
     }
 
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  int $id
-//     * @return \Illuminate\Http\Response
-//     */
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
 //    public function show ($id)
 //    {
-//        //
+//        $team      = \App\Team::find($id);
+//        $team_user = \App\TeamUser::slackTeamId($team->slack_team_id)->get();
+//        dd($team_user);
 //    }
 
 //    /**
@@ -74,7 +76,11 @@ class TeamController extends Controller
      */
     public function update (Request $request, $id)
     {
-        //
+        $in        = $request->input();
+        $t         = \App\Team::find($id);
+        $t->name   = $in['name'] ?: $t->name;
+        $t->avatar = $in['avatar'] ?: $t->avatar;
+        $t->save();
     }
 
 //    /**

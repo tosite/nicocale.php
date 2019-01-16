@@ -21,7 +21,7 @@ Route::get('auth/slack/logout',   'Auth\SlackAuthController@logout');
 
 Auth::routes();
 
-Route::resource('teams', 'TeamController', ['only' => ['index', 'store', 'update']]);
+Route::resource('teams', 'TeamController', ['only' => ['index', 'show', 'store', 'update']]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
