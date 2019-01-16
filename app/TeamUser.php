@@ -6,4 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamUser extends Model
 {
+    public function user ()
+    {
+        return $this->belongsTo('App\User', 'oauth_id', 'oauth_id');
+    }
+
+    public function team ()
+    {
+        return $this->belongsTo('App\Team', 'team_id', 'id');
+    }
+
+    public function scopeSlackTeamId ($query, $slack_team_id)
+    {
+        return $query->where('slack_team_id', $slack_team_id);
+    }
 }

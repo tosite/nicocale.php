@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'oauth_token', 'oauth_id', 'sns', 'avatar',
+            'name', 'oauth_token', 'oauth_id', 'sns', 'avatar',
     ];
 
     /**
@@ -25,6 +25,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+            'password', 'remember_token',
     ];
+
+    public static function slack ()
+    {
+        return new \App\Slack();
+    }
+
+    public function teamUsers ()
+    {
+        return $this->hasMany('App\TeamUser', 'oauth_id', 'oauth_id');
+    }
+
+    public function scopeTeams ($query)
+    {
+        return $query->where();
+    }
 }
