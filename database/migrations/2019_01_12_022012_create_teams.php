@@ -17,6 +17,7 @@ class CreateTeams extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('avatar');
+            $table->string('slack_team_id');
             $table->timestamps();
         });
     }
