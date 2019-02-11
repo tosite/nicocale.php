@@ -49,6 +49,11 @@ class Emotion extends Model
         $emotion = self::firstOrNew($keys);
         $emotion->fill($params);
         $emotion->save();
+        // TODO: 移設
+        if ($keys['entered_on'] == date('Y-m-d'))
+        {
+            \App\Slack::usersProfileSet($params['status_text'], $params['emoji']);
+        }
         return $emotion;
     }
 
