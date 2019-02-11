@@ -12,21 +12,21 @@ class TeamUser extends Model
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'oauth_id', 'oauth_id');
+        return $this->belongsTo('App\User', 'oauth_id', 'user_id');
     }
 
     public function team ()
     {
-        return $this->belongsTo('App\Team', 'team_id', 'id');
+        return $this->belongsTo('App\Team', 'team_id', 'slack_team_id');
     }
 
-    public function scopeOauthId ($query, $oauth_id = null)
+    public function scopeUserId ($query, $user_id = null)
     {
-        $id = $oauth_id ?: \Auth::user()->oauth_id;
-        return $query->where('oauth_id', $id);
+        $id = $user_id ?: \Auth::user()->oauth_id;
+        return $query->where('user_id', $id);
     }
 
-    public function scopeSlackTeamId ($query, $team_id = null)
+    public function scopeTeamId ($query, $team_id = null)
     {
         $id = $team_id ?: \App\Slack::usersInfo()->team_id;
         return $query->where('team_id', $id);

@@ -13,12 +13,14 @@ class TeamController extends Controller
      */
     public function index ()
     {
-        $m1               = \App\TeamUser::slackTeamId();
-        $m2               = clone $m1;
-        $joined_teams     = $m1->oauthId()->get();
-        $not_joined_teams = $m2->get();
-        $users            = \App\Slack::usersList();
-        return view('teams/index', ['joined_teams' => $joined_teams, 'not_joined_teams' => $not_joined_teams, 'users' => $users]);
+        $team_users = \App\TeamUser::userId()->get();
+        return view('teams/index', ['team_users' => $team_users]);
+//        $m1               = \App\TeamUser::slackTeamId();
+//        $m2               = clone $m1;
+//        $joined_teams     = $m1->oauthId()->get();
+//        $not_joined_teams = $m2->get();
+//        $users            = \App\Slack::usersList();
+//        return view('teams/index', ['joined_teams' => $joined_teams, 'not_joined_teams' => $not_joined_teams, 'users' => $users]);
     }
 
 //    /**

@@ -5,17 +5,18 @@
   <tr>
     <th>#</th>
     <th>name</th>
-    <th></th>
   </tr>
   </thead>
   <tbody>
-  @foreach($joined_teams as $cnt => $joined_team)
-    <?php $joined_team = $joined_team->team; ?>
-    <tr>
-      <td>{{ ($cnt + 1) }}</td>
-      <td>{{ $joined_team->name }}</td>
-      <td><a href="/teams/{{ $joined_team->id }}">edit</a></td>
-    </tr>
+  @foreach($team_users as $cnt => $team_user)
+      <?php $team = $team_user->team; ?>
+      <tr>
+        <td>{{ ($cnt + 1) }}</td>
+        <td>{{ $team->name }}</td>
+        <td>
+          <img src="{{ $team->avatar }}">
+        </td>
+      </tr>
   @endforeach
   </tbody>
 </table>

@@ -12,7 +12,7 @@ class Team extends Model
 
     public function teamUsers ()
     {
-        return $this->hasMany('App\TeamUser', 'slack_team_id', 'slack_team_id');
+        return $this->hasMany('App\TeamUser', 'team_id', 'slack_team_id');
     }
 
     public static function findOrCreateTeam ($slack_team)
