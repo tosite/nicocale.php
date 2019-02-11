@@ -25,7 +25,7 @@ class TeamUser extends Model
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'slack_id', 'user_id');
+        return $this->belongsTo('App\User', 'slack_user_id', 'user_id');
     }
 
     public function team ()
