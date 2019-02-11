@@ -21,28 +21,35 @@ class TeamUser extends Model
     }
 
     protected $fillable = [
-            'oauth_id', 'team_id',
+            'user_id', 'team_id',
     ];
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'oauth_id', 'oauth_id');
+        return $this->belongsTo('App\User', 'oauth_id', 'user_id');
     }
 
     public function team ()
     {
-        return $this->belongsTo('App\Team', 'team_id', 'id');
+        return $this->belongsTo('App\Team', 'team_id', 'slack_team_id');
     }
 
-    public function scopeOauthId ($query, $oauth_id = null)
+    public function scopeUserId ($query, $user_id = null)
     {
-        $id = $oauth_id ?: \Auth::user()->oauth_id;
-        return $query->where('oauth_id', $id);
+        $id = $user_id ?: \Auth::user()->oauth_id;
+        return $query->where('user_id', $id);
     }
 
-    public function scopeSlackTeamId ($query, $slack_team_id = null)
+    public function scopeTeamId ($query, $team_id = null)
     {
-        $id = $slack_team_id ?: \App\Slack::usersInfo()->team_id;
-        return $query->where('slack_team_id', $id);
+        $id = $team_id ?: \App\Slack::usersInfo()->team_id;
+        return $query->where('team_id', $id);
+    }
+
+    public static function firstOrCreateTeamUser ($user, $team)
+    {
+        $params = ['user_id' => $user->oauth_id, 'team_id' => $team->slack_team_id];
+        $team_user = self::firstOrCreate($params);
+        return $team_user;
     }
 }
