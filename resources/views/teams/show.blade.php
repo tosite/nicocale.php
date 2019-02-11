@@ -3,13 +3,13 @@
 @section('content')
     <?php
     $params = [
-        'team'      => $team,
-        'emotions'  => $emotions,
-        'date_list' => $date_list,
-        'week_days' => $week_days,
-        'users'     => $users,
-        'user_id'   => $user_id,
+        'team'         => $team,
+        'emotions'     => $emotions,
+        'date_list'    => $date_list,
+        'day_of_weeks' => $day_of_weeks,
+        'users'        => $users,
+        'user_id'      => $user_id,
     ];
     ?>
-    @include('teams._team_detail', $params)
+    @include('teams._team_table', $params)
 @endsection

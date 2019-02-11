@@ -5,7 +5,7 @@
   <tr>
     <th>name</th>
     @foreach($date_list as $date)
-      <th>{{ $date->day }} ({{ $week_days[$date->dayOfWeek] }})</th>
+      <th>{{ $date->day }} ({{ $day_of_weeks[$date->dayOfWeek] }})</th>
     @endforeach
   </tr>
   </thead>
