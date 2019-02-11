@@ -7,11 +7,10 @@ use Illuminate\Support\Str;
 
 class TeamUser extends Model
 {
-    // プライマリーキーの型
-    protected $keyType = 'string';
 
-    // プライマリーキーは自動連番か？
-    public $incrementing = false;
+    // プライマリキー
+    protected $keyType      = 'string';
+    public    $incrementing = false;
 
     // コンストラクタを追加
     public function __construct(array $attributes = [])

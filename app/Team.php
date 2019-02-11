@@ -8,14 +8,13 @@ use Illuminate\Support\Str;
 class Team extends Model
 {
 
-    // プライマリーキーの型
-    protected $keyType = 'string';
-
-    // プライマリーキーは自動連番か？
-    public $incrementing = false;
+    // プライマリキー
+    protected $primaryKey   = 'slack_team_id';
+    protected $keyType      = 'string';
+    public    $incrementing = false;
 
     // コンストラクタを追加
-    public function __construct(array $attributes = [])
+    public function __construct (array $attributes = [])
     {
         parent::__construct($attributes);
         $this->attributes['id'] = Str::orderedUuid();

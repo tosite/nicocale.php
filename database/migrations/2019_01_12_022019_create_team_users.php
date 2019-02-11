@@ -14,7 +14,7 @@ class CreateTeamUsers extends Migration
     public function up()
     {
         Schema::create('team_users', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('id', 36)->primary();
             $table->string('user_id')->index();
             $table->string('team_id')->index();
             $table->timestamps();
