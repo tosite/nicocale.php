@@ -46,15 +46,15 @@ class SlackAuthController extends Controller
 
     private function findOrCreateUser ($slackUser)
     {
-        $authUser = User::where('oauth_token', $slackUser->token)->first();
+        $authUser = User::where('slack_token', $slackUser->token)->first();
         if ($authUser) return $authUser;
 
         return User::create([
-                'name'        => $slackUser->name,
-                'oauth_token' => $slackUser->token,
-                'oauth_id'    => $slackUser->id,
-                'avatar'      => $slackUser['user']['image_512'],
-                'sns'         => 'slack',
+                'name'          => $slackUser->name,
+                'slack_token'   => $slackUser->token,
+                'slack_user_id' => $slackUser->id,
+                'avatar'        => $slackUser['user']['image_512'],
+                'sns'           => 'slack',
         ]);
     }
 

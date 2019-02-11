@@ -26,7 +26,7 @@ class TeamUser extends Model
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'oauth_id', 'user_id');
+        return $this->belongsTo('App\User', 'slack_id', 'user_id');
     }
 
     public function team ()
@@ -36,7 +36,7 @@ class TeamUser extends Model
 
     public function scopeUserId ($query, $user_id = null)
     {
-        $id = $user_id ?: \Auth::user()->oauth_id;
+        $id = $user_id ?: \Auth::user()->slack_user_id;
         return $query->where('user_id', $id);
     }
 
@@ -48,7 +48,7 @@ class TeamUser extends Model
 
     public static function firstOrCreateTeamUser ($user, $team)
     {
-        $params = ['user_id' => $user->oauth_id, 'team_id' => $team->slack_team_id];
+        $params = ['user_id' => $user->slack_user_id, 'team_id' => $team->slack_team_id];
         $team_user = self::firstOrCreate($params);
         return $team_user;
     }

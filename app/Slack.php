@@ -15,7 +15,7 @@ class Slack extends Model
     {
         parent::__construct($attributes);
         $this->client = new Client;
-        $this->token  = \Auth::user()->oauth_token;
+        $this->token  = \Auth::user()->slack_token;
     }
 
     private function httpGet ($action, $param = '')
@@ -56,7 +56,7 @@ class Slack extends Model
     // https://api.slack.com/methods/users.info/test
     public static function usersInfo ($user_id = null)
     {
-        $user_id = $user_id ?: \Auth::user()->oauth_id;
+        $user_id = $user_id ?: \Auth::user()->slack_id;
         $model   = new static();
         return $model->httpGet('users.info', "&user={$user_id}")->user;
     }

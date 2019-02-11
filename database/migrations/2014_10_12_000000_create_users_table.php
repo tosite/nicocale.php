@@ -16,8 +16,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('name');
-            $table->string('oauth_token')->unique();
-            $table->string('oauth_id')->unique();
+            $table->string('slack_token')->unique();
+            $table->string('slack_user_id')->unique();
             $table->string('avatar');
             $table->string('sns');
             $table->rememberToken();

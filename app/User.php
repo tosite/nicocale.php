@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-            'name', 'oauth_token', 'oauth_id', 'sns', 'avatar',
+            'name', 'slack_token', 'slack_user_id', 'sns', 'avatar',
     ];
 
     /**
@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function teamUsers ()
     {
-        return $this->hasMany('App\TeamUser', 'oauth_id', 'oauth_id');
+        return $this->hasMany('App\TeamUser', 'slack_user_id', 'slack_user_id');
     }
 }
