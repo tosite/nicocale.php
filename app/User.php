@@ -16,18 +16,18 @@ class User extends Authenticatable
     public    $incrementing = false;
 
     // コンストラクタを追加
-    public function __construct(array $attributes = [])
+    public function __construct (array $attributes = [])
     {
         parent::__construct($attributes);
         $this->attributes['id'] = Str::orderedUuid();
     }
 
     protected $fillable = [
-            'name', 'slack_token', 'slack_user_id', 'sns', 'avatar',
+        'name', 'slack_token', 'slack_user_id', 'sns', 'avatar',
     ];
 
     protected $hidden = [
-            'password', 'remember_token',
+        'password', 'remember_token',
     ];
 
     public static function slack ()
@@ -38,5 +38,10 @@ class User extends Authenticatable
     public function teamUsers ()
     {
         return $this->hasMany('App\TeamUser', 'slack_user_id', 'slack_user_id');
+    }
+
+    public function emotions ()
+    {
+        return $this->hasMany('App\Emotion', 'user_id', 'id');
     }
 }

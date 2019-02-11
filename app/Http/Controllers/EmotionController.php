@@ -31,8 +31,8 @@ class EmotionController extends Controller
     {
         return [
             'keys'   => [
-                'user_id'    => $team_user->user->slack_user_id,
-                'team_id'    => $team_user->team->slack_team_id,
+                'user_id'    => $team_user->user->id,
+                'team_id'    => $team_user->team->id,
                 'entered_on' => $input['entered_on'],
             ],
             'params' => [

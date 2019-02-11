@@ -36,6 +36,10 @@ class Emotion extends Model
         ];
     }
 
+    public function team ()     { return $this->belongsTo('App\Team',     'team_id','id'); }
+    public function user ()     { return $this->belongsTo('App\User',     'user_id','id'); }
+    public function teamUser () { return $this->belongsTo('App\TeamUser', 'team_user_id','id'); }
+
     public static function createEmotion ($keys, $params)
     {
         $emotion = self::firstOrNew($keys);
@@ -46,10 +50,9 @@ class Emotion extends Model
 
     public static function getBetweenEnteredOn ($team_id, $yyyymm)
     {
-        $team     = \App\Team::find($team_id);
         $date_buf = strtotime("{$yyyymm}01");
         $emotions = self::whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)])
-            ->where(['team_id' => $team->slack_team_id])
+            ->where(['team_id' => $team_id])
             ->get();
 
         return $emotions->keyBy(function ($e) {

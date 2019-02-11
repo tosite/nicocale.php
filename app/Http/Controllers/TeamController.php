@@ -17,7 +17,7 @@ class TeamController extends Controller
     {
         $team      = \App\Team::find($id);
         $emotions  = \App\Emotion::getBetweenEnteredOn($id, $yyyymm);
-        $users     = \App\TeamUser::where(['team_id' => $team->slack_team_id])->get();
+        $users     = \App\TeamUser::teamId($team->id)->get();
         $calendar  = $this->createCalendar($yyyymm);
         $date_list = $this->createDateList($yyyymm);
         return view('teams/show', [
