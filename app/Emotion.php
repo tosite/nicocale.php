@@ -44,7 +44,7 @@ class Emotion extends Model
     public function scopeUserId($query, $id = null) { return $query->where(['user_id' => $id ?: \Auth::user()->id]); }
     public function scopeTeamUserId($query, $id)    { return $query->where(['team_user_id' => $id]); }
 
-    public static function createEmotion ($keys, $params)
+    public static function createOrUpdateEmotion ($keys, $params)
     {
         $emotion = self::firstOrNew($keys);
         $emotion->fill($params);

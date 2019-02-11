@@ -11,9 +11,9 @@ class EmotionController extends Controller
     public function store (Request $request, $team_id)
     {
         $input     = $request->only(self::STORE_PARAMS);
-        $team_user = \App\TeamUser::findByTeamId($team_id);
+        $team_user = \App\TeamUser::teamId($team_id)->userId()->first();
         $params    = $this->form_params($team_user, $input);
-        \App\Emotion::createEmotion($params['keys'], $params['params']);
+        \App\Emotion::createOrUpdateEmotion($params['keys'], $params['params']);
         return redirect()->back();
     }
 
