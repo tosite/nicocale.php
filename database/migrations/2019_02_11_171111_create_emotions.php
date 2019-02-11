@@ -21,8 +21,8 @@ class CreateEmotions extends Migration
             // TODO: カスタム絵文字対応
             $table->string('emoji', 1)->index();
             // TODO: max_length調べる
-            $table->string('status_text', 100);
-            $table->text('memo');
+            $table->string('status_text', 100)->nullable();
+            $table->text('memo')->nullable();
             $table->date('entered_on')->index();
             $table->timestamps();
         });

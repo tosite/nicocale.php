@@ -7,25 +7,26 @@ use Illuminate\Support\Str;
 
 class TeamUser extends Model
 {
+    use \App\Traits\Findable;
 
     // プライマリキー
     protected $keyType      = 'string';
     public    $incrementing = false;
 
     // コンストラクタを追加
-    public function __construct(array $attributes = [])
+    public function __construct (array $attributes = [])
     {
         parent::__construct($attributes);
         $this->attributes['id'] = Str::orderedUuid();
     }
 
     protected $fillable = [
-            'user_id', 'team_id',
+        'user_id', 'team_id',
     ];
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'slack_user_id', 'user_id');
+        return $this->belongsTo('App\User', 'user_id', 'slack_user_id');
     }
 
     public function team ()
@@ -47,8 +48,17 @@ class TeamUser extends Model
 
     public static function firstOrCreateTeamUser ($user, $team)
     {
-        $params = ['user_id' => $user->slack_user_id, 'team_id' => $team->slack_team_id];
+        $params    = ['user_id' => $user->slack_user_id, 'team_id' => $team->slack_team_id];
         $team_user = self::firstOrCreate($params);
         return $team_user;
     }
+
+    public static function findByTeamId ($team_id)
+    {
+        return self::findBy([
+            'user_id' => \Auth::user()->slack_user_id,
+            'team_id' => \App\Team::findBy(['id' => $team_id])->slack_team_id,
+        ]);
+    }
+
 }

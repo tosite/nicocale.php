@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function () { return redirect()->route('teams.index'); });
 
 Route::get('auth/slack',          'Auth\SlackAuthController@redirectToProvider');
 Route::get('auth/slack/callback', 'Auth\SlackAuthController@handleProviderCallback');
@@ -21,15 +22,15 @@ Route::get('auth/slack/logout',   'Auth\SlackAuthController@logout');
 
 Auth::routes();
 
-Route::resource('teams', 'TeamController', ['only' => ['index']]);
-Route::resource('emotions', 'EmotionController', ['only' => ['show', 'update', 'destroy']]);
+Route::resource('teams',    'TeamController',    ['only' => ['index']]);
+Route::resource('emotions', 'EmotionController', ['only' => ['update', 'destroy']]);
 
 Route::group(['prefix'=>'teams/{team_id}'], function() {
-    Route::get('{yyyymm}', 'TeamController@show')->name('teams.show');
+    Route::get('{yyyymm}',  'TeamController@show')->name('teams.show');
     Route::post('emotions', 'EmotionController@store')->name('emotions.store');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/sl', function () {
 ////    $m = new \App\Slack;
