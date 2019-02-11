@@ -26,10 +26,10 @@ class TeamUser extends Model
         return $query->where('oauth_id', $id);
     }
 
-    public function scopeSlackTeamId ($query, $slack_team_id = null)
+    public function scopeSlackTeamId ($query, $team_id = null)
     {
-        $id = $slack_team_id ?: \App\Slack::usersInfo()->team_id;
-        return $query->where('slack_team_id', $id);
+        $id = $team_id ?: \App\Slack::usersInfo()->team_id;
+        return $query->where('team_id', $id);
     }
 
     public static function firstOrCreateTeamUser ($user, $team)
