@@ -12,6 +12,7 @@ class TeamController extends Controller
 
     public function show ($id, $yyyymm)
     {
-        return view('teams/show', ['emotions' => 'sample']);
+        $team = \App\Team::findBy(['id' => $id]);
+        return view('teams/show', ['team'=>$team, 'emotions' => 'sample']);
     }
 }

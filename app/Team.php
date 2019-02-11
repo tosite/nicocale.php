@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 class Team extends Model
 {
+    use \App\Traits\Findable;
 
     // プライマリキー
     protected $primaryKey   = 'slack_team_id';
