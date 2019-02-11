@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 class Emotion extends Model
 {
     use \App\Traits\Findable;
+    use \App\Traits\Datable;
     use \App\Traits\ModelVaidatable;
 
     // プライマリキー
@@ -41,5 +42,18 @@ class Emotion extends Model
         $emotion->fill($params);
         $emotion->save();
         return $emotion;
+    }
+
+    public static function getBetweenEnteredOn ($team_id, $yyyymm)
+    {
+        $team     = \App\Team::find($team_id);
+        $date_buf = strtotime("{$yyyymm}01");
+        $emotions = self::whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)])
+            ->where(['team_id' => $team->slack_team_id])
+            ->get();
+
+        return $emotions->keyBy(function ($e) {
+            return "{$e->entered_on}-{$e->team_user_id}";
+        });
     }
 }

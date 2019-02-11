@@ -10,7 +10,6 @@ class Team extends Model
     use \App\Traits\Findable;
 
     // プライマリキー
-    protected $primaryKey   = 'slack_team_id';
     protected $keyType      = 'string';
     public    $incrementing = false;
 

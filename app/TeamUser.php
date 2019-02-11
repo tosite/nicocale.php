@@ -57,7 +57,7 @@ class TeamUser extends Model
     {
         return self::findBy([
             'user_id' => \Auth::user()->slack_user_id,
-            'team_id' => \App\Team::findBy(['id' => $team_id])->slack_team_id,
+            'team_id' => \App\Team::find($team_id)->slack_team_id,
         ]);
     }
 

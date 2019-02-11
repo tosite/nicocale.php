@@ -12,7 +12,6 @@ class User extends Authenticatable
     use Notifiable;
 
     // プライマリキー
-    protected $primaryKey   = 'slack_user_id';
     protected $keyType      = 'string';
     public    $incrementing = false;
 
@@ -23,20 +22,10 @@ class User extends Authenticatable
         $this->attributes['id'] = Str::orderedUuid();
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
             'name', 'slack_token', 'slack_user_id', 'sns', 'avatar',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
             'password', 'remember_token',
     ];

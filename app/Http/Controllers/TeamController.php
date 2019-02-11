@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 class TeamController extends Controller
 {
+    use \App\Traits\Datable;
+
     public function index ()
     {
         $team_users = \App\TeamUser::userId()->get();
@@ -12,7 +15,18 @@ class TeamController extends Controller
 
     public function show ($id, $yyyymm)
     {
-        $team = \App\Team::findBy(['id' => $id]);
-        return view('teams/show', ['team'=>$team, 'emotions' => 'sample']);
+        $team      = \App\Team::find($id);
+        $emotions  = \App\Emotion::getBetweenEnteredOn($id, $yyyymm);
+        $users     = \App\TeamUser::where(['team_id' => $team->slack_team_id])->get();
+        $calendar  = $this->createCalendar($yyyymm);
+        $date_list = $this->createDateList($yyyymm);
+        return view('teams/show', [
+            'user_id'   => \Auth::user()->id,
+            'users'     => $users,
+            'team'      => $team,
+            'emotions'  => $emotions,
+            'date_list' => $date_list,
+            'week_days' => $this->weekDays(),
+        ]);
     }
 }
