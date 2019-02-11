@@ -14,10 +14,10 @@ class CreateTeams extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id', 36)->index();
             $table->string('name');
             $table->string('avatar');
-            $table->string('slack_team_id')->index();
+            $table->string('slack_team_id')->primary();
             $table->timestamps();
         });
     }

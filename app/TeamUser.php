@@ -3,32 +3,52 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TeamUser extends Model
 {
+
+    // プライマリキー
+    protected $keyType      = 'string';
+    public    $incrementing = false;
+
+    // コンストラクタを追加
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->attributes['id'] = Str::orderedUuid();
+    }
+
     protected $fillable = [
-            'oauth_id', 'slack_team_id', 'team_id',
+            'user_id', 'team_id',
     ];
 
     public function user ()
     {
-        return $this->belongsTo('App\User', 'oauth_id', 'oauth_id');
+        return $this->belongsTo('App\User', 'slack_id', 'user_id');
     }
 
     public function team ()
     {
-        return $this->belongsTo('App\Team', 'team_id', 'id');
+        return $this->belongsTo('App\Team', 'team_id', 'slack_team_id');
     }
 
-    public function scopeOauthId ($query, $oauth_id = null)
+    public function scopeUserId ($query, $user_id = null)
     {
-        $id = $oauth_id ?: \Auth::user()->oauth_id;
-        return $query->where('oauth_id', $id);
+        $id = $user_id ?: \Auth::user()->slack_user_id;
+        return $query->where('user_id', $id);
     }
 
-    public function scopeSlackTeamId ($query, $slack_team_id = null)
+    public function scopeTeamId ($query, $team_id = null)
     {
-        $id = $slack_team_id ?: \App\Slack::usersInfo()->team_id;
-        return $query->where('slack_team_id', $id);
+        $id = $team_id ?: \App\Slack::usersInfo()->team_id;
+        return $query->where('team_id', $id);
+    }
+
+    public static function firstOrCreateTeamUser ($user, $team)
+    {
+        $params = ['user_id' => $user->slack_user_id, 'team_id' => $team->slack_team_id];
+        $team_user = self::firstOrCreate($params);
+        return $team_user;
     }
 }

@@ -14,10 +14,10 @@ class CreateUsersTable extends Migration
     public function up ()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('id', 36)->index();
             $table->string('name');
-            $table->string('oauth_token')->unique();
-            $table->string('oauth_id')->unique();
+            $table->string('slack_token')->unique();
+            $table->string('slack_user_id')->primary();
             $table->string('avatar');
             $table->string('sns');
             $table->rememberToken();

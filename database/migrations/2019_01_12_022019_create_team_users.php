@@ -14,10 +14,9 @@ class CreateTeamUsers extends Migration
     public function up()
     {
         Schema::create('team_users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('oauth_id')->index();
-            $table->string('slack_team_id')->index();
-            $table->integer('team_id')->index();
+            $table->string('id', 36)->primary();
+            $table->string('user_id')->index();
+            $table->string('team_id')->index();
             $table->timestamps();
         });
     }
