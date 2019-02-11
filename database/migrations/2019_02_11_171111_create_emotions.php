@@ -15,8 +15,8 @@ class CreateEmotions extends Migration
     {
         Schema::create('emotions', function (Blueprint $table) {
             $table->string('id', 36)->primary();
-            $table->string('user_id')->index();
-            $table->string('team_id')->index();
+            $table->string('user_id', 36)->index();
+            $table->string('team_id',36)->index();
             $table->string('team_user_id', 36)->index();
             // TODO: カスタム絵文字対応
             $table->string('emoji', 1)->index();
