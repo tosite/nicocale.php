@@ -25,10 +25,8 @@ class Team extends Model
             'name', 'avatar', 'slack_team_id',
     ];
 
-    public function teamUsers ()
-    {
-        return $this->hasMany('App\TeamUser', 'team_id', 'id');
-    }
+    public function teamUsers () { return $this->hasMany('App\TeamUser', 'team_id', 'id'); }
+    public function emotions ()  { return $this->hasMany('App\Emotion',  'team_id', 'id'); }
 
     public static function findOrCreateTeam ($slack_team)
     {
