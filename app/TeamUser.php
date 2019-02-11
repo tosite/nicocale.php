@@ -3,11 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TeamUser extends Model
 {
+    // プライマリーキーの型
+    protected $keyType = 'string';
+
+    // プライマリーキーは自動連番か？
+    public $incrementing = false;
+
+    // コンストラクタを追加
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->attributes['id'] = Str::orderedUuid();
+    }
+
     protected $fillable = [
-            'oauth_id', 'slack_team_id', 'team_id',
+            'oauth_id', 'team_id',
     ];
 
     public function user ()
