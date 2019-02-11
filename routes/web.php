@@ -21,13 +21,19 @@ Route::get('auth/slack/logout',   'Auth\SlackAuthController@logout');
 
 Auth::routes();
 
-Route::resource('teams', 'TeamController', ['only' => ['index', 'show', 'store', 'update']]);
+Route::resource('teams', 'TeamController', ['only' => ['index']]);
+Route::resource('emotions', 'EmotionController', ['only' => ['show', 'update', 'destroy']]);
+
+Route::group(['prefix'=>'teams/{team_id}'], function() {
+    Route::get('{yyyymm}', 'TeamController@show')->name('teams.show');
+    Route::post('emotions', 'EmotionController@store')->name('emotions.store');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/sl', function () {
-//    $m = new \App\Slack;
-//    dd($m->usersInfo());
-    dd(\App\Slack::usersInfo());
-    $r = $m->usersProfileSet('APIでステータスセットしました', ':100:');
-});
+//Route::get('/sl', function () {
+////    $m = new \App\Slack;
+////    dd($m->usersInfo());
+//    dd(\App\Slack::usersInfo());
+//    $r = $m->usersProfileSet('APIでステータスセットしました', ':100:');
+//});
