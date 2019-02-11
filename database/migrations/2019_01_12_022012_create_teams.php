@@ -14,7 +14,7 @@ class CreateTeams extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
-            $table->increments('id');
+//            $table->increments('id');
             $table->string('name');
             $table->string('avatar');
             $table->string('slack_team_id')->index();

@@ -37,6 +37,9 @@ class SlackAuthController extends Controller
         $authUser = $this->findOrCreateUser($user);
         Auth::login($authUser, true);
 
+        $team = \App\Team::findOrCreateTeam($user['team']);
+        \App\TeamUser::firstOrCreateTeamUser($authUser, $team);
+
         return redirect()->route('home');
     }
 

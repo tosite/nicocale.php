@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TeamUser extends Model
 {
     protected $fillable = [
-            'oauth_id', 'slack_team_id', 'team_id',
+            'user_id', 'team_id',
     ];
 
     public function user ()
@@ -30,5 +30,12 @@ class TeamUser extends Model
     {
         $id = $slack_team_id ?: \App\Slack::usersInfo()->team_id;
         return $query->where('slack_team_id', $id);
+    }
+
+    public static function firstOrCreateTeamUser ($user, $team)
+    {
+        $params = ['user_id' => $user->oauth_id, 'team_id' => $team->slack_team_id];
+        $team_user = self::firstOrCreate($params);
+        return $team_user;
     }
 }
