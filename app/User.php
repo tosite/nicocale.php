@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->hasMany('App\TeamUser', 'oauth_id', 'oauth_id');
     }
 
-    public function scopeTeams ($query)
+    public function findTeamUser ($team_id)
     {
-        return $query->where();
+        return \App\TeamUser::where(['user_id' => self::oauth_id, 'team_id' => $team_id,])->first();
     }
 }

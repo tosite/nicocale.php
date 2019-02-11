@@ -12,13 +12,7 @@ class Team extends Model
 
     public function teamUsers ()
     {
-        return $this->hasMany('App\TeamUser', 'slack_team_id', 'slack_team_id');
-    }
-
-    public static function createWithTeamUser ($params)
-    {
-        $team = \App\Team::create($params);
-        \App\TeamUser::create(['oauth_id' => \Auth::user()->oauth_id, 'slack_team_id' => $team->slack_team_id, 'team_id' => $team->id]);
+        return $this->hasMany('App\TeamUser', 'team_id', 'slack_team_id');
     }
 
     public static function findOrCreateTeam ($slack_team)
