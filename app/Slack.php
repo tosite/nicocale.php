@@ -56,7 +56,7 @@ class Slack extends Model
     // https://api.slack.com/methods/users.info/test
     public static function usersInfo ($user_id = null)
     {
-        $user_id = $user_id ?: \Auth::user()->slack_id;
+        $user_id = $user_id ?: \Auth::user()->slack_user_id;
         $model   = new static();
         return $model->httpGet('users.info', "&user={$user_id}")->user;
     }
