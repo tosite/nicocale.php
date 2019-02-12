@@ -37,4 +37,8 @@ class TeamUser extends Model
         $team_user = self::firstOrCreate($params);
         return $team_user;
     }
+    public static function findByTeamId ($team_id)
+    {
+        return self::teamId($team_id)->userId()->first();
+    }
 }

@@ -1,4 +1,11 @@
 <?php
+if (! function_exists('to_query')) {
+    function to_query($params)
+    {
+        return urlencode(json_encode(array_filter($params)));
+    }
+}
+
 if (!function_exists('formValue')) {
     function formValue ($key, $model)
     {

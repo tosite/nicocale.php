@@ -13,16 +13,15 @@ class TeamController extends Controller
         return view('teams/index', ['team_users' => $team_users]);
     }
 
-    public function show ($id, $yyyymm)
+    public function show ($team_id, $yyyymm)
     {
-        $team      = \App\Team::find($id);
-        $emotions  = \App\Emotion::getBetweenEnteredOn($id, $yyyymm);
-        $users     = \App\TeamUser::teamId($team->id)->get();
+        $emotions  = \App\Emotion::getBetweenEnteredOn($team_id, $yyyymm);
+        $users     = \App\TeamUser::findByTeamId($team_id)->get();
         $date_list = $this->createDateList($yyyymm);
         return view('teams/show', [
             'user_id'      => \Auth::user()->id,
             'users'        => $users,
-            'team'         => $team,
+            'team'         => \App\Team::find($team_id),
             'emotions'     => $emotions,
             'date_list'    => $date_list,
             'day_of_weeks' => $this->dayOfWeeks(),
