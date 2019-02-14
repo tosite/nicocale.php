@@ -1,3 +1,4 @@
+console.log('load boot')
 
 window._ = require('lodash');
 
