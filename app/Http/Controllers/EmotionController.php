@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 
 class EmotionController extends Controller
 {
-    const STORE_PARAMS = ['emoji', 'entered_on', 'status_text', 'memo'];
+    const STORE_PARAMS = ['team_user_id', 'emoji', 'entered_on', 'status_text', 'memo'];
 
-    public function store (Request $request, $team_id)
+    public function store (Request $request)
     {
         $input     = $request->only(self::STORE_PARAMS);
-        $team_user = \App\TeamUser::teamId($team_id)->userId()->first();
+        $team_user = \App\TeamUser::find($input['team_user_id']);
         $params    = $this->form_params($team_user, $input);
         \App\Emotion::createOrUpdateEmotion($params['keys'], $params['params']);
-        return redirect()->back();
+        return 201;
+//        return redirect()->back();
     }
 
     public function update (Request $request, $id)

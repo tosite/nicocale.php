@@ -1754,10 +1754,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionModal.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmotionModal.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1789,47 +1789,153 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['emotion'],
+  data: function data() {
+    return {
+      selectedEmoji: '',
+      dialog: false,
+      normalEmojis: ['😃', '😐', '😥'],
+      allEmojis: ['☺️', '😊', '😇', '🧐', '😖']
+    };
+  },
+  methods: {
+    selectEmoji: function selectEmoji(emoji) {
+      this.$emit('selectEmoji', emoji);
+      this.dialog = false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionModal.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmotionModal.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmojiSelector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmojiSelector */ "./resources/js/components/EmojiSelector.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    EmojiSelector: _EmojiSelector__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['emotion', 'enteredOn', 'isMe', 'teamUserId'],
   data: function data() {
     return {
       dialog: false,
-      e: null
+      e: null,
+      defaultEmotion: {
+        emoji: '👤',
+        status_text: '',
+        memo: ''
+      }
     };
   },
   created: function created() {
-    if (this.emotion) {
-      this.e = JSON.parse(this.emotion);
-      console.log(this.e);
+    this.e = !this.emotion ? this.defaultEmotion : JSON.parse(this.emotion);
+    this.enteredOn = this.enteredOn;
+  },
+  methods: {
+    selectEmoji: function selectEmoji(emoji) {
+      this.e.emoji = emoji;
+    },
+    cancel: function cancel() {
+      this.e = !this.emotion ? this.defaultEmotion : JSON.parse(this.emotion);
+      this.dialog = false;
+    },
+    post: function post() {
+      var params = this.e;
+      params["entered_on"] = this.enteredOn;
+      params["team_user_id"] = this.teamUserId;
+      console.log(params);
+      axios.post('/api/v1/emotions', params).then(function (r) {
+        console.log(r.data);
+      }).catch(function (e) {
+        console.log(e.response);
+      });
+      this.dialog = false;
     }
   }
 });
@@ -37370,6 +37476,114 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-xs-center" },
+    [
+      _vm._l(_vm.normalEmojis, function(e) {
+        return _c(
+          "span",
+          [
+            _c(
+              "v-btn",
+              {
+                staticStyle: { height: "54px", "min-width": "0px" },
+                attrs: { flat: "" },
+                on: {
+                  click: function($event) {
+                    return _vm.selectEmoji(e)
+                  }
+                }
+              },
+              [_c("span", { staticClass: "display-2" }, [_vm._v(_vm._s(e))])]
+            )
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c(
+        "v-expansion-panel",
+        { staticClass: "elevation-0" },
+        [
+          _c(
+            "v-expansion-panel-content",
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                _vm._v("show more")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-text",
+                    { staticClass: "text-xs-center pa-0" },
+                    _vm._l(_vm.allEmojis, function(e) {
+                      return _c(
+                        "span",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              staticStyle: {
+                                height: "40px",
+                                "min-width": "0px"
+                              },
+                              attrs: { flat: "" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.selectEmoji(e)
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { staticClass: "display-1" }, [
+                                _vm._v(_vm._s(e))
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionModal.vue?vue&type=template&id=55a985fd&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmotionModal.vue?vue&type=template&id=55a985fd& ***!
@@ -37402,50 +37616,102 @@ var render = function() {
           }
         },
         [
-          _c(
-            "v-btn",
-            {
-              attrs: { slot: "activator", color: "red lighten-2", dark: "" },
-              slot: "activator"
-            },
-            [_vm._v("\n      " + _vm._s(_vm.e.entered_on) + "\n    ")]
-          ),
+          _c("span", { attrs: { slot: "activator" }, slot: "activator" }, [
+            _c("span", { staticClass: "display-2" }, [
+              _vm._v(_vm._s(_vm.e.emoji))
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "v-card",
             [
-              _c("v-card-title", {
-                staticClass: "headline grey lighten-2",
-                attrs: { "primary-title": "" }
-              }),
-              _vm._v(" "),
               _c(
-                "v-card-text",
-                [
-                  _c("v-text-field", {
-                    attrs: { counter: 100, label: "Status" },
-                    model: {
-                      value: _vm.e.emoji,
-                      callback: function($$v) {
-                        _vm.$set(_vm.e, "emoji", $$v)
-                      },
-                      expression: "e.emoji"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { counter: 100, label: "Status" },
-                    model: {
-                      value: _vm.e.status_text,
-                      callback: function($$v) {
-                        _vm.$set(_vm.e, "status_text", $$v)
-                      },
-                      expression: "e.status_text"
-                    }
-                  })
-                ],
-                1
+                "v-card-title",
+                {
+                  staticClass: "headline grey lighten-2",
+                  attrs: { "primary-title": "" }
+                },
+                [_vm._v("\n        " + _vm._s(_vm.enteredOn) + "\n      ")]
               ),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _c("p", { staticClass: "display-4 text-xs-center ma-0" }, [
+                  _vm._v(_vm._s(_vm.e.emoji))
+                ]),
+                _vm._v(" "),
+                _vm.isMe
+                  ? _c(
+                      "div",
+                      [
+                        _c("emoji-selector", {
+                          on: { selectEmoji: _vm.selectEmoji }
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: { counter: 100, label: "Status" },
+                          model: {
+                            value: _vm.e.status_text,
+                            callback: function($$v) {
+                              _vm.$set(_vm.e, "status_text", $$v)
+                            },
+                            expression: "e.status_text"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-expansion-panel",
+                          { staticClass: "elevation-0" },
+                          [
+                            _c(
+                              "v-expansion-panel-content",
+                              [
+                                _c(
+                                  "div",
+                                  { attrs: { slot: "header" }, slot: "header" },
+                                  [_vm._v("add memo")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-card",
+                                  [
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "text-xs-center pa-0" },
+                                      [
+                                        _c("v-textarea", {
+                                          attrs: {
+                                            counter: 100,
+                                            label: "Memo"
+                                          },
+                                          model: {
+                                            value: _vm.e.memo,
+                                            callback: function($$v) {
+                                              _vm.$set(_vm.e, "memo", $$v)
+                                            },
+                                            expression: "e.memo"
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  : _c("div", [
+                      _c("p", [_vm._v(_vm._s(_vm.e.status_text))]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.e.memo))])
+                    ])
+              ]),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
@@ -37458,14 +37724,21 @@ var render = function() {
                     "v-btn",
                     {
                       attrs: { color: "primary", flat: "" },
-                      on: {
-                        click: function($event) {
-                          _vm.dialog = false
-                        }
-                      }
+                      on: { click: _vm.cancel }
                     },
-                    [_vm._v("\n          I accept\n        ")]
-                  )
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _vm.isMe
+                    ? _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary", flat: "" },
+                          on: { click: _vm.post }
+                        },
+                        [_vm._v("Submit")]
+                      )
+                    : _vm._e()
                 ],
                 1
               )
@@ -75538,6 +75811,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('emotion-modal', __webpack_require__(/*! ./components/EmotionModal.vue */ "./resources/js/components/EmotionModal.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('emotion-selector', __webpack_require__(/*! ./components/EmojiSelector.vue */ "./resources/js/components/EmojiSelector.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -75557,7 +75831,6 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-console.log('load boot');
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -75586,13 +75859,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-var token = document.head.querySelector('meta[name="csrf-token"]');
+var token = window.Laravel.csrfToken;
+axios.defaults.headers.common = {
+  // 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
+  'X-CSRF-TOKEN': token,
+  // 'X-XSRF-TOKEN': token,
+  'X-Requested-With': 'XMLHttpRequest'
+};
+console.log(token); // let token = document.head.querySelector('meta[name="csrf-token"]');
+//
+// if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
 
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -75606,6 +75887,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/EmojiSelector.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/EmojiSelector.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmojiSelector.vue?vue&type=template&id=5ce2b92c& */ "./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c&");
+/* harmony import */ var _EmojiSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmojiSelector.vue?vue&type=script&lang=js& */ "./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmojiSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EmojiSelector.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmojiSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EmojiSelector.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmojiSelector.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmojiSelector_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EmojiSelector.vue?vue&type=template&id=5ce2b92c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmojiSelector.vue?vue&type=template&id=5ce2b92c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmojiSelector_vue_vue_type_template_id_5ce2b92c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

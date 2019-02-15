@@ -7,7 +7,7 @@
         'emotions'     => $emotions,
         'date_list'    => $date_list,
         'day_of_weeks' => $day_of_weeks,
-        'users'        => $users,
+        'team_users'   => $team_users,
         'user_id'      => $user_id,
     ];
     ?>
