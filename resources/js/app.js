@@ -1,4 +1,3 @@
-console.log('load app');
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -26,10 +25,12 @@ Vue.use(Vuetify);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('emotion-modal',     require('./components/EmotionModal.vue').default);
-Vue.component('emotion-selector',  require('./components/EmojiSelector.vue').default);
-Vue.component('month-selector',    require('./components/MonthSelector.vue').default);
+// Vue.component('example-component',   require('./components/ExampleComponent.vue').default);
+Vue.component('side-nav',            require('./components/SideNav.vue').default);
+Vue.component('emotion-modal',       require('./components/EmotionModal.vue').default);
+Vue.component('emotion-selector',    require('./components/EmojiSelector.vue').default);
+Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
+Vue.component('sub-team-form-modal', require('./components/SubTeamFormModal.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

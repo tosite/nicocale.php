@@ -1,6 +1,6 @@
 <month-selector
   months="{{ json_encode($months) }}"
-  uri="/teams/{{ $team->id }}/"
+  uri="/sub_teams/{{ $team->id }}/"
 ></month-selector>
 <table>
   <thead>
@@ -15,17 +15,17 @@
   </thead>
   <tbody>
 
-  @foreach($team_users as $u)
+  @foreach($sub_team_users as $u)
     <tr>
-      <th> {{ $u->user->name }}</th>
+      <th> {{ $u->team_user->user->name }}</th>
       @foreach($date_list as $d)
         <td class="pl-3 pr-3 pt-1 pb-1 text-xs-center lighten-5 @if($d->dayOfWeek == 6) blue @elseif($d->dayOfWeek ==0) red @endif">
-            <?php $emotion = byKey("{$d->format('Y-m-d')}-{$u->id}", $emotions); ?>
+            <?php $emotion = byKey("{$d->format('Y-m-d')}-{$u->team_user->id}", $emotions); ?>
           <emotion-modal
             emotion="{{ $emotion }}"
             entered-on="{{ $d->format('Y-m-d') }}"
-            is-me="{{ $u->user->id === $user_id }}"
-            team-user-id="{{ $u->id }}"
+            is-me="{{ $u->team_user->user_id === $user_id }}"
+            team-user-id="{{ $u->team_user->id }}"
           ></emotion-modal>
         </td>
       @endforeach

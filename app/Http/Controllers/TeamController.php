@@ -10,22 +10,21 @@ class TeamController extends Controller
     public function index ()
     {
         $team_users = \App\TeamUser::userId()->get();
-        return view('teams/index', ['team_users' => $team_users]);
+        $team_ids   = \App\TeamUser::userId()->get(['team_id']);
+        $teams      = \App\Team::whereIn('id', $team_ids)->get(['id', 'name', 'avatar']);
+        return view('teams/index', ['team_users' => $team_users, 'teams' => $teams, 'url' => ['prefix' => 'teams', 'suffix' => '',]]);
     }
-
-    public function show ($team_id, $yyyymm)
+    public function show ($team_id)
     {
-        $emotions   = \App\Emotion::getBetweenEnteredOn($team_id, $yyyymm);
-        $team_users = \App\TeamUser::teamId($team_id)->get();
-        $date_list  = $this->createDateList($yyyymm);
+        $sub_team_users = \App\SubTeamUser::teamId($team_id)->get();
+        $sub_team_ids   = \App\SubTeamUser::teamId($team_id)->get(['sub_team_id']);
+        $sub_teams      = \App\SubTeam::whereIn('id', $sub_team_ids)->get(['id', 'name', 'avatar']);
+
         return view('teams/show', [
-            'user_id'       => \Auth::user()->id,
-            'team_users'    => $team_users,
-            'team'          => \App\Team::find($team_id),
-            'emotions'      => $emotions,
-            'date_list'     => $date_list,
-            'day_of_weeks'  => $this->dayOfWeeks(),
-            'months'        => $this->createMonthsList($yyyymm),
+            'teams'          => $sub_teams,
+            'team'           => \App\Team::find($team_id),
+            'sub_team_users' => $sub_team_users,
+            'url'            => ['prefix' => 'sub_teams', 'suffix' => date('Ym')],
         ]);
     }
 }

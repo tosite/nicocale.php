@@ -69,12 +69,18 @@
   </nav>
 
   <v-app>
+    <side-nav
+      params="{{ $teams }}"
+      url="{{ json_encode($url) }}"
+    ></side-nav>
     <v-content>
-      <v-container style="overflow-x: scroll;">
+      <v-container fluid style="overflow-x: scroll;">
         @yield('content')
       </v-container>
     </v-content>
+<!--    <v-footer app></v-footer>-->
   </v-app>
+
 </div>
 </body>
 </html>
