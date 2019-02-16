@@ -107,7 +107,7 @@
         console.log(params);
         axios.post('/api/v1/emotions', params)
           .then((r) => {
-            console.log(r.data)
+            console.log(r)
           })
           .catch((e) => {
             console.log(e.response)

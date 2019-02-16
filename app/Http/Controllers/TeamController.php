@@ -19,12 +19,13 @@ class TeamController extends Controller
         $team_users = \App\TeamUser::teamId($team_id)->get();
         $date_list  = $this->createDateList($yyyymm);
         return view('teams/show', [
-            'user_id'      => \Auth::user()->id,
-            'team_users'   => $team_users,
-            'team'         => \App\Team::find($team_id),
-            'emotions'     => $emotions,
-            'date_list'    => $date_list,
-            'day_of_weeks' => $this->dayOfWeeks(),
+            'user_id'       => \Auth::user()->id,
+            'team_users'    => $team_users,
+            'team'          => \App\Team::find($team_id),
+            'emotions'      => $emotions,
+            'date_list'     => $date_list,
+            'day_of_weeks'  => $this->dayOfWeeks(),
+            'months'        => $this->createMonthsList($yyyymm),
         ]);
     }
 }

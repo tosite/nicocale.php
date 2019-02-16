@@ -27,8 +27,9 @@ Vue.use(Vuetify);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('emotion-modal', require('./components/EmotionModal.vue').default);
-Vue.component('emotion-selector', require('./components/EmojiSelector.vue').default);
+Vue.component('emotion-modal',     require('./components/EmotionModal.vue').default);
+Vue.component('emotion-selector',  require('./components/EmojiSelector.vue').default);
+Vue.component('month-selector',    require('./components/MonthSelector.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

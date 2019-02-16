@@ -8,30 +8,24 @@ class EmotionController extends Controller
 {
     const STORE_PARAMS = ['team_user_id', 'emoji', 'entered_on', 'status_text', 'memo'];
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
         $input     = $request->only(self::STORE_PARAMS);
         $team_user = \App\TeamUser::find($input['team_user_id']);
         $params    = $this->form_params($team_user, $input);
-        \App\Emotion::createOrUpdateEmotion($params['keys'], $params['params']);
-        return 201;
-//        return redirect()->back();
+        $emotion   = \App\Emotion::createOrUpdateEmotion($params['keys'], $params['params']);
+        return response()->json($emotion, 201);
     }
 
-    public function update (Request $request, $id)
+    public function destroy($id)
     {
         //
     }
 
-    public function destroy ($id)
-    {
-        //
-    }
-
-    private function form_params ($team_user, $input)
+    private function form_params($team_user, $input)
     {
         return [
-            'keys'   => [
+            'keys' => [
                 'user_id'    => $team_user->user->id,
                 'team_id'    => $team_user->team->id,
                 'entered_on' => $input['entered_on'],
