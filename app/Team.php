@@ -7,9 +7,9 @@ use Illuminate\Support\Str;
 
 class Team extends Model
 {
+    use \App\Traits\Findable;
 
     // プライマリキー
-    protected $primaryKey   = 'slack_team_id';
     protected $keyType      = 'string';
     public    $incrementing = false;
 
@@ -25,10 +25,8 @@ class Team extends Model
             'name', 'avatar', 'slack_team_id',
     ];
 
-    public function teamUsers ()
-    {
-        return $this->hasMany('App\TeamUser', 'team_id', 'slack_team_id');
-    }
+    public function teamUsers () { return $this->hasMany('App\TeamUser', 'team_id', 'id'); }
+    public function emotions ()  { return $this->hasMany('App\Emotion',  'team_id', 'id'); }
 
     public static function findOrCreateTeam ($slack_team)
     {

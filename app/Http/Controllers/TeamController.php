@@ -2,91 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use \App\Traits\Datable;
+
     public function index ()
     {
         $team_users = \App\TeamUser::userId()->get();
         return view('teams/index', ['team_users' => $team_users]);
     }
 
-//    /**
-//     * Show the form for creating a new resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function create ()
-//    {
-//    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store (Request $request)
+    public function show ($team_id, $yyyymm)
     {
-        $in         = $request->input();
-        $slack_user = \App\Slack::usersInfo();
-        \App\Team::createWithTeamUser(['name' => $in['name'], 'avatar' => 'png', 'slack_team_id' => $slack_user->team_id]);
+        $emotions  = \App\Emotion::getBetweenEnteredOn($team_id, $yyyymm);
+        $users     = \App\TeamUser::findByTeamId($team_id)->get();
+        $date_list = $this->createDateList($yyyymm);
+        return view('teams/show', [
+            'user_id'      => \Auth::user()->id,
+            'users'        => $users,
+            'team'         => \App\Team::find($team_id),
+            'emotions'     => $emotions,
+            'date_list'    => $date_list,
+            'day_of_weeks' => $this->dayOfWeeks(),
+        ]);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-//    public function show ($id)
-//    {
-//        $team      = \App\Team::find($id);
-//        $team_user = \App\TeamUser::slackTeamId($team->slack_team_id)->get();
-//        dd($team_user);
-//    }
-
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit ($id)
-//    {
-//        //
-//    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update (Request $request, $id)
-    {
-        $in        = $request->input();
-        $t         = \App\Team::find($id);
-        $t->name   = $in['name'] ?: $t->name;
-        $t->avatar = $in['avatar'] ?: $t->avatar;
-        $t->save();
-    }
-
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  int $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy ($id)
-//    {
-//        //
-//    }
 }
