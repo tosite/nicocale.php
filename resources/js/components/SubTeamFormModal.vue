@@ -1,12 +1,13 @@
 <template>
-  <div class="text-xs-center">
+  <div>
     <v-dialog
       v-model="dialog"
       width="500"
     >
-      <span slot="activator">
-        <span>New SubTeams</span>
-      </span>
+
+      <v-list-tile slot="activator">
+        <v-list-tile-title>Create Sub Team</v-list-tile-title>
+      </v-list-tile>
 
       <v-card>
         <v-card-title
