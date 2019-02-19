@@ -1,16 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <?php
-    $params = [
-        'team'          => $team,
-        'emotions'      => $emotions,
-        'date_list'     => $date_list,
-        'day_of_weeks'  => $day_of_weeks,
-        'team_users'    => $team_users,
-        'user_id'       => $user_id,
-        'months'        => $months,
-    ];
-    ?>
-    @include('teams._team_table', $params)
+  @foreach($sub_team_users as $sub_team_user)
+    <p>
+      <a href="/sub_teams/{{ $sub_team_user->sub_team->id }}/{{ date('Ym') }}">{{ $sub_team_user->sub_team->name }}</a>
+    </p>
+  @endforeach
 @endsection

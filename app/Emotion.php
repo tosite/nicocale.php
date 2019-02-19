@@ -42,7 +42,12 @@ class Emotion extends Model
 
     public function scopeTeamId($query, $id)        { return $query->where(['team_id' => $id]); }
     public function scopeUserId($query, $id = null) { return $query->where(['user_id' => $id ?: \Auth::user()->id]); }
-    public function scopeTeamUserId($query, $id)    { return $query->where(['team_user_id' => $id]); }
+    public function scopeTeamUserId($query, $ids)   { return $query->whereIn('team_user_id', $ids); }
+
+    public function scopeBetweenEnteredOn($query, $yyyymm) {
+        $date_buf = strtotime("{$yyyymm}01");
+        $query->whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)]);
+    }
 
     public static function createOrUpdateEmotion ($keys, $params)
     {
@@ -57,15 +62,21 @@ class Emotion extends Model
         return $emotion;
     }
 
-    public static function getBetweenEnteredOn ($team_id, $yyyymm)
-    {
-        $date_buf = strtotime("{$yyyymm}01");
-        $emotions = self::whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)])
-            ->where(['team_id' => $team_id])
-            ->get();
-
-        return $emotions->keyBy(function ($e) {
+    public function scopeGetKeyBy ($query) {
+        return $query->get()->keyBy(function ($e) {
             return "{$e->entered_on}-{$e->team_user_id}";
         });
     }
+
+//    public static function getBetweenEnteredOn ($team_id, $yyyymm)
+//    {
+//        $date_buf = strtotime("{$yyyymm}01");
+//        $emotions = self::whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)])
+//            ->where(['team_id' => $team_id])
+//            ->get();
+//
+//        return $emotions->keyBy(function ($e) {
+//            return "{$e->entered_on}-{$e->team_user_id}";
+//        });
+//    }
 }
