@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!--  <meta name="csrf-token" content="{{ csrf_token() }}">-->
   <title>{{ config('app.name', 'Laravel') }}</title>
   <script src="{{ asset('js/app.js') }}" defer></script>
   <script>window.Laravel = {csrfToken: "{{ csrf_token() }}"};</script>
@@ -69,10 +68,12 @@
   </nav>
 
   <v-app>
+    @if(\Auth::check())
     <side-nav
-      params="{{ $teams }}"
-      url="{{ json_encode($url) }}"
+      team-list="{{ json_encode($team_list) }}"
+      yyyymm="{{ date('Ym') }}"
     ></side-nav>
+    @endif
     <v-content>
       <v-container fluid style="overflow-x: scroll;">
         @yield('content')

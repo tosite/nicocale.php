@@ -2033,22 +2033,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['params', 'url'],
+  props: ['teamList', 'yyyymm'],
   data: function data() {
     return {
       items: [],
-      urls: [],
       right: null
     };
   },
   mounted: function mounted() {
-    this.items = JSON.parse(this.params);
-    this.urls = JSON.parse(this.url);
+    this.items = JSON.parse(this.teamList);
   },
   methods: {
-    href: function href(id) {
-      window.location.href = "/".concat(this.urls.prefix, "/").concat(id, "/").concat(this.urls.suffix);
+    openTeam: function openTeam(id) {
+      window.location.href = "/teams/".concat(id);
+    },
+    openSubTeam: function openSubTeam(id) {
+      window.location.href = "/sub_teams/".concat(id, "/").concat(this.yyyymm);
     }
   }
 });
@@ -2064,6 +2086,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -38025,32 +38048,88 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-list",
-        { staticClass: "pt-0", attrs: { dense: "" } },
-        _vm._l(_vm.items, function(item) {
-          return _c(
-            "v-list-tile",
-            {
-              key: item.id,
-              on: {
-                click: function($event) {
-                  return _vm.href(item.id)
-                }
-              }
-            },
+        [
+          _c(
+            "v-list-group",
+            { attrs: { "prepend-icon": "account_circle", value: "true" } },
             [
-              _c("v-list-tile-avatar", [
-                _c("img", { attrs: { src: item.avatar } })
-              ]),
-              _vm._v(" "),
               _c(
-                "v-list-tile-content",
-                [_c("v-list-tile-title", [_vm._v(_vm._s(item.name))])],
+                "v-list-tile",
+                { attrs: { slot: "activator" }, slot: "activator" },
+                [_c("v-list-tile-title", [_vm._v("Teams")])],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.items, function(team, team_id) {
+                return _c(
+                  "div",
+                  [
+                    _c(
+                      "v-list-group",
+                      {
+                        attrs: {
+                          "no-action": "",
+                          "sub-group": "",
+                          value: "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "v-list-tile",
+                          { attrs: { slot: "activator" }, slot: "activator" },
+                          [
+                            _c("v-list-tile-title", [
+                              _vm._v(_vm._s(team.team.name))
+                            ])
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("sub-team-form-modal"),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-tile",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.openTeam(team.team.id)
+                              }
+                            }
+                          },
+                          [_c("v-list-tile-title", [_vm._v("Open Team")])],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm._l(team.sub_teams, function(sub_team, i) {
+                          return _c(
+                            "v-list-tile",
+                            {
+                              key: i,
+                              on: {
+                                click: function($event) {
+                                  return _vm.openSubTeam(sub_team.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("v-list-tile-title", {
+                                domProps: { textContent: _vm._s(sub_team.name) }
+                              })
+                            ],
+                            1
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                )
+              })
             ],
-            1
+            2
           )
-        }),
+        ],
         1
       )
     ],
@@ -38081,7 +38160,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "text-xs-center" },
     [
       _c(
         "v-dialog",
@@ -38096,9 +38174,12 @@ var render = function() {
           }
         },
         [
-          _c("span", { attrs: { slot: "activator" }, slot: "activator" }, [
-            _c("span", [_vm._v("New SubTeams")])
-          ]),
+          _c(
+            "v-list-tile",
+            { attrs: { slot: "activator" }, slot: "activator" },
+            [_c("v-list-tile-title", [_vm._v("Create Sub Team")])],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-card",

@@ -32,6 +32,7 @@ class SubTeamController extends Controller
         $sub_team_users = \App\SubTeamUser::subTeamId($sub_team_id)->get();
         $date_list      = $this->createDateList($yyyymm);
         return view('sub_teams/show', [
+            'team_list'      => \App\Team::teamList(),
             'user_id'        => \Auth::user()->id,
             'sub_team_users' => $sub_team_users,
             'sub_team'       => \App\SubTeam::find($sub_team_id),
