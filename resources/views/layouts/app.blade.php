@@ -4,19 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<!--  <meta name="csrf-token" content="{{ csrf_token() }}">-->
   <title>{{ config('app.name', 'Laravel') }}</title>
-
-  <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
-
-  <!-- Fonts -->
+  <script>window.Laravel = {csrfToken: "{{ csrf_token() }}"};</script>
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
-  <!-- Styles -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -74,9 +68,13 @@
     </div>
   </nav>
 
-  <main class="py-4">
-    @yield('content')
-  </main>
+  <v-app>
+    <v-content>
+      <v-container style="overflow-x: scroll;">
+        @yield('content')
+      </v-container>
+    </v-content>
+  </v-app>
 </div>
 </body>
 </html>

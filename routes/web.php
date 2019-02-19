@@ -25,7 +25,6 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('teams',    'TeamController',    ['only' => ['index']]);
-    Route::resource('emotions', 'EmotionController', ['only' => ['update', 'destroy']]);
 
     Route::group(['prefix'=>'teams/{team_id}'], function() {
         Route::get('{yyyymm}',  'TeamController@show')->name('teams.show');
