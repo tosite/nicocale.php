@@ -162,6 +162,7 @@ class ViewControllerTest extends TestCase
             ->assertViewIs('sub_team_users.not_joined.index')
             ->assertStatus(200);
     }
+
     /**
      * @test
      */

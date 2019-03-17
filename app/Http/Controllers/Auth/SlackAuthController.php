@@ -11,10 +11,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 class SlackAuthController extends Controller
 {
     use AuthenticatesUsers;
-//    public function __construct ()
-//    {
-//        $this->middleware('guest')->except('logout');
-//    }
 
     public function redirectToProvider ()
     {
@@ -58,19 +54,16 @@ class SlackAuthController extends Controller
     }
 
 
-    private function findOrCreateUser ($slack_user)
+    private function findOrCreateUser ($slackUser)
     {
-//        $authUser = User::where('slack_token', $slack_user->token)->first();
-        $authUser = User::where('slack_user_id', $slack_user->id)->first();
+        $authUser = User::where('slack_user_id', $slackUser->id)->first();
         if ($authUser) return $authUser;
 
-//        dd($slack_user, $slack_user->token, $authUser);
         return User::create([
-                'name'          => $slack_user->name,
-                'slack_token'   => $slack_user->token,
-                'slack_user_id' => $slack_user->id,
-                'avatar'        => $slack_user['user']['image_512'],
-                'sns'           => 'slack',
+                'name'          => $slackUser->name,
+                'slack_token'   => $slackUser->token,
+                'slack_user_id' => $slackUser->id,
+                'avatar'        => $slackUser['user']['image_512'],
         ]);
     }
 
