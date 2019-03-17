@@ -11,7 +11,7 @@
       <tr>
         <td>{{ ($cnt + 1) }}</td>
         <td>
-          <a href="{{ route('teams.show', ['team_id'=>$team->id,'yyyymm'=>date('Ym')]) }}">{{ $team->name }}</a>
+          <a href="{{ route('teams.show', ['team_id'=>$team->id]) }}">{{ $team->name }}</a>
         </td>
         <td>
           <img src="{{ $team->avatar }}">

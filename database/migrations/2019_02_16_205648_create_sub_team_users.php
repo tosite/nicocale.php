@@ -15,6 +15,7 @@ class CreateSubTeamUsers extends Migration
     {
         Schema::create('sub_team_users', function (Blueprint $table) {
             $table->string('id', 36)->primary();
+            $table->string('user_id', 36)->index();
             $table->string('team_id', 36)->index();
             $table->string('team_user_id', 36)->index();
             $table->string('sub_team_id', 36)->index();

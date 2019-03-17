@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('slack_token')->unique();
             $table->string('slack_user_id')->primary();
             $table->string('avatar');
-            $table->string('sns');
             $table->rememberToken();
             $table->timestamps();
         });

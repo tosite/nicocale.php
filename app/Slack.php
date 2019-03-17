@@ -32,6 +32,7 @@ class Slack extends Model
         $url  = "{$this->base_url}/{$action}?token={$this->token}{$param}";
         $res  = $this->client->post($url);
         $data = json_decode($res->getBody(), true);
+        dd($data);
         if ($data["ok"] === false) throw new \Exception($data['error']);
         return json_decode(json_encode($data));
     }

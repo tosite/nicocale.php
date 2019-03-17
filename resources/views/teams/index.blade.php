@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-  @foreach($team_users as $team_user)
-    <sub-team-form-modal
-      team-user-id="{{ $team_user->id }}"
-      sub-team-name=""
-    ></sub-team-form-modal>
-  @endforeach
-  @include('teams._teams', ['team_users' => $team_users])
+    <h1>Team Index</h1>
+    @foreach($teamUsers as $tu)
+        <div>
+            <h2>{{ $tu->team->name }}</h2>
+            <a href="{{ route('sub_teams.index', $tu->team_id) }}">sub teams</a>
+            <a href="{{ route('team_users.index', ['teamId' => $tu->team_id]) }}">team users</a>
+            <a href="{{ route('sub_teams.not_joined', ['teamId' => $tu->team_id]) }}">not joined</a>
+            <a href="{{ route('team_users.me', ['teamUserId' => $tu->id]) }}">me</a>
+        </div>
+    @endforeach
 @endsection

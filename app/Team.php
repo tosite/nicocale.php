@@ -2,6 +2,7 @@
 
 namespace App;
 
+use http\Cookie;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -31,29 +32,31 @@ class Team extends Model
 
     public static function findOrCreateTeam ($slack_team)
     {
-        $team         = \App\Team::firstOrNew(['slack_team_id' => $slack_team['id']]);
+        $team         = self::firstOrNew(['slack_team_id' => $slack_team['id']]);
         $team->name   = $slack_team['name'];
         $team->avatar = $slack_team['image_230'];
         $team->save();
         return $team;
     }
 
-    public static function teamList ()
+    public static function joinedTeamList ()
     {
         $team_list  = [];
         foreach (\App\TeamUser::userId()->get() as $t) {
             $team_list[$t->id]['team'] = [
-                'id'     => $t->team->id,
-                'name'   => $t->team->name,
-                'avatar' => $t->team->avatar,
+                'id'           => $t->team->id,
+                'name'         => $t->team->name,
+                'avatar'       => $t->team->avatar,
+                'team_user_id' => $t->id,
             ];
 
             $team_list[$t->id]['sub_teams'] = [];
             foreach (\App\SubTeamUser::teamUserId($t->id)->get() as $s) {
                 $team_list[$t->id]['sub_teams'][] = [
-                    'id'     => $s->sub_team->id,
-                    'name'   => $s->sub_team->name,
-                    'avatar' => $s->sub_team->avatar,
+                    'id'               => $s->sub_team->id,
+                    'name'             => $s->sub_team->name,
+                    'avatar'           => $s->sub_team->avatar,
+                    'sub_team_user_id' => $s->id,
                 ];
             }
         }
