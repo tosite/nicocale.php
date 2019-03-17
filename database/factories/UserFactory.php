@@ -20,7 +20,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'slack_token'    => Str::Uuid(),
         'slack_user_id'  => str_random(9),
         'avatar'         => 'https://bsblog.casareal.co.jp/img/recruit.png',
-        'sns'            => 'slack',
         'remember_token' => str_random(10),
     ];
     //    return [
