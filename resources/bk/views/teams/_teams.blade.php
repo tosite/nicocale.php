@@ -1,5 +1,3 @@
-<h1>happy</h1>
-
 <table>
   <thead>
   <tr>
@@ -12,7 +10,9 @@
       <?php $team = $team_user->team; ?>
       <tr>
         <td>{{ ($cnt + 1) }}</td>
-        <td>{{ $team->name }}</td>
+        <td>
+          <a href="{{ route('teams.show', ['team_id'=>$team->id]) }}">{{ $team->name }}</a>
+        </td>
         <td>
           <img src="{{ $team->avatar }}">
         </td>
