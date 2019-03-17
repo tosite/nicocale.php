@@ -14,11 +14,53 @@ Route::group(['prefix' => 'auth/slack'], function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::post(  'teams',             'TeamController@store'  )->name('teams.store');
 
-    Route::get('teams',           'TeamController@index')->name('teams.index');
-    Route::get('teams/{team_id}', 'TeamController@show')->name('teams.show');
-    Route::get('sub_teams/{sub_team_id}/{yyyymm}', 'SubTeamController@show')->name('sub_teams.show');
+    Route::post(  'sub-teams',             'SubTeamController@store'  )->name('sub_teams.store');
+    Route::put(   'sub-teams/{subTeamId}', 'SubTeamController@update' )->name('sub_teams.update');
+    Route::delete('sub-teams/{subTeamId}', 'SubTeamController@destroy')->name('sub_teams.destroy');
+
+    Route::post(  'team-users',              'TeamUserController@store'  )->name('team_users.store');
+    Route::delete('team-users/{teamUserId}', 'TeamUserController@destroy')->name('team_users.destroy');
+
+    Route::post(  'sub-team-users',                 'SubTeamUserController@store'  )->name('sub_team_users.store');
+    Route::put(   'sub-team-users/{subTeamUserId}', 'SubTeamUserController@update' )->name('sub_team_users.update');
+    Route::delete('sub-team-users/{subTeamUserId}', 'SubTeamUserController@destroy')->name('sub_team_users.destroy');
+
+    Route::post(  'emotions',             'EmotionController@store'  )->name('emotions.store');
+    Route::put(   'emotions/{emotionId}', 'EmotionController@update' )->name('emotions.update');
+    Route::delete('emotions/{emotionId}', 'EmotionController@destroy')->name('emotions.destroy');
+
     Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');
+
+    // ok
+    Route::get('teams',                                             'ViewTeamController@index'           )->name('teams.index');
+    // ok
+    Route::get('teams/{teamId}/team-users',                         'ViewTeamUserController@index'       )->name('team_users.index');
+    // ok
+    Route::get('team-users/{teamUserId}/me',                        'ViewTeamUserController@me'          )->name('team_users.me');
+    // ok
+    Route::get('/calendars/{year}/{month}/team-users/{teamUserId}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');
+    // ok
+    Route::get('/lists/{year}/{month}/team-users/{teamUserId}',     'ViewTeamUserController@list'        )->name('team_users.list');
+    // ok
+    Route::get('/calendars/{year}/{month}/sub-teams/{subTeamId}',   'ViewSubTeamController@calendar'     )->name('sub_teams.calendar');
+    // ok
+    Route::get('/lists/{year}/{month}/sub-teams/{subTeamId}',       'ViewSubTeamController@list'         )->name('sub_teams.list');
+    // ok
+    Route::get('teams/{teamId}/sub-teams',                          'ViewSubTeamController@index'        )->name('sub_teams.index');
+    // ok
+    Route::get('teams/{teamId}/sub-teams/not-joined',               'ViewSubTeamController@notJoined'    )->name('sub_teams.not_joined');
+    // ok
+    Route::get('sub-teams/{subTeamId}/settings',                    'ViewSubTeamController@setting'      )->name('sub_teams.setting');
+    // ok
+    Route::get('sub-teams/{subTeamId}/sub-team-users',              'ViewSubTeamUserController@index'    )->name('sub_team_users.index');
+    // ok
+    Route::get('sub-teams/{subTeamId}/sub-team-users/not-joined',   'ViewSubTeamUserController@notJoined')->name('sub_team_users.not_joined');
+    //
+    Route::get('sub-team-users/{subTeamUserId}/me',                 'ViewSubTeamUserController@me'       )->name('sub_team_users.me');
+
+//    Route::get('teams/{teamId}/team-users/not-joined',            '')->name('view_team_users.index_not_joined'); // 不要？
 });
 
 

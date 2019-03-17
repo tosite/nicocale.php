@@ -64,7 +64,7 @@ class SlackAuthController extends Controller
         $authUser = User::where('slack_user_id', $slack_user->id)->first();
         if ($authUser) return $authUser;
 
-        dd($slack_user, $slack_user->token, $authUser);
+//        dd($slack_user, $slack_user->token, $authUser);
         return User::create([
                 'name'          => $slack_user->name,
                 'slack_token'   => $slack_user->token,

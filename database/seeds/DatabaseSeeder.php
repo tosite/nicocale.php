@@ -12,10 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run (Faker $faker)
     {
-//        \App\User::truncate();
-//        \App\Team::truncate();
-//        \App\TeamUser::truncate();
-//        \App\Emotion::truncate();
+        \App\User::truncate();
+        \App\Team::truncate();
+        \App\TeamUser::truncate();
+        \App\Emotion::truncate();
 
         factory(App\User::class, 10)->create();
         factory(App\Team::class, 5)->create();
