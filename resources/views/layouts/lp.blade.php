@@ -68,9 +68,6 @@
   </nav>
 
   <v-app>
-    <side-nav
-      class="elevation-1"
-    ></side-nav>
     <v-content>
       <v-container fluid style="overflow-x: scroll;">
         @yield('content')
