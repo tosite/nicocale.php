@@ -9,35 +9,36 @@
       width="300"
       app
     >
-      <v-layout fill-height>
+      <v-progress-linear :indeterminate="true" v-if="!loaded" class="mt-1"></v-progress-linear>
+      <v-layout fill-height v-else>
         <v-navigation-drawer
           dark
           mini-variant
           stateless
           value="true"
         >
-          <!--<v-toolbar flat class="transparent">-->
-          <!--<v-list class="pa-0">-->
-          <!--<v-list-tile avatar>-->
-          <!--<v-list-tile-avatar>-->
-          <!--<img src="https://randomuser.me/api/portraits/men/85.jpg">-->
-          <!--</v-list-tile-avatar>-->
+          <v-toolbar flat class="transparent">
+          <v-list class="pa-0">
+          <v-list-tile avatar>
+          <v-list-tile-avatar>
+          <img :src="user.avatar">
+          </v-list-tile-avatar>
 
-          <!--<v-list-tile-content>-->
-          <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
-          <!--</v-list-tile-content>-->
+          <v-list-tile-content>
+          <v-list-tile-title>{{ user.name }}</v-list-tile-title>
+          </v-list-tile-content>
 
-          <!--<v-list-tile-action>-->
-          <!--<v-btn-->
-          <!--icon-->
-          <!--@click.native.stop="mini = !mini"-->
-          <!--&gt;-->
-          <!--<v-icon>chevron_left</v-icon>-->
-          <!--</v-btn>-->
-          <!--</v-list-tile-action>-->
-          <!--</v-list-tile>-->
-          <!--</v-list>-->
-          <!--</v-toolbar>-->
+          <v-list-tile-action>
+          <v-btn
+          icon
+          @click.native.stop="mini = !mini"
+          >
+          <v-icon>chevron_left</v-icon>
+          </v-btn>
+          </v-list-tile-action>
+          </v-list-tile>
+          </v-list>
+          </v-toolbar>
 
           <v-list class="pt-2" dense>
             <v-divider></v-divider>
@@ -45,10 +46,10 @@
             <v-list-tile
               v-for="team in teams"
               :key="team.id"
-              @click=""
+              @click.stop=""
             >
               <v-list-tile-action>
-                <v-avatar size="36px">
+                <v-avatar size="30px">
                   <img :src="team.avatar">
                 </v-avatar>
               </v-list-tile-action>
@@ -57,6 +58,13 @@
                 <v-list-tile-title>{{ team.name }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
+
+            <v-list-tile @click.stop="">
+              <v-list-tile-action>
+                <v-icon>add</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+
           </v-list>
         </v-navigation-drawer>
 
@@ -79,15 +87,36 @@
           <v-list-tile
             v-for="subTeam in subTeams"
             :key="subTeam.id"
-            @click=""
+            @click="locationSubTeamCalendar(subTeam.id)"
           >
             <v-list-tile-title v-text="subTeam.name"></v-list-tile-title>
           </v-list-tile>
+
+          <v-list-tile @click.stop="locateSubTeamNotJoined(currentTeam.id)">
+            <v-list-tile-content>
+              <v-list-tile-title>サブチームを追加する</v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-icon color="grey lighten-1">add</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+
         </v-list>
       </v-layout>
     </v-navigation-drawer>
   </div>
 </template>
+
+<style scoped>
+  .v-list__tile__title {
+    font-size: 80%;
+  }
+
+  #team-name {
+    font-size: 100%;
+  }
+</style>
 
 <script>
   export default {
@@ -100,17 +129,18 @@
         teams: [],
         subTeams: [],
         currentTeam: {},
+        user: {},
+        loaded: false,
       }
     },
-    created () {
-      axios.get('/api/v1/side-navigations').
-      then((res) => {
-        console.log(res);
+    created() {
+      axios.get('/api/v1/side-navigations').then((res) => {
+        this.user = res.data.user;
         this.teams = res.data.teams;
         this.subTeams = res.data.subTeams;
         this.currentTeam = res.data.currentTeam;
-      }).
-      catch((e) => {
+        this.loaded = true;
+      }).catch((e) => {
         console.log(e.data)
       });
     },
@@ -120,6 +150,12 @@
       },
       locateSubTeamNew: function (teamId) {
         window.location = `/teams/${teamId}/new`
+      },
+      locateSubTeamNotJoined: function (teamId) {
+        window.location = `/teams/${teamId}/sub-teams/not-joined`
+      },
+      locationSubTeamCalendar: function (subTeamId) {
+        window.location = `/calendars/2019/3/sub-teams/${subTeamId}`;
       },
     },
   }
