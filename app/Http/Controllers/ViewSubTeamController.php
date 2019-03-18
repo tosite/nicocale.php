@@ -9,9 +9,9 @@ class ViewSubTeamController extends Controller
     public function index($teamId)
     {
         $teamUser = \App\TeamUser::teamId($teamId)->userId()->first();
-        $subTeams = \App\SubTeamUser::teamId($teamId)->teamUserId($teamUser->id)->get();
+        $subTeamUsers = \App\SubTeamUser::teamId($teamId)->teamUserId($teamUser->id)->get();
         return view('sub_teams.index', [
-            'subTeams' => $subTeams,
+            'subTeamUsers' => $subTeamUsers,
         ]);
     }
 
@@ -40,7 +40,7 @@ class ViewSubTeamController extends Controller
     {
         return view('sub_teams.settings.index', [
             'subTeam' => \App\SubTeam::find($subTeamId),
-            ]);
+        ]);
     }
 
 }

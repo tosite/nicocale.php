@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Sub team index</h1>
-    @foreach($subTeams as $st)
+    @foreach($subTeamUsers as $st)
         <h4>{{ $st->subTeam->name }}</h4>
         <p>
             <a href="{{ route('sub_teams.calendar', ['subTeamId' => $st->sub_team_id, 'year'=> 2019, 'month'=> 3]) }}">calendar</a>
