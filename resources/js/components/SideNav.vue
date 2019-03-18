@@ -87,7 +87,7 @@
           <v-list-tile
             v-for="subTeam in subTeams"
             :key="subTeam.id"
-            @click="locationSubTeamCalendar(subTeam.id)"
+            @click="locateSubTeamCalendar(subTeam.id)"
           >
             <v-list-tile-title v-text="subTeam.name"></v-list-tile-title>
           </v-list-tile>
@@ -154,7 +154,7 @@
       locateSubTeamNotJoined: function (teamId) {
         window.location = `/teams/${teamId}/sub-teams/not-joined`
       },
-      locationSubTeamCalendar: function (subTeamId) {
+      locateSubTeamCalendar: function (subTeamId) {
         window.location = `/calendars/2019/3/sub-teams/${subTeamId}`;
       },
     },

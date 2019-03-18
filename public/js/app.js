@@ -2158,7 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
     locateSubTeamNotJoined: function locateSubTeamNotJoined(teamId) {
       window.location = "/teams/".concat(teamId, "/sub-teams/not-joined");
     },
-    locationSubTeamCalendar: function locationSubTeamCalendar(subTeamId) {
+    locateSubTeamCalendar: function locateSubTeamCalendar(subTeamId) {
       window.location = "/calendars/2019/3/sub-teams/".concat(subTeamId);
     }
   }
@@ -38542,7 +38542,7 @@ var render = function() {
                             key: subTeam.id,
                             on: {
                               click: function($event) {
-                                return _vm.locationSubTeamCalendar(subTeam.id)
+                                return _vm.locateSubTeamCalendar(subTeam.id)
                               }
                             }
                           },
