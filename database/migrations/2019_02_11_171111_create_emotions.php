@@ -14,7 +14,7 @@ class CreateEmotions extends Migration
     public function up()
     {
         Schema::create('emotions', function (Blueprint $table) {
-            $table->string('id', 36)->primary();
+            $table->string('id', 36)->index();
             $table->string('user_id', 36)->index();
             $table->string('team_id',36)->index();
             $table->string('team_user_id', 36)->index();
