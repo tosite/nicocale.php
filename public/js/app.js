@@ -2159,7 +2159,7 @@ __webpack_require__.r(__webpack_exports__);
       window.location = "/teams/".concat(teamId, "/sub-teams/not-joined");
     },
     locateSubTeamCalendar: function locateSubTeamCalendar(subTeamId) {
-      window.location = "/calendars/2019/3/sub-teams/".concat(subTeamId);
+      window.location = "/sub-teams/".concat(subTeamId, "/calendars/2019/3");
     }
   }
 });
