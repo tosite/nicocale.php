@@ -25,6 +25,7 @@ class SubTeamUser extends Model
     public function teamUser () { return $this->belongsTo('App\TeamUser', 'team_user_id', 'id'); }
     public function subTeam  () { return $this->belongsTo('App\SubTeam', 'sub_team_id', 'id'); }
     public function team     () { return $this->belongsTo('App\Team', 'team_id', 'id'); }
+    public function user     () { return $this->belongsTo('App\User', 'user_id', 'id'); }
 
     public function scopeUserId     ($query, $userId = null) { return $query->where(['user_id' => $userId ?: \Auth::user()->id]); }
     public function scopeTeamId     ($query, $teamId)        { return $query->where(['team_id' => $teamId]); }
