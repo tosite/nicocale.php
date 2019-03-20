@@ -16,12 +16,12 @@ class ViewTeamUserController extends Controller
 
     public function calendar($teamUserId, $year, $month)
     {
-        return view('calendars.team_users.index');
+        return view('team_users.calendars.index');
     }
 
     public function list($teamUserId, $year, $month)
     {
-        return view('lists.team_users.index');
+        return view('team_users.lists.index');
     }
 
     public function me($teamUserId)
