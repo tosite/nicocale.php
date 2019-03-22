@@ -6,7 +6,6 @@
         <div>
             {{ $tu->user->name }}
             <a href="{{ route('team_users.calendar', ['teamUserId' => $tu->id, 'year' => 2019, 'month' => 3]) }}">calendar</a>
-            <a href="{{ route('team_users.list', ['teamUserId' => $tu->id, 'year' => 2019, 'month' => 3]) }}">list</a>
         </div>
     @endforeach
 @endsection
