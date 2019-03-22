@@ -27,27 +27,26 @@ class ViewSubTeamController extends Controller
 
     public function calendar($subTeamId, $year, $month)
     {
-        $current     = new Carbon("{$year}-{$month}-1");
-        $calendar    = $this->createDateList($current->format('Ym'));
-        $subTeam     = \App\SubTeam::find($subTeamId);
-        $teamUser    = \App\TeamUser::teamId($subTeam->team_id)->userId()->first();
+        $current       = new Carbon("{$year}-{$month}-1");
+        $calendar      = $this->createDateList($current->format('Ym'));
+        $mySubTeamUser = \App\SubTeamUser::subTeamId($subTeamId)->userId()->with(['user'])->first();
 
-        $myEmotions  = \App\Emotion::teamUserId($teamUser->id)
+        $myEmotions  = \App\Emotion::teamUserId($mySubTeamUser->team_user_id)
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
             ->keyBy('entered_on')
         ;
 
-        $teamEmotions = \App\Emotion::teamId($teamUser->team_id)
-            ->where('user_id', '!=', $teamUser->user_id)
+        $teamEmotions = \App\Emotion::teamId($mySubTeamUser->team_id)
+            ->where('user_id', '!=', $mySubTeamUser->user_id)
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
             ->groupBy('entered_on')
         ;
 
-        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $teamUser->user_id)->with(['user'])->get();
+        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
 
         $emotions = [];
         foreach ($calendar as $cal)
@@ -64,6 +63,7 @@ class ViewSubTeamController extends Controller
             'calendarWithEmotions' => $emotions,
             'subTeamUsers'         => $subTeamUsers,
             'month'                => $current,
+            'mySubTeamUser'        => $mySubTeamUser,
         ]);
     }
 
