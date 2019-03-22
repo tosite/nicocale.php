@@ -14,7 +14,9 @@
         </thead>
         <tbody>
         <tr>
-            <th>{{ \Auth::user()->name }}</th>
+            <th>
+                <a href="{{ route('team_users.calendar', ['teamUserId' => $mySubTeamUser->team_user_id, 'year'=> $month->format('Y'), 'month'=> $month->format('n')]) }}">{{ $mySubTeamUser->user->name }}</a>
+            </th>
             @foreach($calendarWithEmotions as $e)
                 <td>
                     <emotion-modal
@@ -26,7 +28,9 @@
         </tr>
         @foreach($subTeamUsers as $u)
             <tr>
-                <th>{{ $u->user->name }}</th>
+                <th>
+                    <a href="{{ route('team_users.calendar', ['teamUserId' => $u->team_user_id, 'year'=> $month->format('Y'), 'month'=> $month->format('n')]) }}">{{ $u->user->name }}</a>
+                </th>
                 @foreach($calendarWithEmotions as $e)
                     <td>
                         <emotion-popper
