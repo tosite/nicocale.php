@@ -55,7 +55,7 @@ class ViewControllerTest extends TestCase
         $teamUser = \App\TeamUser::userId($user->id)->first();
         $this->actingAs($user)
             ->get(route('team_users.calendar', ['teamUserId' => $teamUser->id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('calendars.team_users.index')
+            ->assertViewIs('team_users.calendars.index')
             ->assertStatus(200);
     }
 
@@ -68,7 +68,7 @@ class ViewControllerTest extends TestCase
         $teamUser = \App\TeamUser::userId($user->id)->first();
         $this->actingAs($user)
             ->get(route('team_users.list', ['teamUserId' => $teamUser->id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('lists.team_users.index')
+            ->assertViewIs('team_users.lists.index')
             ->assertStatus(200);
     }
 
@@ -81,7 +81,7 @@ class ViewControllerTest extends TestCase
         $subTeamUser = \App\SubTeamUser::userId($user->id)->first();
         $this->actingAs($user)
             ->get(route('sub_teams.calendar', ['subTeamId' => $subTeamUser->sub_team_id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('calendars.sub_teams.index')
+            ->assertViewIs('sub_teams.calendars.index')
             ->assertStatus(200);
     }
 
@@ -94,7 +94,7 @@ class ViewControllerTest extends TestCase
         $subTeamUser = \App\SubTeamUser::userId($user->id)->first();
         $this->actingAs($user)
             ->get(route('sub_teams.list', ['subTeamId' => $subTeamUser->sub_team_id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('lists.sub_teams.index')
+            ->assertViewIs('sub_teams.lists.index')
             ->assertStatus(200);
     }
 

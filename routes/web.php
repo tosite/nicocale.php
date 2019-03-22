@@ -36,10 +36,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('teams',                                             'ViewTeamController@index'           )->name('teams.index');
     Route::get('teams/{teamId}/team-users',                         'ViewTeamUserController@index'       )->name('team_users.index');
     Route::get('team-users/{teamUserId}/me',                        'ViewTeamUserController@me'          )->name('team_users.me');
-    Route::get('/calendars/{year}/{month}/team-users/{teamUserId}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');
-    Route::get('/lists/{year}/{month}/team-users/{teamUserId}',     'ViewTeamUserController@list'        )->name('team_users.list');
-    Route::get('/calendars/{year}/{month}/sub-teams/{subTeamId}',   'ViewSubTeamController@calendar'     )->name('sub_teams.calendar');
-    Route::get('/lists/{year}/{month}/sub-teams/{subTeamId}',       'ViewSubTeamController@list'         )->name('sub_teams.list');
+
+    Route::get('/team-users/{teamUserId}/calendars/{year}/{month}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');
+    Route::get('/team-users/{teamUserId}/lists/{year}/{month}',     'ViewTeamUserController@list'        )->name('team_users.list');
+    Route::get('/sub-teams/{subTeamId}/calendars/{year}/{month}',   'ViewSubTeamController@calendar'     )->name('sub_teams.calendar');
+    Route::get('/sub-teams/{subTeamId}/lists/{year}/{month}',       'ViewSubTeamController@list'         )->name('sub_teams.list');
+
     Route::get('teams/{teamId}/sub-teams',                          'ViewSubTeamController@index'        )->name('sub_teams.index');
 //    Route::get('teams/{teamId}/new',                                'ViewSubTeamController@new'          )->name('sub_teams.new');
     Route::get('teams/{teamId}/sub-teams/not-joined',               'ViewSubTeamController@notJoined'    )->name('sub_teams.not_joined');

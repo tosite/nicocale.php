@@ -18,26 +18,17 @@
           value="true"
         >
           <v-toolbar flat class="transparent">
-          <v-list class="pa-0">
-          <v-list-tile avatar>
-          <v-list-tile-avatar>
-          <img :src="user.avatar">
-          </v-list-tile-avatar>
+            <v-list class="pa-0">
+              <v-list-tile avatar>
+                <v-list-tile-avatar>
+                  <img :src="user.avatar">
+                </v-list-tile-avatar>
 
-          <v-list-tile-content>
-          <v-list-tile-title>{{ user.name }}</v-list-tile-title>
-          </v-list-tile-content>
-
-          <v-list-tile-action>
-          <v-btn
-          icon
-          @click.native.stop="mini = !mini"
-          >
-          <v-icon>chevron_left</v-icon>
-          </v-btn>
-          </v-list-tile-action>
-          </v-list-tile>
-          </v-list>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ user.name }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
           </v-toolbar>
 
           <v-list class="pt-2" dense>
@@ -62,6 +53,12 @@
             <v-list-tile @click.stop="">
               <v-list-tile-action>
                 <v-icon>add</v-icon>
+              </v-list-tile-action>
+            </v-list-tile>
+
+            <v-list-tile @click.stop="drawer = !drawer">
+              <v-list-tile-action>
+                <v-icon>chevron_left</v-icon>
               </v-list-tile-action>
             </v-list-tile>
 
@@ -155,7 +152,7 @@
         window.location = `/teams/${teamId}/sub-teams/not-joined`
       },
       locateSubTeamCalendar: function (subTeamId) {
-        window.location = `/calendars/2019/3/sub-teams/${subTeamId}`;
+        window.location = `/sub-teams/${subTeamId}/calendars/2019/3`;
       },
     },
   }
