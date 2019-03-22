@@ -31,7 +31,7 @@ class ViewSubTeamController extends Controller
         $calendar      = $this->createDateList($current->format('Ym'));
         $mySubTeamUser = \App\SubTeamUser::subTeamId($subTeamId)->userId()->with(['user'])->first();
 
-        $myEmotions  = \App\Emotion::teamUserId($mySubTeamUser->team_user_id)
+        $myEmotions = \App\Emotion::teamUserId($mySubTeamUser->team_user_id)
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
