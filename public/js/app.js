@@ -1959,8 +1959,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -38308,14 +38306,11 @@ var render = function() {
             _c(
               "span",
               {
-                attrs: { slot: "activator", dark: "", color: "primary" },
+                staticClass: "display-2",
+                attrs: { slot: "activator" },
                 slot: "activator"
               },
-              [
-                _c("span", { staticClass: "display-2" }, [
-                  _vm._v(_vm._s(_vm.e.emoji))
-                ])
-              ]
+              [_vm._v(_vm._s(_vm.e.emoji))]
             ),
             _vm._v(" "),
             _c("span", [_vm._v(_vm._s(_vm.e.status_text))])

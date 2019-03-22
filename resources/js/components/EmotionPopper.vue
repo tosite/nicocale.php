@@ -1,9 +1,7 @@
 <template>
   <div class="text-xs-center">
     <v-tooltip top v-if="e.status_text.length!==0">
-      <span slot="activator" dark color="primary">
-        <span class="display-2">{{ e.emoji }}</span>
-      </span>
+      <span class="display-2" slot="activator">{{ e.emoji }}</span>
       <span>{{ e.status_text }}</span>
     </v-tooltip>
     <span v-else>
