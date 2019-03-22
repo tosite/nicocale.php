@@ -13,10 +13,11 @@ trait Datable
 
     public function createCalendar($yyyymm)
     {
-        $date = new Carbon(date('Y-m-01', strtotime("{$yyyymm}01")));
+        $date = new Carbon("{$yyyymm}01");
+        $addDay = ($date->copy()->endOfMonth()->isSunday()) ? 7 : 0;
         $date->subDay($date->dayOfWeek);
 
-        $count = 31 + $date->dayOfWeek;
+        $count = 31 + $addDay + $date->dayOfWeek;
         $count = ceil($count / 7) * 7;
         $calendar = [];
 
