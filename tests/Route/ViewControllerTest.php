@@ -62,19 +62,6 @@ class ViewControllerTest extends TestCase
     /**
      * @test
      */
-    public function team_users_list_index(): void
-    {
-        $user = \App\User::first();
-        $teamUser = \App\TeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('team_users.list', ['teamUserId' => $teamUser->id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('team_users.lists.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
     public function sub_teams_calendar_index(): void
     {
         $user = \App\User::first();
@@ -82,19 +69,6 @@ class ViewControllerTest extends TestCase
         $this->actingAs($user)
             ->get(route('sub_teams.calendar', ['subTeamId' => $subTeamUser->sub_team_id, 'year' => date('Y'), 'month' => date('n')]))
             ->assertViewIs('sub_teams.calendars.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
-    public function sub_teams_list_index(): void
-    {
-        $user = \App\User::first();
-        $subTeamUser = \App\SubTeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('sub_teams.list', ['subTeamId' => $subTeamUser->sub_team_id, 'year' => date('Y'), 'month' => date('n')]))
-            ->assertViewIs('sub_teams.lists.index')
             ->assertStatus(200);
     }
 
