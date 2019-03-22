@@ -28,6 +28,7 @@ Vue.use(Vuetify);
 // Vue.component('example-component',   require('./components/ExampleComponent.vue').default);
 Vue.component('side-nav',            require('./components/SideNav.vue').default);
 Vue.component('emotion-modal',       require('./components/EmotionModal.vue').default);
+Vue.component('emotion-popper',      require('./components/EmotionPopper.vue').default);
 Vue.component('emotion-selector',    require('./components/EmojiSelector.vue').default);
 Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
 Vue.component('sub-team-form-modal', require('./components/SubTeamFormModal.vue').default);

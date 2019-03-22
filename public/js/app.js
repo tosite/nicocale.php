@@ -1889,19 +1889,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     EmojiSelector: _EmojiSelector__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['emotion', 'enteredOn', 'isMe', 'teamUserId'],
+  props: ['emotion', 'date'],
   data: function data() {
     return {
       dialog: false,
@@ -1914,27 +1907,102 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.e = !this.emotion ? this.defaultEmotion : JSON.parse(this.emotion);
-    this.enteredOn = this.enteredOn;
+    this.e = !this.emotion ? this.defaultEmotion : this.emotion;
   },
   methods: {
     selectEmoji: function selectEmoji(emoji) {
       this.e.emoji = emoji;
     },
     cancel: function cancel() {
-      this.e = !this.emotion ? this.defaultEmotion : JSON.parse(this.emotion);
+      this.e = !this.emotion ? this.defaultEmotion : this.emotion;
       this.dialog = false;
     },
     post: function post() {
-      var params = this.e;
-      params["entered_on"] = this.enteredOn;
-      params["team_user_id"] = this.teamUserId;
-      console.log(params);
-      axios.post('/api/v1/emotions', params).then(function (r) {
-        console.log(r);
-      }).catch(function (e) {
-        console.log(e.response);
-      });
+      // const params = this.e;
+      // params["entered_on"] = this.enteredOn;
+      // params["team_user_id"] = this.teamUserId;
+      // console.log(params);
+      // axios.post('/api/v1/emotions', params)
+      //   .then((r) => {
+      //     console.log(r)
+      //   })
+      //   .catch((e) => {
+      //     console.log(e.response)
+      //   })
+      // ;
+      this.dialog = false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmojiSelector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmojiSelector */ "./resources/js/components/EmojiSelector.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    EmojiSelector: _EmojiSelector__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['emotion'],
+  data: function data() {
+    return {
+      dialog: false,
+      e: null,
+      defaultEmotion: {
+        emoji: '👤',
+        status_text: '',
+        memo: ''
+      }
+    };
+  },
+  created: function created() {
+    this.e = !this.emotion ? this.defaultEmotion : this.emotion;
+  },
+  methods: {
+    selectEmoji: function selectEmoji(emoji) {
+      this.e.emoji = emoji;
+    },
+    cancel: function cancel() {
+      console.log(this.emotion);
+      this.e = !this.emotion ? this.defaultEmotion : this.emotion;
+      this.dialog = false;
+    },
+    post: function post() {
+      // const params = this.e;
+      // params["entered_on"] = this.enteredOn;
+      // params["team_user_id"] = this.teamUserId;
+      // console.log(params);
+      // axios.post('/api/v1/emotions', params)
+      //   .then((r) => {
+      //     console.log(r)
+      //   })
+      //   .catch((e) => {
+      //     console.log(e.response)
+      //   })
+      // ;
       this.dialog = false;
     }
   }
@@ -2001,9 +2069,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -38104,87 +38169,76 @@ var render = function() {
                   staticClass: "headline grey lighten-2",
                   attrs: { "primary-title": "" }
                 },
-                [_vm._v("\n        " + _vm._s(_vm.enteredOn) + "\n      ")]
+                [_vm._v("\n        " + _vm._s(_vm.date) + "\n      ")]
               ),
               _vm._v(" "),
-              _c("v-card-text", [
-                _c("p", { staticClass: "display-4 text-xs-center ma-0" }, [
-                  _vm._v(_vm._s(_vm.e.emoji))
-                ]),
-                _vm._v(" "),
-                _vm.isMe
-                  ? _c(
-                      "div",
-                      [
-                        _c("emoji-selector", {
-                          on: { selectEmoji: _vm.selectEmoji }
-                        }),
-                        _vm._v(" "),
-                        _c("v-text-field", {
-                          attrs: { counter: 100, label: "Status" },
-                          model: {
-                            value: _vm.e.status_text,
-                            callback: function($$v) {
-                              _vm.$set(_vm.e, "status_text", $$v)
-                            },
-                            expression: "e.status_text"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "v-expansion-panel",
-                          { staticClass: "elevation-0" },
-                          [
-                            _c(
-                              "v-expansion-panel-content",
-                              [
-                                _c(
-                                  "div",
-                                  { attrs: { slot: "header" }, slot: "header" },
-                                  [_vm._v("add memo")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card",
-                                  [
-                                    _c(
-                                      "v-card-text",
-                                      { staticClass: "text-xs-center pa-0" },
-                                      [
-                                        _c("v-textarea", {
-                                          attrs: {
-                                            counter: 100,
-                                            label: "Memo"
-                                          },
-                                          model: {
-                                            value: _vm.e.memo,
-                                            callback: function($$v) {
-                                              _vm.$set(_vm.e, "memo", $$v)
-                                            },
-                                            expression: "e.memo"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  : _c("div", [
-                      _c("p", [_vm._v(_vm._s(_vm.e.status_text))]),
-                      _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.e.memo))])
-                    ])
-              ]),
+              _c(
+                "v-card-text",
+                [
+                  _c("p", { staticClass: "display-4 text-xs-center ma-0" }, [
+                    _vm._v(_vm._s(_vm.e.emoji))
+                  ]),
+                  _vm._v(" "),
+                  _c("emoji-selector", {
+                    on: { selectEmoji: _vm.selectEmoji }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { counter: 100, label: "Status" },
+                    model: {
+                      value: _vm.e.status_text,
+                      callback: function($$v) {
+                        _vm.$set(_vm.e, "status_text", $$v)
+                      },
+                      expression: "e.status_text"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-expansion-panel",
+                    { staticClass: "elevation-0" },
+                    [
+                      _c(
+                        "v-expansion-panel-content",
+                        [
+                          _c(
+                            "div",
+                            { attrs: { slot: "header" }, slot: "header" },
+                            [_vm._v("add memo")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card",
+                            [
+                              _c(
+                                "v-card-text",
+                                { staticClass: "text-xs-center pa-0" },
+                                [
+                                  _c("v-textarea", {
+                                    attrs: { counter: 100, label: "Memo" },
+                                    model: {
+                                      value: _vm.e.memo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.e, "memo", $$v)
+                                      },
+                                      expression: "e.memo"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("v-divider"),
               _vm._v(" "),
@@ -38199,19 +38253,17 @@ var render = function() {
                       attrs: { color: "primary", flat: "" },
                       on: { click: _vm.cancel }
                     },
-                    [_vm._v("Cancel")]
+                    [_vm._v("Cancel\n        ")]
                   ),
                   _vm._v(" "),
-                  _vm.isMe
-                    ? _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "primary", flat: "" },
-                          on: { click: _vm.post }
-                        },
-                        [_vm._v("Submit")]
-                      )
-                    : _vm._e()
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.post }
+                    },
+                    [_vm._v("\n          Submit\n        ")]
+                  )
                 ],
                 1
               )
@@ -38221,6 +38273,58 @@ var render = function() {
         ],
         1
       )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "text-xs-center" },
+    [
+      _vm.e.status_text.length !== 0
+        ? _c("v-tooltip", { attrs: { top: "" } }, [
+            _c(
+              "span",
+              {
+                attrs: { slot: "activator", dark: "", color: "primary" },
+                slot: "activator"
+              },
+              [
+                _c("span", { staticClass: "display-2" }, [
+                  _vm._v(_vm._s(_vm.e.emoji))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.e.status_text))])
+          ])
+        : _c("span", [
+            _c("span", { staticClass: "display-2" }, [
+              _vm._v(_vm._s(_vm.e.emoji))
+            ])
+          ])
     ],
     1
   )
@@ -38371,29 +38475,6 @@ var render = function() {
                                       ])
                                     ],
                                     1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-list-tile-action",
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: { icon: "" },
-                                          nativeOn: {
-                                            click: function($event) {
-                                              $event.stopPropagation()
-                                              _vm.mini = !_vm.mini
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("v-icon", [_vm._v("chevron_left")])
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
                                   )
                                 ],
                                 1
@@ -38466,6 +38547,26 @@ var render = function() {
                               _c(
                                 "v-list-tile-action",
                                 [_c("v-icon", [_vm._v("add")])],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-tile",
+                            {
+                              on: {
+                                click: function($event) {
+                                  $event.stopPropagation()
+                                  _vm.drawer = !_vm.drawer
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-list-tile-action",
+                                [_c("v-icon", [_vm._v("chevron_left")])],
                                 1
                               )
                             ],
@@ -76836,6 +76937,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('side-nav', __webpack_require__(/*! ./components/SideNav.vue */ "./resources/js/components/SideNav.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('emotion-modal', __webpack_require__(/*! ./components/EmotionModal.vue */ "./resources/js/components/EmotionModal.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('emotion-popper', __webpack_require__(/*! ./components/EmotionPopper.vue */ "./resources/js/components/EmotionPopper.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('emotion-selector', __webpack_require__(/*! ./components/EmojiSelector.vue */ "./resources/js/components/EmojiSelector.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('month-selector', __webpack_require__(/*! ./components/MonthSelector.vue */ "./resources/js/components/MonthSelector.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sub-team-form-modal', __webpack_require__(/*! ./components/SubTeamFormModal.vue */ "./resources/js/components/SubTeamFormModal.vue").default);
@@ -76982,14 +77084,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/components/EmotionModal.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EmotionModal_vue_vue_type_template_id_55a985fd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmotionModal.vue?vue&type=template&id=55a985fd& */ "./resources/js/components/EmotionModal.vue?vue&type=template&id=55a985fd&");
 /* harmony import */ var _EmotionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmotionModal.vue?vue&type=script&lang=js& */ "./resources/js/components/EmotionModal.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EmotionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EmotionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -77019,7 +77122,7 @@ component.options.__file = "resources/js/components/EmotionModal.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/components/EmotionModal.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77042,6 +77145,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionModal_vue_vue_type_template_id_55a985fd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionModal_vue_vue_type_template_id_55a985fd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EmotionPopper.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/EmotionPopper.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmotionPopper.vue?vue&type=template&id=2c1abd8c& */ "./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c&");
+/* harmony import */ var _EmotionPopper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmotionPopper.vue?vue&type=script&lang=js& */ "./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmotionPopper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EmotionPopper.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionPopper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EmotionPopper.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionPopper.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionPopper_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EmotionPopper.vue?vue&type=template&id=2c1abd8c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EmotionPopper.vue?vue&type=template&id=2c1abd8c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmotionPopper_vue_vue_type_template_id_2c1abd8c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -3,7 +3,7 @@
 @section('content')
     <h1>{{ $month->format('Y-m') }} Sub team emotion calendar</h1>
 
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <th>name</th>
@@ -16,14 +16,23 @@
         <tr>
             <th>{{ \Auth::user()->name }}</th>
             @foreach($calendarWithEmotions as $e)
-                <td>{{ optional($e['me'])->emoji }}</td>
+                <td>
+                    <emotion-modal
+                      :date="'{{ $e['date']->format('n月j日') }}'"
+                      :emotion="{{ json_encode($e['me']) }}"
+                    ></emotion-modal>
+                </td>
             @endforeach
         </tr>
         @foreach($subTeamUsers as $u)
             <tr>
                 <th>{{ $u->user->name }}</th>
                 @foreach($calendarWithEmotions as $e)
-                    <td>{{ optional($e['members'][$u->user_id])->emoji }}</td>
+                    <td>
+                        <emotion-popper
+                          :emotion="{{ json_encode($e['members'][$u->user_id]) }}"
+                        ></emotion-popper>
+                    </td>
                 @endforeach
             </tr>
         @endforeach
