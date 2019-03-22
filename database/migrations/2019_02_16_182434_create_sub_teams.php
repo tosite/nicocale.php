@@ -17,6 +17,7 @@ class CreateSubTeams extends Migration
             $table->string('id', 36)->primary();
             $table->string('name');
             $table->string('avatar');
+            $table->string('bio')->default('');
             $table->string('team_id', 36)->index();
             $table->timestamps();
         });

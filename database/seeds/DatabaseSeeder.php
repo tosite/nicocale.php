@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             $joinedSubTeams[] = \App\SubTeam::create([
                 'team_id' => $teamUser->team_id,
                 'avatar'  => 'https://nekogazou.com/wp-content/uploads/2015/03/gazou12-e1426694824704.jpg',
+                'bio'     => 'fugafuga',
                 'name'    => "joined-{$cnt}"
             ]);
             \App\SubTeamUser::create([
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             $notJoinedSubTeams[] = \App\SubTeam::create([
                 'team_id' => $teamUser->team_id,
                 'avatar'  => 'https://nekogazou.com/wp-content/uploads/2015/03/gazou12-e1426694824704.jpg',
+                'bio'     => 'piyopiyo',
                 'name'    => "not-joined-{$cnt}"
             ]);
         }
@@ -57,6 +59,7 @@ class DatabaseSeeder extends Seeder
                 'name'          => "user-{$cnt}",
                 'slack_token'   => "slack-token-{$cnt}",
                 'slack_user_id' => "slack-user-id-{$cnt}",
+                'bio'           => 'hogehoge',
                 'avatar'        => 'https://nekogazou.com/wp-content/uploads/2015/03/gazou12-e1426694824704.jpg',
             ]);
         }
