@@ -19,9 +19,9 @@
         >
           <v-toolbar flat class="transparent">
             <v-list class="pa-0">
-              <v-list-tile avatar>
+              <v-list-tile avatar @click.stop="locateMe(currentTeam.id)">
                 <v-list-tile-avatar>
-                  <img :src="user.avatar">
+                  <img :src="user.avatar" alt="avatar">
                 </v-list-tile-avatar>
 
                 <v-list-tile-content>
@@ -153,6 +153,9 @@
       },
       locateSubTeamCalendar: function (subTeamId) {
         window.location = `/sub-teams/${subTeamId}/calendars/2019/3`;
+      },
+      locateMe: function (teamId) {
+        window.location = `/teams/${teamId}/me`
       },
     },
   }

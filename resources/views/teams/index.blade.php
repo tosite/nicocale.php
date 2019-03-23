@@ -8,7 +8,7 @@
             <a href="{{ route('sub_teams.index', ['teamId' => $tu->team_id]) }}">sub teams</a>
             <a href="{{ route('team_users.index', ['teamId' => $tu->team_id]) }}">team users</a>
             <a href="{{ route('sub_teams.not_joined', ['teamId' => $tu->team_id]) }}">not joined</a>
-            <a href="{{ route('team_users.me', ['teamUserId' => $tu->id]) }}">me</a>
+            <a href="{{ route('team_users.me', ['teamId' => $tu->team_id]) }}">me</a>
         </div>
     @endforeach
 @endsection

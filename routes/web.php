@@ -34,8 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');
 
     Route::get('teams',                                             'ViewTeamController@index'           )->name('teams.index');
+    Route::get('teams/{teamId}/me',                                 'ViewTeamUserController@me'          )->name('team_users.me');
+
     Route::get('teams/{teamId}/team-users',                         'ViewTeamUserController@index'       )->name('team_users.index');
-    Route::get('team-users/{teamUserId}/me',                        'ViewTeamUserController@me'          )->name('team_users.me');
 
     Route::get('/team-users/{teamUserId}/calendars/{year}/{month}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');
 //    Route::get('/team-users/{teamUserId}/lists/{year}/{month}',     'ViewTeamUserController@list'        )->name('team_users.list');
