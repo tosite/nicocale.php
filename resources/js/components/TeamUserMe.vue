@@ -3,21 +3,21 @@
     <v-flex xs12 sm8 offset-sm2>
       <v-card class="text-xs-center pt-3">
         <v-avatar size="128">
-          <img :src="subTeamUser.user.avatar" alt="avatar">
+          <img :src="teamUser.user.avatar" alt="avatar">
         </v-avatar>
 
         <v-card-title primary-title class="text-xs-center pb-1">
           <div>
-            <h3 class="headline mb-0">{{ subTeamUser.user.name }}</h3>
+            <h3 class="headline mb-0">{{ teamUser.user.name }}</h3>
           </div>
         </v-card-title>
         <v-card-text>
           <div>
-            <div v-if="subTeamUser.team_user.slack_access === 0">
+            <div v-if="teamUser.slack_access === 0">
               <p>
                 お使いのアカウントはまだSlackと連携されていないようです。<br>
                 連携することでステータスアイコンの変更・ステータスメッセージの変更・チャンネル通知などがご利用いただけます。<br>
-                <a href="/auth/slack/access">連携を有効にしますか？（連携グループ：{{ subTeamUser.team.name }}）</a>
+                <a href="/auth/slack/access">連携を有効にしますか？（連携グループ：{{ teamUser.team.name }}）</a>
               </p>
             </div>
             <div v-else>
@@ -35,7 +35,7 @@
               name="input-7-4"
               label="自己紹介"
               hint=""
-              :value="subTeamUser.user.bio"
+              :value="teamUser.user.bio"
             ></v-textarea>
             <v-btn>更新する</v-btn>
           </div>
@@ -47,6 +47,6 @@
 
 <script>
   export default {
-    props: ['subTeamUser',],
+    props: ['teamUser',],
   }
 </script>
