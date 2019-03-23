@@ -25,7 +25,7 @@ class ViewSubTeamUserController extends Controller
     public function me($subTeamUserId)
     {
         return view('sub_team_users.me.index', [
-            'subTeamUser' => \App\SubTeamUser::find($subTeamUserId),
+            'subTeamUser' => \App\SubTeamUser::with(['teamUser', 'user', 'subTeam', 'team'])->find($subTeamUserId),
         ]);
     }
 }
