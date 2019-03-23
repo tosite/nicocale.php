@@ -33,6 +33,7 @@ Vue.component('emotion-selector',    require('./components/EmojiSelector.vue').d
 Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
 Vue.component('sub-team-form-modal', require('./components/SubTeamFormModal.vue').default);
 Vue.component('sub-team-user-list',  require('./components/SubTeamUserList.vue').default);
+Vue.component('not-joined-sub-team-list', require('./components/notJoinedSubTeamList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
