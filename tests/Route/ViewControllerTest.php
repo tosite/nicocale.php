@@ -136,17 +136,4 @@ class ViewControllerTest extends TestCase
             ->assertViewIs('sub_team_users.not_joined.index')
             ->assertStatus(200);
     }
-
-    /**
-     * @test
-     */
-    public function sub_team_users_me_index(): void
-    {
-        $user = \App\User::first();
-        $subTeamUser = \App\SubTeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('sub_team_users.me', ['subTeamUserId' => $subTeamUser->id]))
-            ->assertViewIs('sub_team_users.me.index')
-            ->assertStatus(200);
-    }
 }

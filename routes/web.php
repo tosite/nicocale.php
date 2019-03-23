@@ -34,13 +34,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');
 
     Route::get('teams',                                             'ViewTeamController@index'           )->name('teams.index');
+    Route::get('teams/{teamId}/me',                                 'ViewTeamUserController@me'          )->name('team_users.me');
+
     Route::get('teams/{teamId}/team-users',                         'ViewTeamUserController@index'       )->name('team_users.index');
-    Route::get('team-users/{teamUserId}/me',                        'ViewTeamUserController@me'          )->name('team_users.me');
 
     Route::get('/team-users/{teamUserId}/calendars/{year}/{month}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');
-//    Route::get('/team-users/{teamUserId}/lists/{year}/{month}',     'ViewTeamUserController@list'        )->name('team_users.list');
     Route::get('/sub-teams/{subTeamId}/calendars/{year}/{month}',   'ViewSubTeamController@calendar'     )->name('sub_teams.calendar');
-//    Route::get('/sub-teams/{subTeamId}/lists/{year}/{month}',       'ViewSubTeamController@list'         )->name('sub_teams.list');
 
     Route::get('teams/{teamId}/sub-teams',                          'ViewSubTeamController@index'        )->name('sub_teams.index');
 //    Route::get('teams/{teamId}/new',                                'ViewSubTeamController@new'          )->name('sub_teams.new');
@@ -48,7 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sub-teams/{subTeamId}/settings',                    'ViewSubTeamController@setting'      )->name('sub_teams.setting');
     Route::get('sub-teams/{subTeamId}/sub-team-users',              'ViewSubTeamUserController@index'    )->name('sub_team_users.index');
     Route::get('sub-teams/{subTeamId}/sub-team-users/not-joined',   'ViewSubTeamUserController@notJoined')->name('sub_team_users.not_joined');
-    Route::get('sub-team-users/{subTeamUserId}/me',                 'ViewSubTeamUserController@me'       )->name('sub_team_users.me');
 
 //    Route::get('teams/{teamId}/team-users/not-joined',            '')->name('view_team_users.index_not_joined'); // 不要？
 });
