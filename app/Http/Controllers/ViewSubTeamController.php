@@ -20,8 +20,10 @@ class ViewSubTeamController extends Controller
 
     public function notJoined($teamId)
     {
+        $joinedSubTeamIds  = \App\SubTeamUser::teamId($teamId)->userId()->pluck('sub_team_id');
+        $notJoinedSubTeams = \App\SubTeam::teamId($teamId)->whereNotIn('id', $joinedSubTeamIds)->get();
         return view('sub_teams.not_joined.index', [
-            'notJoinedSubTeams' => \App\SubTeam::teamId($teamId)->get(),
+            'notJoinedSubTeams' => $notJoinedSubTeams,
         ]);
     }
 
