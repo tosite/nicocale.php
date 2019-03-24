@@ -8,7 +8,7 @@ class ViewSubTeamUserController extends Controller
 {
     public function index($subTeamId)
     {
-        $me = \App\SubTeamUser::subTeamId($subTeamId)->userId()->first();
+        $me = \App\SubTeamUser::subTeamId($subTeamId)->me()->first();
         return view('sub_team_users.index', [
             'subTeamUsers' => \App\SubTeamUser::subTeamId($subTeamId)->with(['user:id,name,avatar,bio'])->get(),
             'me'           => $me,

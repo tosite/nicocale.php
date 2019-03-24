@@ -8,7 +8,7 @@ class ViewTeamController extends Controller
 {
     public function index()
     {
-        $teamUsers = \App\TeamUser::userId()->get();
+        $teamUsers = \App\TeamUser::me()->get();
         return view('teams.index', [
             'teamUsers' => $teamUsers,
         ]);

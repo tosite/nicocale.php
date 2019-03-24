@@ -56,7 +56,7 @@ class ViewTeamUserController extends Controller
     public function me($teamId)
     {
         return view('team_users.me.index', [
-            'teamUser' => \App\TeamUser::with(['user','team'])->teamId($teamId)->userId()->first(),
+            'teamUser' => \App\TeamUser::with(['user','team'])->teamId($teamId)->me()->first(),
         ]);
     }
 
