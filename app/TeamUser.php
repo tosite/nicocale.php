@@ -29,9 +29,9 @@ class TeamUser extends Model
     public function subTeamUsers () { return $this->hasMany('App\SubTeamUser', 'team_user_id', 'id'); }
      public function emotions ()    { return $this->hasMany('App\Emotion', 'team_user_id', 'id'); }
 
-    public function scopeTeamId ($query, $id)        { return $query->where(['team_id' => $id]); }
-    public function scopeUserId ($query, $id) { return $query->where(['user_id' => $id ?: \Auth::user()->id]); }
-    public function scopeMe($query)              { return $query->userId(\Auth::user()->id); }
+    public function scopeTeamId ($query, $id) { return $query->where(['team_id' => $id]); }
+    public function scopeUserId ($query, $id) { return $query->where(['user_id' => $id]); }
+    public function scopeMe($query)           { return $query->userId(\Auth::user()->id); }
 
     public static function firstOrCreateTeamUser ($user, $team)
     {
