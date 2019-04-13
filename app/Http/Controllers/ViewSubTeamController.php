@@ -11,7 +11,7 @@ class ViewSubTeamController extends Controller
 
     public function index($teamId)
     {
-        $teamUser = \App\TeamUser::teamId($teamId)->userId()->first();
+        $teamUser = \App\TeamUser::teamId($teamId)->me()->first();
         $subTeamUsers = \App\SubTeamUser::teamId($teamId)->teamUserId($teamUser->id)->get();
         return view('sub_teams.index', [
             'subTeamUsers' => $subTeamUsers,
@@ -20,7 +20,7 @@ class ViewSubTeamController extends Controller
 
     public function notJoined($teamId)
     {
-        $joinedSubTeamIds  = \App\SubTeamUser::teamId($teamId)->userId()->pluck('sub_team_id');
+        $joinedSubTeamIds  = \App\SubTeamUser::teamId($teamId)->me()->pluck('sub_team_id');
         $notJoinedSubTeams = \App\SubTeam::teamId($teamId)->whereNotIn('id', $joinedSubTeamIds)->get();
         return view('sub_teams.not_joined.index', [
             'notJoinedSubTeams' => $notJoinedSubTeams,
@@ -31,7 +31,7 @@ class ViewSubTeamController extends Controller
     {
         $current       = new Carbon("{$year}-{$month}-1");
         $calendar      = $this->createDateList($current->format('Ym'));
-        $mySubTeamUser = \App\SubTeamUser::subTeamId($subTeamId)->userId()->with(['user'])->first();
+        $mySubTeamUser = \App\SubTeamUser::subTeamId($subTeamId)->me()->with(['user'])->first();
 
         $myEmotions = \App\Emotion::teamUserId($mySubTeamUser->team_user_id)
             ->betweenEnteredOn($current->format('Ym'))

@@ -29,9 +29,10 @@ class Emotion extends Model
     public function user ()     { return $this->belongsTo('App\User',     'user_id','id'); }
     public function teamUser () { return $this->belongsTo('App\TeamUser', 'team_user_id','id'); }
 
-    public function scopeTeamId($query, $id)        { return $query->where(['team_id' => $id]); }
-    public function scopeUserId($query, $id = null) { return $query->where(['user_id' => $id ?: \Auth::user()->id]); }
-    public function scopeTeamUserId($query, $id)    { return $query->where('team_user_id', $id); }
+    public function scopeTeamId ($query, $id)     { return $query->where(['team_id' => $id]); }
+    public function scopeUserId ($query, $id)     { return $query->where(['user_id' => $id]); }
+    public function scopeMe ($query)              { return $query->userId(\Auth::user()->id); }
+    public function scopeTeamUserId ($query, $id) { return $query->where('team_user_id', $id); }
 
     public function scopeBetweenEnteredOn($query, $yyyymm) {
         $date_buf = strtotime("{$yyyymm}01");
