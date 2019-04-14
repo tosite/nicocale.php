@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class ApiSubTeamSettingModalController extends Controller
+class ApiSubTeamController extends Controller
 {
-    public function index($subTeamId)
+    public function infoModals($subTeamId)
     {
         $subTeam = \App\SubTeam::find($subTeamId);
 
