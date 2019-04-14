@@ -5,7 +5,6 @@
       class="pb-0 elevation-2"
       floating
       hide-overlay
-      stateless
       width="300"
       app
     >
@@ -113,9 +112,14 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-tile>
+          <v-list-tile :href="`/teams/${currentTeam.id}/me`">
             <v-list-tile-title>
-              <a href="/auth/slack/logout">logout</a>
+              setting
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile href="/auth/slack/logout">
+            <v-list-tile-title>
+              logout
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -143,7 +147,7 @@
     data() {
       return {
         dialog: false,
-        drawer: true,
+        drawer: null,
         mini: true,
         right: null,
         teams: [],
