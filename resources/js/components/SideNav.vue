@@ -55,13 +55,6 @@
                 <v-icon>add</v-icon>
               </v-list-tile-action>
             </v-list-tile>
-
-            <v-list-tile @click.stop="drawer = !drawer">
-              <v-list-tile-action>
-                <v-icon>chevron_left</v-icon>
-              </v-list-tile-action>
-            </v-list-tile>
-
           </v-list>
         </v-navigation-drawer>
 
@@ -102,6 +95,32 @@
         </v-list>
       </v-layout>
     </v-navigation-drawer>
+
+    <v-toolbar color="indigo" dark app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>NicoCale</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            dark
+            flat
+            v-on="on"
+          >
+            {{ user.name }}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-title>
+              <a href="/auth/slack/logout">logout</a>
+            </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </v-toolbar>
   </div>
 </template>
 
@@ -112,6 +131,10 @@
 
   #team-name {
     font-size: 100%;
+  }
+
+  .v-navigation-drawer--mini-variant {
+    transform: translateX(0px) !important;
   }
 </style>
 
