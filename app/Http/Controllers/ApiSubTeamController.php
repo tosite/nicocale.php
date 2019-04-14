@@ -53,7 +53,7 @@ class ApiSubTeamController extends Controller
         $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
 
         $me = [];
-        $me['user'] = \Auth::user();
+        $me['user'] = $mySubTeamUser;
         foreach ($calendar as $cal)
         {
             $d = $cal->format('Y-m-d');
@@ -73,10 +73,29 @@ class ApiSubTeamController extends Controller
             $users[] = $params;
         }
 
+        $next = $current->copy()->addMonth();
+        $prev = $current->copy()->subMonth();
+
         return response([
-            'month' => $current,
+            'months' => [
+                'current' => [
+                    'display' => $current->format('Y年n月'),
+                    'year' => $current->format('Y'),
+                    'month' => $current->format('n'),
+                ],
+                'next' => [
+                    'display' => $next->format('Y年n月'),
+                    'year' => $next->format('Y'),
+                    'month' => $next->format('n'),
+                ],
+                'prev' => [
+                    'display' => $prev->format('Y年n月'),
+                    'year' => $prev->format('Y'),
+                    'month' => $prev->format('n'),
+                ],
+            ],
             'me' => $me,
-            'teamUsers' => $users,
+            'members' => $users,
             'calendar' => $calendar,
         ]);
     }

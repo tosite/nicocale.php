@@ -3,7 +3,13 @@
     <v-progress-linear :indeterminate="true" v-if="loading"></v-progress-linear>
     <div v-else>
       <h1>
-        calendar
+        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
+          <v-icon>keyboard_arrow_left</v-icon>
+        </v-btn>
+        {{ months.current.display }}
+        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
+          <v-icon>keyboard_arrow_right</v-icon>
+        </v-btn>
         <sub-team-info-modal :sub-team-id="subTeamId"></sub-team-info-modal>
       </h1>
       <table class="table">
@@ -15,16 +21,15 @@
           </template>
         </tr>
         </thead>
-        <tbody v-if="me === null">
-
-        </tbody>
-        <tbody v-else>
+        <tbody>
         <tr>
-          <th>{{ me.user.name }}</th>
-          <template v-for="emotion in me.emotions">
+          <th>
+            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ me.user.user.name }}</a>
+          </th>
+          <template v-for="(emotion, key) in me.emotions">
             <td>
               <emotion-modal
-                :date="emotion.entered_on"
+                :date="key"
                 :emotion="emotion"
               ></emotion-modal>
             </td>
@@ -32,7 +37,9 @@
         </tr>
         <template v-for="user in members">
           <tr>
-            <th>{{ user.user.user.name }}</th>
+            <th>
+              <a :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ user.user.user.name }}</a>
+            </th>
             <template v-for="emotion in user.emotions">
               <td>
                 <emotion-popper :emotion="emotion"></emotion-popper>
@@ -49,11 +56,10 @@
 
 <script>
   export default {
-    props: ['subTeamId'],
+    props: ['subTeamId', 'year', 'month'],
     data() {
       return {
-        calendar: null,
-        month: null,
+        months: null,
         calendar: null,
         me: null,
         members: null,
@@ -65,12 +71,16 @@
         let d = new Date(Date.parse(date));
         return d.getDate();
       },
+      url: function (teamUserId) {
+
+      },
       fetchParams: function () {
-        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/2019/3`).then(res => {
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
           console.log(res.data);
           this.calendar = res.data.calendar;
           this.me = res.data.me;
-          this.members = res.data.teamUsers;
+          this.members = res.data.members;
+          this.months = res.data.months;
           this.loading = false;
         }).catch(e => {
         });
