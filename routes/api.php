@@ -12,5 +12,5 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
     Route::resource('sub_team_users', 'SubTeamUserController', ['only' => ['store', 'destroy']]);
 
     Route::get('side-navigations', 'SideNavigationController@index')->name('api_side_navigations.index');
-    Route::get('sub-team-setting-modals/{subTeamId}', 'ApiSubTeamSettingModalController@index');
+    Route::get('sub-team-info-modals/{subTeamId}', 'ApiSubTeamSettingModalController@index');
 });

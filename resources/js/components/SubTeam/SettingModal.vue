@@ -35,22 +35,24 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item :key="0" value="tab-0">
-            <sub-team-setting-modal-joined-user-tab
+            <sub-team-info-modal-joined-user-tab
               :users="joinedUsers"
-            ></sub-team-setting-modal-joined-user-tab>
+            ></sub-team-info-modal-joined-user-tab>
           </v-tab-item>
 
           <v-tab-item :key="1" value="tab-1">
             <v-card flat>
-              <sub-team-setting-modal-not-joined-user-tab
+              <sub-team-info-modal-not-joined-user-tab
                 :users="notJoinedUsers"
-              ></sub-team-setting-modal-not-joined-user-tab>
+              ></sub-team-info-modal-not-joined-user-tab>
             </v-card>
           </v-tab-item>
 
           <v-tab-item :key="2" value="tab-2">
             <v-card flat>
-              <v-card-text>Settings</v-card-text>
+              <sub-team-info-modal-setting-tab
+                :sub-team="subTeam"
+              ></sub-team-info-modal-setting-tab>
             </v-card>
           </v-tab-item>
 
@@ -72,13 +74,15 @@
         tab: 'tab-0',
         joinedUsers: null,
         notJoinedUsers: null,
+        subTeam: null,
       }
     },
     methods: {
       fetchParams: function () {
-        axios.get(`/api/v1/sub-team-setting-modals/${this.subTeamId}`).then(res => {
+        axios.get(`/api/v1/sub-team-info-modals/${this.subTeamId}`).then(res => {
           this.joinedUsers = res.data.joinedUsers;
           this.notJoinedUsers = res.data.notJoinedUsers;
+          this.subTeam = res.data.subTeam;
         }).catch(e => {
         });
       }

@@ -3,9 +3,9 @@
 @section('content')
     <h1>
         {{ $month->format('Y-m') }} Sub team emotion calendar
-        <sub-team-setting-modal
+        <sub-team-info-modal
           :sub-team-id="{{ json_encode($subTeamId) }}"
-        ></sub-team-setting-modal>
+        ></sub-team-info-modal>
     </h1>
 
     <table class="table">

@@ -34,9 +34,10 @@ Vue.component('sub-team-user-list',  require('./components/SubTeamUserList.vue')
 Vue.component('team-user-me',        require('./components/TeamUserMe.vue').default);
 Vue.component('not-joined-sub-team-list', require('./components/notJoinedSubTeamList.vue').default);
 
-Vue.component('sub-team-setting-modal',  require('./components/SubTeam/SettingModal.vue').default);
-Vue.component('sub-team-setting-modal-joined-user-tab',  require('./components/SubTeam/SettingModal/JoinedUserTab.vue').default);
-Vue.component('sub-team-setting-modal-not-joined-user-tab',  require('./components/SubTeam/SettingModal/NotJoinedUserTab.vue').default);
+Vue.component('sub-team-info-modal',  require('./components/SubTeam/SettingModal.vue').default);
+Vue.component('sub-team-info-modal-joined-user-tab',  require('./components/SubTeam/InfoModal/JoinedUserTab.vue').default);
+Vue.component('sub-team-info-modal-not-joined-user-tab',  require('./components/SubTeam/InfoModal/NotJoinedUserTab.vue').default);
+Vue.component('sub-team-info-modal-setting-tab',  require('./components/SubTeam/InfoModal/SettingTab.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
