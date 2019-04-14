@@ -1,0 +1,93 @@
+<template>
+  <div>
+    <v-progress-linear :indeterminate="true" v-if="loading"></v-progress-linear>
+    <div v-else>
+      <h1>
+        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
+          <v-icon>keyboard_arrow_left</v-icon>
+        </v-btn>
+        {{ months.current.display }}
+        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
+          <v-icon>keyboard_arrow_right</v-icon>
+        </v-btn>
+        <sub-team-info-modal :sub-team-id="subTeamId"></sub-team-info-modal>
+      </h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>name</th>
+          <template v-for="date in calendar">
+            <th>{{ formatDate(date.date) }}</th>
+          </template>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th>
+            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ me.user.user.name }}</a>
+          </th>
+          <template v-for="(emotion, key) in me.emotions">
+            <td>
+              <emotion-modal
+                :date="key"
+                :emotion="emotion"
+              ></emotion-modal>
+            </td>
+          </template>
+        </tr>
+        <template v-for="user in members">
+          <tr>
+            <th>
+              <a :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ user.user.user.name }}</a>
+            </th>
+            <template v-for="emotion in user.emotions">
+              <td>
+                <emotion-popper :emotion="emotion"></emotion-popper>
+              </td>
+            </template>
+          </tr>
+        </template>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: ['subTeamId', 'year', 'month'],
+    data() {
+      return {
+        months: null,
+        calendar: null,
+        me: null,
+        members: null,
+        loading: true,
+      }
+    },
+    methods: {
+      formatDate: function (date) {
+        let d = new Date(Date.parse(date));
+        return d.getDate();
+      },
+      url: function (teamUserId) {
+
+      },
+      fetchParams: function () {
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
+          console.log(res.data);
+          this.calendar = res.data.calendar;
+          this.me = res.data.me;
+          this.members = res.data.members;
+          this.months = res.data.months;
+          this.loading = false;
+        }).catch(e => {
+        });
+      }
+    },
+    mounted() {
+      this.fetchParams();
+    }
+  }
+</script>

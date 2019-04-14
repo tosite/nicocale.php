@@ -1,10 +1,8 @@
 <template>
   <v-card>
-    <v-list two-line subheader>
+    <v-list two-line subheader class="pb-0">
 
-      <div
-        v-for="subTeam in notJoinedSubTeams"
-      >
+      <div v-for="subTeam in notJoinedSubTeams">
         <v-list-tile :key="subTeam.id" avatar>
           <v-list-tile-avatar>
             <img :src="subTeam.avatar">
@@ -21,7 +19,7 @@
             </v-btn>
           </v-list-tile-action>
         </v-list-tile>
-        <v-divider></v-divider>
+        <v-divider class="ma-0"></v-divider>
       </div>
     </v-list>
   </v-card>
