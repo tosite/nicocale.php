@@ -36,14 +36,14 @@
         <v-tabs-items v-model="tab">
           <v-tab-item :key="0" value="tab-0">
             <sub-team-setting-modal-joined-user-tab
-              :users="subTeamUsers"
+              :users="joinedUsers"
             ></sub-team-setting-modal-joined-user-tab>
           </v-tab-item>
 
           <v-tab-item :key="1" value="tab-1">
             <v-card flat>
               <sub-team-setting-modal-not-joined-user-tab
-                :users="subTeamUsers"
+                :users="notJoinedUsers"
               ></sub-team-setting-modal-not-joined-user-tab>
             </v-card>
           </v-tab-item>
@@ -64,17 +64,27 @@
 
 <script>
   export default {
-    props: ['subTeamUsers', 'me', 'subTeamId'],
+    props: ['subTeamId'],
     data() {
       return {
         dialog: false,
         panel: [true, false],
         tab: 'tab-0',
+        joinedUsers: null,
+        notJoinedUsers: null,
       }
     },
     methods: {
-      fetchUserList: function() {
+      fetchParams: function () {
+        axios.get(`/api/v1/sub-team-setting-modals/${this.subTeamId}`).then(res => {
+          this.joinedUsers = res.data.joinedUsers;
+          this.notJoinedUsers = res.data.notJoinedUsers;
+        }).catch(e => {
+        });
       }
     },
+    mounted() {
+      this.fetchParams();
+    }
   }
 </script>

@@ -13,15 +13,15 @@
       </v-flex>
 
       <v-list two-line>
-        <template v-for="user in usersFilterName">
+        <template v-for="user in filteredUsers">
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img :src="user.user.avatar">
+                <img :src="user.avatar">
               </v-list-tile-avatar>
 
               <v-list-tile-content>
-                <v-list-tile-title>{{ user.user.name }}</v-list-tile-title>
-                <v-list-tile-sub-title>{{ user.user.bio }}</v-list-tile-sub-title>
+                <v-list-tile-title>{{ user.name }}</v-list-tile-title>
+                <v-list-tile-sub-title>{{ user.bio }}</v-list-tile-sub-title>
               </v-list-tile-content>
 
             </v-list-tile>
@@ -42,9 +42,12 @@
       }
     },
     computed: {
-      usersFilterName: function () {
+      filteredUsers: function () {
+        if(this.users == null){
+          return null;
+        }
         return this.users.filter((user) => {
-          return (user.user.name.indexOf(this.search) !== -1);
+          return (user.name.indexOf(this.search) !== -1);
         })
       }
     },
