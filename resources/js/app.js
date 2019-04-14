@@ -39,6 +39,8 @@ Vue.component('sub-team-info-modal-joined-user-tab',  require('./components/SubT
 Vue.component('sub-team-info-modal-not-joined-user-tab',  require('./components/SubTeam/InfoModal/NotJoinedUserTab.vue').default);
 Vue.component('sub-team-info-modal-setting-tab',  require('./components/SubTeam/InfoModal/SettingTab.vue').default);
 
+Vue.component('sub-team-emotion-calendar-table',  require('./components/SubTeam/EmotionCalendarTable.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
