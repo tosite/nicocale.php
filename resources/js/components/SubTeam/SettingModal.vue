@@ -79,7 +79,7 @@
     },
     methods: {
       fetchParams: function () {
-        axios.get(`/api/v1/sub-team-info-modals/${this.subTeamId}`).then(res => {
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/info-modals`).then(res => {
           this.joinedUsers = res.data.joinedUsers;
           this.notJoinedUsers = res.data.notJoinedUsers;
           this.subTeam = res.data.subTeam;
