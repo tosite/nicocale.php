@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <v-progress-linear :indeterminate="true" v-if="loading"></v-progress-linear>
+  <v-fade-transition mode="out-in">
+    <loading v-if="loading"></loading>
     <div v-else>
       <h1>
-        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
+        <v-btn flat icon color="pink"
+               :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
           <v-icon>keyboard_arrow_left</v-icon>
         </v-btn>
         {{ months.current.display }}
-        <v-btn flat icon color="pink" :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
+        <v-btn flat icon color="pink"
+               :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
           <v-icon>keyboard_arrow_right</v-icon>
         </v-btn>
         <sub-team-info-modal :sub-team-id="subTeamId"></sub-team-info-modal>
@@ -24,7 +26,8 @@
         <tbody>
         <tr>
           <th>
-            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ me.user.user.name }}</a>
+            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{
+              me.user.user.name }}</a>
           </th>
           <template v-for="(emotion, key) in me.emotions">
             <td>
@@ -38,7 +41,9 @@
         <template v-for="user in members">
           <tr>
             <th>
-              <a :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{ user.user.user.name }}</a>
+              <a
+                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{
+                user.user.user.name }}</a>
             </th>
             <template v-for="emotion in user.emotions">
               <td>
@@ -51,7 +56,7 @@
       </table>
 
     </div>
-  </div>
+  </v-fade-transition>
 </template>
 
 <script>
@@ -76,7 +81,6 @@
       },
       fetchParams: function () {
         axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
-          console.log(res.data);
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;

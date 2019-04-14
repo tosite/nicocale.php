@@ -25,6 +25,7 @@ Vue.use(Vuetify);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('side-nav',            require('./components/SideNav.vue').default);
+Vue.component('loading',             require('./components/Loading.vue').default);
 Vue.component('emotion-modal',       require('./components/EmotionModal.vue').default);
 Vue.component('emotion-popper',      require('./components/EmotionPopper.vue').default);
 Vue.component('emotion-selector',    require('./components/EmojiSelector.vue').default);
