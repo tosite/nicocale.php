@@ -34,6 +34,9 @@ Vue.component('sub-team-user-list',  require('./components/SubTeamUserList.vue')
 Vue.component('team-user-me',        require('./components/TeamUserMe.vue').default);
 Vue.component('not-joined-sub-team-list', require('./components/notJoinedSubTeamList.vue').default);
 
+Vue.component('sub-team-joined-users-modal',  require('./components/SubTeam/JoinedUsersModal.vue').default);
+Vue.component('sub-team-user-list-v1',  require('./components/SubTeam/v1/UserList.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
