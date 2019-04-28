@@ -7,7 +7,12 @@
       width="300"
       app
     >
-      <v-progress-linear :indeterminate="true" color="secondary" v-if="!loaded" class="mt-1"></v-progress-linear>
+      <v-progress-linear
+        :indeterminate="true"
+        color="secondary"
+        v-if="!loaded"
+        class="mt-1"
+      ></v-progress-linear>
       <v-layout fill-height v-else>
         <v-navigation-drawer
           dark
@@ -67,7 +72,6 @@
 
             <v-list-tile-action @click.stop="locateSubTeamNew(currentTeam.id)">
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1">add</v-icon>
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
@@ -86,7 +90,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-icon color="grey lighten-1">add</v-icon>
+              <v-icon color="grey lighten-1">add_circle</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
