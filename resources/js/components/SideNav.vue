@@ -7,7 +7,7 @@
       width="300"
       app
     >
-      <v-progress-linear :indeterminate="true" v-if="!loaded" class="mt-1"></v-progress-linear>
+      <v-progress-linear :indeterminate="true" color="secondary" v-if="!loaded" class="mt-1"></v-progress-linear>
       <v-layout fill-height v-else>
         <v-navigation-drawer
           dark
@@ -94,7 +94,7 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-toolbar color="indigo" dark app>
+    <v-toolbar color="primary" dark app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>NicoCale</v-toolbar-title>
 

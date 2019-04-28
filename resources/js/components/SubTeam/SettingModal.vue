@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
-      <v-btn flat icon color="primary" v-on="on">
+      <v-btn flat icon color="accent" v-on="on">
         <v-icon>info</v-icon>
       </v-btn>
     </template>
@@ -9,7 +9,7 @@
     <v-card>
       <div>
         <v-toolbar
-          color="cyan"
+          color="primary"
           dark
           tabs
         >
@@ -22,8 +22,8 @@
           <template v-slot:extension>
             <v-tabs
               v-model="tab"
-              color="cyan"
-              slider-color="yellow"
+              color="primary"
+              slider-color="accent"
             >
               <v-tab :key="0" href="#tab-0">Joined User</v-tab>
               <v-tab :key="1" href="#tab-1">Not Joined User</v-tab>

@@ -3,12 +3,12 @@
     <loading v-if="loading"></loading>
     <div v-else>
       <h1>
-        <v-btn flat icon color="pink"
+        <v-btn flat icon color="secondary"
                :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
           <v-icon>keyboard_arrow_left</v-icon>
         </v-btn>
         {{ months.current.display }}
-        <v-btn flat icon color="pink"
+        <v-btn flat icon color="secondary"
                :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
           <v-icon>keyboard_arrow_right</v-icon>
         </v-btn>
