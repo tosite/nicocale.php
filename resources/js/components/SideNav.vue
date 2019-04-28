@@ -4,7 +4,6 @@
       v-model="drawer"
       class="pb-0 elevation-2"
       floating
-      hide-overlay
       width="300"
       app
     >
