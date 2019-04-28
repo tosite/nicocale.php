@@ -10,8 +10,9 @@
 
       <v-card>
         <v-card-title
-          class="headline grey lighten-2"
+          class="headline primary white--text"
           primary-title
+          color="primary"
         >
           {{ date }}
         </v-card-title>
