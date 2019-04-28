@@ -25,7 +25,7 @@
               color="primary"
               slider-color="accent"
             >
-              <v-tab key="0" href="#tab-0">Joined User</v-tab>
+              <v-tab key="0" href="#tab-0">メンバー</v-tab>
               <v-tab key="1" href="#tab-1">Not Joined User</v-tab>
               <v-tab key="2" href="#tab-2">Settings</v-tab>
             </v-tabs>

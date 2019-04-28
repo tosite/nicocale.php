@@ -2,10 +2,10 @@
   <v-card flat>
     <v-card-text class="pt-0">
 
-      <div class="mt-4 headline">Joined User</div>
+      <div class="mt-4 headline">メンバー</div>
       <v-flex xs12 sm6>
         <v-text-field
-          label="User Name"
+          label="ユーザー名で検索"
           prepend-inner-icon="search"
           v-model="search"
           clearable
