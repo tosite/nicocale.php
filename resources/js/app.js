@@ -11,7 +11,15 @@ require('./bootstrap');
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
-Vue.use(Vuetify);
+import colors from 'vuetify/es5/util/colors';
+
+Vue.use(Vuetify, {
+    theme: {
+        primary: colors.teal.darken1,
+        secondary: colors.red.lighten1,
+        accent: colors.amber.base
+    },
+});
 
 /**
  * The following block of code may be used to automatically register your
