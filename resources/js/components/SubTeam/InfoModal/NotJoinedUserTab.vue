@@ -2,17 +2,26 @@
   <v-card flat>
     <v-card-text class="pt-0">
 
-      <div class="mt-4 headline">Not Joined User</div>
+      <div class="mt-4 headline">参加していないメンバー</div>
       <v-flex xs12 sm6>
         <v-text-field
-          label="User Name"
+          label="ユーザー名で検索"
           prepend-inner-icon="search"
           v-model="search"
           clearable
         ></v-text-field>
       </v-flex>
 
-      <v-list two-line>
+      <v-alert
+        :value="true"
+        type="warning"
+        v-if="filteredUsers == false"
+        outline
+      >
+        未参加のユーザーはいません。
+      </v-alert>
+
+      <v-list two-line v-else>
         <template v-for="user in filteredUsers">
           <v-list-tile avatar>
             <v-list-tile-avatar>
