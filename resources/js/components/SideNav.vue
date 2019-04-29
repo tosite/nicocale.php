@@ -7,7 +7,12 @@
       width="300"
       app
     >
-      <v-progress-linear :indeterminate="true" v-if="!loaded" class="mt-1"></v-progress-linear>
+      <v-progress-linear
+        :indeterminate="true"
+        color="secondary"
+        v-if="!loaded"
+        class="mt-1"
+      ></v-progress-linear>
       <v-layout fill-height v-else>
         <v-navigation-drawer
           dark
@@ -67,7 +72,6 @@
 
             <v-list-tile-action @click.stop="locateSubTeamNew(currentTeam.id)">
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1">add</v-icon>
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
@@ -86,7 +90,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-icon color="grey lighten-1">add</v-icon>
+              <v-icon color="grey lighten-1">add_circle</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
@@ -94,13 +98,13 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-toolbar color="indigo" dark app>
+    <v-toolbar color="primary" dark app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>NicoCale</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-menu offset-y>
+      <v-menu offset-y min-width="200">
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -113,12 +117,12 @@
         <v-list>
           <v-list-tile :href="`/teams/${currentTeam.id}/me`">
             <v-list-tile-title>
-              setting
+              ユーザー設定
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile href="/auth/slack/logout">
             <v-list-tile-title>
-              logout
+              ログアウト
             </v-list-tile-title>
           </v-list-tile>
         </v-list>

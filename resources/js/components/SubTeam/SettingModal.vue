@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
-      <v-btn flat icon color="primary" v-on="on">
+      <v-btn flat icon color="accent" v-on="on">
         <v-icon>info</v-icon>
       </v-btn>
     </template>
@@ -9,7 +9,7 @@
     <v-card>
       <div>
         <v-toolbar
-          color="cyan"
+          color="primary"
           dark
           tabs
         >
@@ -22,25 +22,25 @@
           <template v-slot:extension>
             <v-tabs
               v-model="tab"
-              color="cyan"
-              slider-color="yellow"
+              color="primary"
+              slider-color="accent"
             >
-              <v-tab :key="0" href="#tab-0">Joined User</v-tab>
-              <v-tab :key="1" href="#tab-1">Not Joined User</v-tab>
-              <v-tab :key="2" href="#tab-2">Settings</v-tab>
+              <v-tab key="0" href="#tab-0">メンバー</v-tab>
+              <v-tab key="1" href="#tab-1">参加していないメンバー</v-tab>
+              <v-tab key="2" href="#tab-2">Settings</v-tab>
             </v-tabs>
           </template>
 
         </v-toolbar>
 
         <v-tabs-items v-model="tab">
-          <v-tab-item :key="0" value="tab-0">
+          <v-tab-item key="0" value="tab-0">
             <sub-team-info-modal-joined-user-tab
               :users="joinedUsers"
             ></sub-team-info-modal-joined-user-tab>
           </v-tab-item>
 
-          <v-tab-item :key="1" value="tab-1">
+          <v-tab-item key="1" value="tab-1">
             <v-card flat>
               <sub-team-info-modal-not-joined-user-tab
                 :users="notJoinedUsers"
@@ -48,7 +48,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :key="2" value="tab-2">
+          <v-tab-item key="2" value="tab-2">
             <v-card flat>
               <sub-team-info-modal-setting-tab
                 :sub-team="subTeam"

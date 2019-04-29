@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex xs12 sm8 offset-sm2>
+    <v-flex xs12 sm6 offset-sm3>
       <v-card class="text-xs-center pt-3">
         <v-avatar size="128">
           <img :src="teamUser.user.avatar" alt="avatar">
@@ -8,7 +8,7 @@
 
         <v-card-title primary-title class="text-xs-center pb-1">
           <div>
-            <h3 class="headline mb-0">{{ teamUser.user.name }}</h3>
+            <h3 class="headline mb-0 text-xs-center">{{ teamUser.user.name }}</h3>
           </div>
         </v-card-title>
         <v-card-text>
@@ -17,7 +17,7 @@
               <p>
                 お使いのアカウントはまだSlackと連携されていないようです。<br>
                 連携することでステータスアイコンの変更・ステータスメッセージの変更・チャンネル通知などがご利用いただけます。<br>
-                <a href="/auth/slack/access">連携を有効にしますか？（連携グループ：{{ teamUser.team.name }}）</a>
+                <a href="/auth/slack/access">連携を有効にする（連携グループ：{{ teamUser.team.name }}）</a>
               </p>
             </div>
             <div v-else>
@@ -37,7 +37,7 @@
               hint=""
               :value="teamUser.user.bio"
             ></v-textarea>
-            <v-btn>更新する</v-btn>
+            <v-btn color="primary">更新する</v-btn>
           </div>
         </v-card-text>
       </v-card>
