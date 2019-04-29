@@ -100,6 +100,28 @@
                       @select="selectEmoji"
                     ></emoji-picker>
                   </v-fade-transition>
+
+                  <v-text-field
+                    v-model="modalEmotion.status_text"
+                    :counter="100"
+                    label="ひとこと"
+                  ></v-text-field>
+
+                  <v-expansion-panel class="elevation-0">
+                    <v-expansion-panel-content>
+                      <div slot="header">メモを追加する</div>
+                      <v-card>
+                        <v-card-text class="text-xs-center pa-0">
+                          <v-textarea
+                            v-model="modalEmotion.memo"
+                            :counter="100"
+                            label="メモ"
+                          ></v-textarea>
+                        </v-card-text>
+                      </v-card>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+
                 </div>
 
               </v-card-text>
@@ -120,6 +142,11 @@
   </v-fade-transition>
 </template>
 
+<style scoped>
+  .emoji-mart {
+    width: 100% !important;
+  }
+</style>
 <script>
   export default {
     props: ['subTeamId', 'year', 'month'],
