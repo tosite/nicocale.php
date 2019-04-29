@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "emoji-mart-vue": "^2.6.6",
         "vuetify": "^1.5.13"
     }
 }

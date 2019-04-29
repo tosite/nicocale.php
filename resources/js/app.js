@@ -12,6 +12,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import colors from 'vuetify/es5/util/colors';
+import { Emoji, Picker } from 'emoji-mart-vue'
 
 Vue.use(Vuetify, {
     theme: {
@@ -32,6 +33,8 @@ Vue.use(Vuetify, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('emoji', Emoji);
+Vue.component('emoji-picker', Picker);
 Vue.component('side-nav',            require('./components/SideNav.vue').default);
 Vue.component('loading',             require('./components/Loading.vue').default);
 Vue.component('emotion-modal',       require('./components/EmotionModal.vue').default);
