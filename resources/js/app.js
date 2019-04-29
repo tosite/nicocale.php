@@ -18,7 +18,8 @@ Vue.use(Vuetify, {
     theme: {
         primary: colors.teal.darken1,
         secondary: colors.red.lighten1,
-        accent: colors.amber.base
+        accent: colors.amber.base,
+        disabled: colors.grey.base,
     },
 });
 
