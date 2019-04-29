@@ -62,16 +62,6 @@
             v-model="dialog"
             width="500"
           >
-            <template v-slot:activator="{ on }">
-              <v-btn
-                color="red lighten-2"
-                dark
-                v-on="on"
-              >
-                Click Me
-              </v-btn>
-            </template>
-
             <v-card>
               <v-card-title class="headline primary white--text" primary-title color="primary">
                 {{ modalDate }}
@@ -131,7 +121,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="disabled" flat @click="dialog = false">Cancel</v-btn>
-                <v-btn color="primary">Submit</v-btn>
+                <v-btn color="primary" @click="save">Submit</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -159,8 +149,22 @@
         loading: true,
         dialog: false,
         picker: false,
+        beforeEmotion: null,
         modalDate: null,
         modalEmotion: {
+          emoji: {
+            colons: ":bust_in_silhouette:",
+            emoticons: [],
+            id: "bust_in_silhouette",
+            name: "Bust in Silhouette",
+            native: "👤",
+            skin: null,
+            unified: "1f464",
+          },
+          status_text: '',
+          memo: ''
+        },
+        defaultEmotion: {
           emoji: {
             colons: ":bust_in_silhouette:",
             emoticons: [],
@@ -243,14 +247,15 @@
         }).catch(e => {
         });
       },
+      save: function () {
+        this.dialog = false;
+      },
       openModal: function (emotion, day) {
-        console.log(emotion, day);
         this.modalDate = day;
-        this.modalEmotion = (emotion == false) ? {emoji: '👤', status_text: '', memo: ''} : emotion;
+        this.modalEmotion = (emotion == false) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
         this.dialog = true;
       },
       selectEmoji: function (emoji) {
-        console.dir(emoji);
         this.modalEmotion.emoji = emoji.native;
       },
     },
