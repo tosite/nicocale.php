@@ -67,13 +67,15 @@
               </v-card-title>
 
               <v-card-text>
-                <p class="display-4 text-xs-center ma-0">{{ modalEmotion.emoji }}</p>
+                <p class="display-4 text-xs-center ma-0">
+                  <emoji :emoji="modalEmotion.emoji" :size="76"></emoji>
+                </p>
 
                 <div class="text-xs-center">
                   <template v-for="emoji in oftenUseEmoji">
 
                     <v-btn flat @click="selectEmoji(emoji)" style="height: 54px; min-width: 0px;">
-                      <span class="display-2">{{ emoji.native }}</span>
+                      <emoji :emoji="emoji" :size="32"></emoji>
                     </v-btn>
                   </template>
                   <v-btn flat icon @click="picker = !picker">
@@ -218,7 +220,7 @@
         return d.getDate();
       },
       emoji: function (emotion) {
-        return (emotion == false) ? { id: this.defaultEmotion.emoji } : { id: emotion.emoji };
+        return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
       },
       fetchParams: function () {
         axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
@@ -235,7 +237,7 @@
       },
       openModal: function (emotion, day) {
         this.modalDate = day;
-        this.modalEmotion = (emotion == false) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
+        this.modalEmotion = (emotion == null) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
         this.dialog = true;
       },
       selectEmoji: function (emoji) {
