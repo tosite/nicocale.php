@@ -19,7 +19,7 @@ class CreateEmotions extends Migration
             $table->string('team_id',36)->index();
             $table->string('team_user_id', 36)->index();
             // TODO: カスタム絵文字対応
-            $table->string('emoji', 1)->index();
+            $table->string('emoji', 100)->index();
             // TODO: max_length調べる
             $table->string('status_text', 100)->nullable();
             $table->text('memo')->nullable();
