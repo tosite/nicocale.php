@@ -37,7 +37,7 @@
               hint=""
               :value="teamUser.user.bio"
             ></v-textarea>
-            <v-btn>更新する</v-btn>
+            <v-btn color="primary">更新する</v-btn>
           </div>
         </v-card-text>
       </v-card>
