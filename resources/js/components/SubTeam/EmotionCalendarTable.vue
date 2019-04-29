@@ -33,7 +33,7 @@
           <template v-for="(emotion, day) in me.emotions">
             <td>
               <span @click="openModal(emotion, day)">
-                <span class="display-2">{{ emotion.emoji }}</span>
+                <emoji :emoji="emoji(emotion)" :size="48"></emoji>
               </span>
             </td>
           </template>
@@ -41,8 +41,7 @@
         <template v-for="user in members">
           <tr>
             <th>
-              <a
-                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+              <a :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
                 {{ user.user.user.name }}
               </a>
             </th>
@@ -152,28 +151,12 @@
         beforeEmotion: null,
         modalDate: null,
         modalEmotion: {
-          emoji: {
-            colons: ":bust_in_silhouette:",
-            emoticons: [],
-            id: "bust_in_silhouette",
-            name: "Bust in Silhouette",
-            native: "👤",
-            skin: null,
-            unified: "1f464",
-          },
+          emoji: ":bust_in_silhouette:",
           status_text: '',
           memo: ''
         },
         defaultEmotion: {
-          emoji: {
-            colons: ":bust_in_silhouette:",
-            emoticons: [],
-            id: "bust_in_silhouette",
-            name: "Bust in Silhouette",
-            native: "👤",
-            skin: null,
-            unified: "1f464",
-          },
+          emoji: ":bust_in_silhouette:",
           status_text: '',
           memo: ''
         },
@@ -234,8 +217,9 @@
         let d = new Date(Date.parse(date));
         return d.getDate();
       },
-      url: function (teamUserId) {
-
+      emoji: function (emotion) {
+        return ":santa:";
+        return (emotion == false) ? { id: this.defaultEmotion.emoji } : { id: emotion.emoji };
       },
       fetchParams: function () {
         axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
