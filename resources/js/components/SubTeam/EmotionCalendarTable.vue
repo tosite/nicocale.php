@@ -68,13 +68,13 @@
 
               <v-card-text>
                 <p class="display-4 text-xs-center ma-0">
-                  <emoji :emoji="modalEmotion.emoji" :size="76"></emoji>
+                  <emoji :emoji="modalEmotion.emoji" :size="64"></emoji>
                 </p>
 
                 <div class="text-xs-center">
                   <template v-for="emoji in oftenUseEmoji">
 
-                    <v-btn flat @click="selectEmoji(emoji)" style="height: 54px; min-width: 0px;">
+                    <v-btn flat @click="selectEmoji(emoji)" style="height: 54px; min-width: 0;">
                       <emoji :emoji="emoji" :size="32"></emoji>
                     </v-btn>
                   </template>
@@ -241,7 +241,7 @@
         this.dialog = true;
       },
       selectEmoji: function (emoji) {
-        this.modalEmotion.emoji = emoji.native;
+        this.modalEmotion.emoji = emoji.colons;
       },
     },
     mounted() {
