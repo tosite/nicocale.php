@@ -48,7 +48,3 @@
     props: ['notJoinedSubTeams'],
   }
 </script>
-
-<style scoped>
-
-</style>
