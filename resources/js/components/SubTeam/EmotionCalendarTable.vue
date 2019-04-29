@@ -26,15 +26,15 @@
         <tbody>
         <tr>
           <th>
-            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{
-              me.user.user.name }}</a>
+            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+              {{ me.user.user.name }}
+            </a>
           </th>
-          <template v-for="(emotion, key) in me.emotions">
+          <template v-for="(emotion, day) in me.emotions">
             <td>
-              <emotion-modal
-                :date="key"
-                :emotion="emotion"
-              ></emotion-modal>
+              <span @click="openModal(emotion, day)">
+                <span class="display-2">{{ emotion.emoji }}</span>
+              </span>
             </td>
           </template>
         </tr>
@@ -42,8 +42,9 @@
           <tr>
             <th>
               <a
-                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">{{
-                user.user.user.name }}</a>
+                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+                {{ user.user.user.name }}
+              </a>
             </th>
             <template v-for="emotion in user.emotions">
               <td>
@@ -54,6 +55,66 @@
         </template>
         </tbody>
       </table>
+
+      <template>
+        <div class="text-xs-center">
+          <v-dialog
+            v-model="dialog"
+            width="500"
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="red lighten-2"
+                dark
+                v-on="on"
+              >
+                Click Me
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title class="headline primary white--text" primary-title color="primary">
+                {{ modalDate }}
+              </v-card-title>
+
+              <v-card-text>
+                <p class="display-4 text-xs-center ma-0">{{ modalEmotion.emoji }}</p>
+
+                <div class="text-xs-center">
+                  <template v-for="emoji in oftenUseEmoji">
+
+                    <v-btn flat @click="selectEmoji(emoji)" style="height: 54px; min-width: 0px;">
+                      <span class="display-2">{{ emoji.native }}</span>
+                    </v-btn>
+                  </template>
+                  <v-btn flat icon @click="picker = !picker">
+                    <v-icon>more_vert</v-icon>
+                  </v-btn>
+
+                  <v-fade-transition>
+                    <emoji-picker
+                      v-show="picker"
+                      :i18n="pickerI18n"
+                      :showSkinTones="false"
+                      title="NicoCale"
+                      @select="selectEmoji"
+                    ></emoji-picker>
+                  </v-fade-transition>
+                </div>
+
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="disabled" flat @click="dialog = false">Cancel</v-btn>
+                <v-btn color="primary">Submit</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
 
     </div>
   </v-fade-transition>
@@ -69,6 +130,72 @@
         me: null,
         members: null,
         loading: true,
+        dialog: false,
+        picker: false,
+        modalDate: null,
+        modalEmotion: {
+          emoji: {
+            colons: ":bust_in_silhouette:",
+            emoticons: [],
+            id: "bust_in_silhouette",
+            name: "Bust in Silhouette",
+            native: "👤",
+            skin: null,
+            unified: "1f464",
+          },
+          status_text: '',
+          memo: ''
+        },
+        pickerI18n: {
+          search: '検索',
+          notfound: '絵文字が見つかりませんでした',
+          categories: {
+            search: '検索結果',
+            recent: 'よく使う絵文字',
+            people: '人',
+            nature: '自然',
+            foods: 'フード＆ドリンク',
+            activity: 'アクティビティ',
+            places: 'トラベル＆場所',
+            objects: 'オブジェクト',
+            symbols: '記号',
+            flags: '旗',
+            custom: 'カスタム',
+          }
+        },
+        oftenUseEmoji: [
+          {
+            colons: ":grin:",
+            emoticons: [],
+            id: "grin",
+            name: "Grinning Face with Smiling Eyes",
+            native: "😁",
+            skin: null,
+            unified: "1f601",
+          },
+          {
+            colons: ":slightly_smiling_face:",
+            emoticons: [
+              ":)",
+              "(:",
+              ":-)",
+            ],
+            id: "slightly_smiling_face",
+            name: "Slightly Smiling Face",
+            native: "🙂",
+            skin: null,
+            unified: "1f642",
+          },
+          {
+            colons: ":disappointed_relieved:",
+            emoticons: [],
+            id: "disappointed_relieved",
+            name: "Disappointed but Relieved Face",
+            native: "😥",
+            skin: null,
+            unified: "1f625",
+          },
+        ],
       }
     },
     methods: {
@@ -88,7 +215,17 @@
           this.loading = false;
         }).catch(e => {
         });
-      }
+      },
+      openModal: function (emotion, day) {
+        console.log(emotion, day);
+        this.modalDate = day;
+        this.modalEmotion = (emotion == false) ? {emoji: '👤', status_text: '', memo: ''} : emotion;
+        this.dialog = true;
+      },
+      selectEmoji: function (emoji) {
+        console.dir(emoji);
+        this.modalEmotion.emoji = emoji.native;
+      },
     },
     mounted() {
       this.fetchParams();
