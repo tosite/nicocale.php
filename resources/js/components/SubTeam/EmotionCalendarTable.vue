@@ -218,7 +218,6 @@
         return d.getDate();
       },
       emoji: function (emotion) {
-        return ":santa:";
         return (emotion == false) ? { id: this.defaultEmotion.emoji } : { id: emotion.emoji };
       },
       fetchParams: function () {
