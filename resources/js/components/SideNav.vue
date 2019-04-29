@@ -104,7 +104,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-menu offset-y>
+      <v-menu offset-y min-width="200">
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -117,12 +117,12 @@
         <v-list>
           <v-list-tile :href="`/teams/${currentTeam.id}/me`">
             <v-list-tile-title>
-              setting
+              ユーザー設定
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile href="/auth/slack/logout">
             <v-list-tile-title>
-              logout
+              ログアウト
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
