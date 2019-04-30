@@ -13,4 +13,7 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
 
     Route::put('team-users/{teamUserId}', 'TeamUserController@update');
 
+    Route::post('sub-teams', 'SubTeamController@store');
+    Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');
+
 });
