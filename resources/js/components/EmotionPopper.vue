@@ -5,7 +5,7 @@
       <span>{{ e.status_text }}</span>
     </v-tooltip>
     <span v-else>
-      <emoji :emoji="e.emoji" :size="32"></emoji>
+      <emoji :emoji="e.emoji" :size="localSize"></emoji>
     </span>
   </div>
 </template>
