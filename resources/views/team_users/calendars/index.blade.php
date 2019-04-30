@@ -2,7 +2,7 @@
 
 @section('content')
   <h1>Team user emotion calendar</h1>
-  <table class="table table-bordered">
+  <table id="calendar">
     <thead>
     <tr>
       @foreach (['日', '月', '火', '水', '木', '金', '土'] as $dayOfWeek)
