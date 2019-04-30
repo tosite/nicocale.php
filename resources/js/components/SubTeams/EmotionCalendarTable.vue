@@ -19,7 +19,7 @@
         <tr>
           <th>name</th>
           <template v-for="date in calendar">
-            <th>{{ formatDate(date.date) }}</th>
+            <th>{{ date.date | day }}</th>
           </template>
         </tr>
         </thead>
@@ -99,6 +99,11 @@
           memo: ''
         },
       }
+    },
+    filters: {
+      day: function (date) {
+        return dayjs(date).format('D');
+      },
     },
     methods: {
       emoji: function (emotion) {
