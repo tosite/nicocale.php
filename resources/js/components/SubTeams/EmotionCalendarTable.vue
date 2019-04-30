@@ -19,7 +19,7 @@
         <tr>
           <th>name</th>
           <template v-for="date in calendar">
-            <th>{{ formatDate(date.date) }}</th>
+            <th>{{ date.date | day }}</th>
           </template>
         </tr>
         </thead>
@@ -32,8 +32,8 @@
           </th>
           <template v-for="(emotion, day) in me.emotions">
             <td>
-              <span @click="openModal(emotion, day)">
-                <emoji :emoji="emoji(emotion)" :size="48"></emoji>
+              <span @click="openModal(emotion, day)" class="pointer">
+                <emotion-popper :emotion="emotion" :size="48"></emotion-popper>
               </span>
             </td>
           </template>
@@ -57,74 +57,13 @@
 
       <template>
         <div class="text-xs-center">
-          <v-dialog
-            v-model="dialog"
-            width="500"
-          >
-            <v-card>
-              <v-card-title class="headline primary white--text" primary-title color="primary">
-                {{ modalDate }}
-              </v-card-title>
-
-              <v-card-text>
-                <p class="display-4 text-xs-center ma-0">
-                  <emoji :emoji="modalEmotion.emoji" :size="64"></emoji>
-                </p>
-
-                <div class="text-xs-center">
-                  <template v-for="emoji in oftenUseEmoji">
-
-                    <v-btn flat @click="selectEmoji(emoji)" style="height: 54px; min-width: 0;">
-                      <emoji :emoji="emoji" :size="32"></emoji>
-                    </v-btn>
-                  </template>
-                  <v-btn flat icon @click="picker = !picker">
-                    <v-icon>more_vert</v-icon>
-                  </v-btn>
-
-                  <v-fade-transition>
-                    <emoji-picker
-                      v-show="picker"
-                      :i18n="pickerI18n"
-                      :showSkinTones="false"
-                      title="NicoCale"
-                      @select="selectEmoji"
-                    ></emoji-picker>
-                  </v-fade-transition>
-
-                  <v-text-field
-                    v-model="modalEmotion.status_text"
-                    :counter="100"
-                    label="ひとこと"
-                  ></v-text-field>
-
-                  <v-expansion-panel class="elevation-0">
-                    <v-expansion-panel-content>
-                      <div slot="header">メモを追加する</div>
-                      <v-card>
-                        <v-card-text class="text-xs-center pa-0">
-                          <v-textarea
-                            v-model="modalEmotion.memo"
-                            :counter="100"
-                            label="メモ"
-                          ></v-textarea>
-                        </v-card-text>
-                      </v-card>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-
-                </div>
-
-              </v-card-text>
-
-              <v-divider></v-divider>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="disabled" flat @click="dialog = false">Cancel</v-btn>
-                <v-btn color="primary" @click="save">Submit</v-btn>
-              </v-card-actions>
-            </v-card>
+          <v-dialog v-model="dialog" width="500">
+            <emotion-modal
+              :team-id="me.user.team_id"
+              :emotion="modalEmotion"
+              :date="modalDate"
+              @closeModal="closeModal()"
+            ></emotion-modal>
           </v-dialog>
         </div>
       </template>
@@ -134,10 +73,9 @@
 </template>
 
 <style scoped>
-  .emoji-mart {
-    width: 100% !important;
-  }
+  .pointer { cursor: pointer; }
 </style>
+
 <script>
   export default {
     props: ['subTeamId', 'year', 'month'],
@@ -149,8 +87,6 @@
         members: null,
         loading: true,
         dialog: false,
-        picker: false,
-        beforeEmotion: null,
         modalDate: null,
         modalEmotion: {
           emoji: ":bust_in_silhouette:",
@@ -162,63 +98,14 @@
           status_text: '',
           memo: ''
         },
-        pickerI18n: {
-          search: '検索',
-          notfound: '絵文字が見つかりませんでした',
-          categories: {
-            search: '検索結果',
-            recent: 'よく使う絵文字',
-            people: '人',
-            nature: '自然',
-            foods: 'フード＆ドリンク',
-            activity: 'アクティビティ',
-            places: 'トラベル＆場所',
-            objects: 'オブジェクト',
-            symbols: '記号',
-            flags: '旗',
-            custom: 'カスタム',
-          }
-        },
-        oftenUseEmoji: [
-          {
-            colons: ":grin:",
-            emoticons: [],
-            id: "grin",
-            name: "Grinning Face with Smiling Eyes",
-            native: "😁",
-            skin: null,
-            unified: "1f601",
-          },
-          {
-            colons: ":slightly_smiling_face:",
-            emoticons: [
-              ":)",
-              "(:",
-              ":-)",
-            ],
-            id: "slightly_smiling_face",
-            name: "Slightly Smiling Face",
-            native: "🙂",
-            skin: null,
-            unified: "1f642",
-          },
-          {
-            colons: ":disappointed_relieved:",
-            emoticons: [],
-            id: "disappointed_relieved",
-            name: "Disappointed but Relieved Face",
-            native: "😥",
-            skin: null,
-            unified: "1f625",
-          },
-        ],
       }
     },
-    methods: {
-      formatDate: function (date) {
-        let d = new Date(Date.parse(date));
-        return d.getDate();
+    filters: {
+      day: function (date) {
+        return dayjs(date).format('D');
       },
+    },
+    methods: {
       emoji: function (emotion) {
         return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
       },
@@ -232,16 +119,13 @@
         }).catch(e => {
         });
       },
-      save: function () {
-        this.dialog = false;
-      },
       openModal: function (emotion, day) {
         this.modalDate = day;
         this.modalEmotion = (emotion == null) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
         this.dialog = true;
       },
-      selectEmoji: function (emoji) {
-        this.modalEmotion.emoji = emoji.colons;
+      closeModal: function () {
+        this.dialog = false;
       },
     },
     mounted() {

@@ -182,7 +182,8 @@
         window.location = `/teams/${teamId}/sub-teams/not-joined`
       },
       locateSubTeamCalendar: function (subTeamId) {
-        window.location = `/sub-teams/${subTeamId}/calendars/2019/3`;
+        let month = dayjs().format('YYYY/M');
+        window.location = `/sub-teams/${subTeamId}/calendars/${month}`;
       },
       locateMe: function (teamId) {
         window.location = `/teams/${teamId}/me`
