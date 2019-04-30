@@ -32,7 +32,7 @@
           </th>
           <template v-for="(emotion, day) in me.emotions">
             <td>
-              <span @click="openModal(emotion, day)">
+              <span @click="openModal(emotion, day)" class="pointer">
                 <emoji :emoji="emoji(emotion)" :size="48"></emoji>
               </span>
             </td>
@@ -71,6 +71,10 @@
     </div>
   </v-fade-transition>
 </template>
+
+<style scoped>
+  .pointer { cursor: pointer; }
+</style>
 
 <script>
   export default {
