@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="headline primary white--text" primary-title color="primary">
-      {{ date }}
+      {{ date | day }}
     </v-card-title>
 
     <v-card-text>
@@ -59,8 +59,8 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="disabled" flat @click="dialog = false">Cancel</v-btn>
-      <v-btn color="primary" @click="save">Submit</v-btn>
+      <v-btn color="disabled" flat @click="close">閉じる</v-btn>
+      <v-btn color="accent" @click="save">更新する</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -73,7 +73,7 @@
 
 <script>
   export default {
-    props: ['subTeamId', 'date', 'emotion'],
+    props: ['subTeamId', 'date', 'emotion', 'dialog'],
     data() {
       return {
         picker: false,
@@ -134,19 +134,20 @@
         ],
       }
     },
+    filters: {
+      day: function (date) {
+        return dayjs(date).format('M/D (ddd)');
+      }
+    },
     methods: {
-      formatDate: function (date) {
-        let d = new Date(Date.parse(date));
-        return d.getDate();
-      },
-      emoji: function (emotion) {
-        return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
-      },
       save: function () {
-        this.dialog = false;
+        this.$emit('closeModal');
       },
       selectEmoji: function (emoji) {
         this.emotion.emoji = emoji.colons;
+      },
+      close: function () {
+        this.$emit('closeModal');
       },
     },
   }

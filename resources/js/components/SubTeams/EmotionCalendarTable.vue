@@ -62,6 +62,7 @@
               :sub-team-id="subTeamId"
               :emotion="modalEmotion"
               :date="modalDate"
+              @closeModal="closeModal()"
             ></emotion-modal>
           </v-dialog>
         </div>
@@ -122,6 +123,9 @@
         this.modalDate = day;
         this.modalEmotion = (emotion == null) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
         this.dialog = true;
+      },
+      closeModal: function () {
+        this.dialog = false;
       },
     },
     mounted() {
