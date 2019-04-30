@@ -30,15 +30,15 @@
 
 <script>
   export default {
-    props: ['emotions'],
+    props: ['emotions', 'month'],
     data: () => ({
       today: null,
       currentMonth: null,
       dialog: false,
     }),
     created() {
-      this.today = dayjs().format('YYYY-MM-DD');
-      this.currentMonth = dayjs().format('YYYY-MM');
+      this.today = dayjs(this.month.date).format('YYYY-MM-DD');
+      this.currentMonth = dayjs(this.today).format('YYYY-MM');
     },
     filters: {
       month: function (date) {
