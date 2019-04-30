@@ -1,8 +1,17 @@
 <template>
   <v-layout wrap>
     <v-flex xs12 v-if="today != null">
-      <h1>{{ today | month }}</h1>
-      <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
+      <v-layout row>
+        <v-dialog v-model="dialog" max-width="290px">
+          <template v-slot:activator="{ on }">
+            <h1>{{ currentMonth | month }}</h1>
+            <v-btn color="accent" dark v-on="on" icon flat>
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+          </template>
+          <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
+        </v-dialog>
+      </v-layout>
       <v-sheet height="600">
         <v-calendar :now="today" :value="today" color="primary" locale="jp-ja">
           <template v-slot:day="{ present, past, date }">
@@ -25,6 +34,7 @@
     data: () => ({
       today: null,
       currentMonth: null,
+      dialog: false,
     }),
     created() {
       this.today = dayjs().format('YYYY-MM-DD');
@@ -39,5 +49,7 @@
 </script>
 
 <style scoped>
-  .v-calendar { border: 1px solid #ddd !important; }
+  .v-calendar {
+    border: 1px solid #ddd !important;
+  }
 </style>
