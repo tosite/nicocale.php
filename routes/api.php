@@ -19,4 +19,6 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
     Route::post('sub-team-users', 'SubTeamUserController@store');
     Route::delete('sub-team-users/{subTeamUserId}', 'SubTeamUserController@destroy');
 
+    Route::post('emotions', 'EmotionController@store');
+    Route::put('emotions/{emotionId}', 'EmotionController@update');
 });
