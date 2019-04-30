@@ -33,7 +33,7 @@
           <template v-for="(emotion, day) in me.emotions">
             <td>
               <span @click="openModal(emotion, day)" class="pointer">
-                <emoji :emoji="emoji(emotion)" :size="48"></emoji>
+                <emotion-popper :emotion="emotion" :size="48"></emotion-popper>
               </span>
             </td>
           </template>
@@ -59,7 +59,7 @@
         <div class="text-xs-center">
           <v-dialog v-model="dialog" width="500">
             <emotion-modal
-              :team-id="subTeamId"
+              :team-id="me.user.team_id"
               :emotion="modalEmotion"
               :date="modalDate"
               @closeModal="closeModal()"
