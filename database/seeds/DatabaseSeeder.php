@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         \Auth::login($user);
 
-        $teamUser = \App\TeamUser::userId()->first();
+        $teamUser = \App\TeamUser::me()->first();
 
         // joined sub teams
         $joinedSubTeams = [];
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // emotions
-        $emojis = ['😀', '😐', '😇', '😵', '😡'];
+        $emojis = [':smile:', ':thinking_face:', ':fearful:', ':cry:', ':grin:'];
         foreach(\App\TeamUser::teamId($teamUser->team_id)->get() as $u) {
             $date = new \DateTime(date('Y-m-d', strtotime('-2 month')));
             for ($i = 0; $i < 90; $i++, $date->modify('+1 days')) {

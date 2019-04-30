@@ -20,8 +20,10 @@ try {
  */
 
 window.axios = require('axios');
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+import dayjs from 'dayjs';
+window.dayjs = dayjs;
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -31,9 +33,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 const token = window.Laravel.csrfToken;
 axios.defaults.headers.common = {
-    // 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
     'X-CSRF-TOKEN': token,
-    // 'X-XSRF-TOKEN': token,
     'X-Requested-With': 'XMLHttpRequest'
 };
 
