@@ -12,7 +12,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import colors from 'vuetify/es5/util/colors';
-import { Emoji, Picker } from 'emoji-mart-vue'
+import { Emoji, Picker } from 'emoji-mart-vue';
 
 Vue.use(Vuetify, {
     theme: {
@@ -47,6 +47,8 @@ Vue.component('not-joined-sub-team-list', require('./components/NotJoinedSubTeam
 
 Vue.component('sub-team-info-modal',  require('./components/SubTeams/SettingModal.vue').default);
 Vue.component('sub-team-emotion-calendar-table',  require('./components/SubTeams/EmotionCalendarTable.vue').default);
+
+Vue.component('team-user-calendar',  require('./components/TeamUsers/Calendar.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
