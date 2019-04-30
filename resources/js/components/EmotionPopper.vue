@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-tooltip top v-if="e.status_text.length!==0">
+    <v-tooltip top v-if="e.status_text != null && e.status_text.length != 0">
       <emoji :emoji="e.emoji" :size="localSize" slot="activator"></emoji>
       <span>{{ e.status_text }}</span>
     </v-tooltip>

@@ -5,6 +5,6 @@
     :emotions="{{ json_encode($emotions) }}"
     :month="{{ json_encode($month) }}"
     :me="{{ json_encode($isMe) }}"
-    :team-id="{{ json_encode($teamId) }}"
+    :team-user="{{ json_encode($user) }}"
   ></team-user-calendar>
 @endsection
