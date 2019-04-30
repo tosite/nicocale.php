@@ -49,6 +49,7 @@ Vue.component('sub-team-info-modal',  require('./components/SubTeams/SettingModa
 Vue.component('sub-team-emotion-calendar-table',  require('./components/SubTeams/EmotionCalendarTable.vue').default);
 
 Vue.component('team-user-calendar',  require('./components/TeamUsers/Calendar.vue').default);
+Vue.component('emotion-modal',  require('./components/EmotionModal.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
