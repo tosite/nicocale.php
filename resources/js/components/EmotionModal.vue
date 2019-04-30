@@ -73,7 +73,7 @@
 
 <script>
   export default {
-    props: ['teamId', 'date', 'emotion', 'dialog'],
+    props: ['teamId', 'date', 'emotion'],
     data() {
       return {
         picker: false,
@@ -141,6 +141,19 @@
     },
     methods: {
       save: function () {
+        if (this.emotion.hasOwnProperty('id')) {
+          let e = this.emotion
+          let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo }
+          axios.put(`/emotions/${e.id}`, params)
+            .then (res => {
+              console.log(res);
+            })
+            .catch(e => {
+              // TODO: @tosite error handling
+              console.log(e);
+            });
+        } else {
+        }
         this.$emit('closeModal');
       },
       selectEmoji: function (emoji) {

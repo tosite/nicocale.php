@@ -117,6 +117,7 @@
           this.months = res.data.months;
           this.loading = false;
         }).catch(e => {
+          // TODO: @tosite error handling
         });
       },
       openModal: function (emotion, day) {
@@ -125,6 +126,7 @@
         this.dialog = true;
       },
       closeModal: function () {
+        this.fetchParams();
         this.dialog = false;
       },
     },
