@@ -73,7 +73,7 @@
 
 <script>
   export default {
-    props: ['subTeamId', 'date', 'emotion', 'dialog'],
+    props: ['teamId', 'date', 'emotion', 'dialog'],
     data() {
       return {
         picker: false,

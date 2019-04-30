@@ -35,7 +35,7 @@
         <div class="text-xs-center">
           <v-dialog v-model="emotionModal" width="500">
             <emotion-modal
-              :sub-team-id="subTeamId"
+              :team-id="teamId"
               :emotion="modalEmotion"
               :date="modalDate"
               @closeModal="closeModal()"
@@ -52,7 +52,7 @@
 
 <script>
   export default {
-    props: ['emotions', 'month', 'me', 'subTeamId'],
+    props: ['emotions', 'month', 'me', 'teamId'],
     data: () => ({
       today: null,
       currentMonth: null,

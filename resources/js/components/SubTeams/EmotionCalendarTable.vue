@@ -59,7 +59,7 @@
         <div class="text-xs-center">
           <v-dialog v-model="dialog" width="500">
             <emotion-modal
-              :sub-team-id="subTeamId"
+              :team-id="subTeamId"
               :emotion="modalEmotion"
               :date="modalDate"
               @closeModal="closeModal()"
