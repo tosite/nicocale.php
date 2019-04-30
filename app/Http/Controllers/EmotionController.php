@@ -23,7 +23,7 @@ class EmotionController extends Controller
         $emotion = \App\Emotion::find($emotionId);
         $params = $request->only(['emoji', 'status_text', 'memo']);
 
-        if (!$this->isTeamExist($emotion->team_id, $emotion->user_id)) {
+        if ($emotion->user_id !== \Auth::user()->id) {
             throw new \Exception('不正なアクセスです。');
         }
 

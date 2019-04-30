@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Mockery\Exception;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -62,6 +63,22 @@ class EmotionControllerTest extends TestCase
 //        dd($res->baseResponse->getContent());
     }
 
+    public function test_store_他のユーザーとして投稿する()
+    {
+        $emotion = \App\Emotion::where('user_id', '!=', $this->user->id)->first();
+        $params = [
+            'team_id' => $emotion->team_id,
+            'team_user_id' => $emotion->team_user_id,
+            'emoji' => $emotion->emoji,
+            'status_text' => $emotion->status_text,
+            'memo' => $emotion->memo,
+            'entered_on' => $emotion->entered_on,
+        ];
+        $this->actingAs($this->user, 'api')
+            ->json('POST', '/emotions', $params)
+            ->assertStatus(500);
+    }
+
     public function test_update_データ不備()
     {
         $emotion = \App\Emotion::userId($this->user->id)->first();
@@ -98,5 +115,19 @@ class EmotionControllerTest extends TestCase
         $this->actingAs($this->user, 'api')
             ->json('PUT', "/emotions/{$emotion->id}", $params)
             ->assertStatus(200);
+    }
+
+    public function test_update_他のユーザーとして投稿する()
+    {
+        $me = \App\TeamUser::userId($this->user->id)->first();
+        $emotion = \App\Emotion::where('user_id', '!=', $this->user->id)->first();
+        $params = [
+            'emoji' => $emotion->emoji,
+            'status_text' => $emotion->status_text,
+            'memo' => $emotion->memo,
+        ];
+        $this->actingAs($this->user, 'api')
+            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->assertStatus(500);
     }
 }
