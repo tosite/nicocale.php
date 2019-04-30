@@ -142,8 +142,8 @@
     methods: {
       save: function () {
         if (this.emotion.hasOwnProperty('id')) {
-          let e = this.emotion
-          let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo }
+          let e = this.emotion;
+          let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo };
           axios.put(`/emotions/${e.id}`, params)
             .then (res => {
               console.log(res);
@@ -153,6 +153,7 @@
               console.log(e);
             });
         } else {
+
         }
         this.$emit('closeModal');
       },
