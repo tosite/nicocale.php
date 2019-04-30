@@ -61,4 +61,42 @@ class EmotionControllerTest extends TestCase
             ->assertStatus(500);
 //        dd($res->baseResponse->getContent());
     }
+
+    public function test_update_データ不備()
+    {
+        $emotion = \App\Emotion::userId($this->user->id)->first();
+        $params = [];
+
+        $this->actingAs($this->user, 'api')
+            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->assertStatus(422);
+    }
+
+    public function test_update_成功()
+    {
+        $emotion = \App\Emotion::userId($this->user->id)->first();
+        $params = [
+            'emoji' => $emotion->emoji,
+            'status_text' => $emotion->status_text,
+            'memo' => $emotion->memo,
+        ];
+        $this->actingAs($this->user, 'api')
+            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->assertStatus(200)
+        ;
+    }
+
+    public function test_update_余計なパラメータがあるが成功()
+    {
+        $emotion = \App\Emotion::userId($this->user->id)->first();
+        $params = [
+            'emoji' => $emotion->emoji,
+            'status_text' => $emotion->status_text,
+            'memo' => $emotion->memo,
+            'entered_on' => '1990-05-01',
+        ];
+        $this->actingAs($this->user, 'api')
+            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->assertStatus(200);
+    }
 }
