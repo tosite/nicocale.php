@@ -16,4 +16,7 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
     Route::post('sub-teams', 'SubTeamController@store');
     Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');
 
+    Route::post('sub-team-users', 'SubTeamUserController@store');
+    Route::delete('sub-team-users/{subTeamUserId}', 'SubTeamUserController@destroy');
+
 });
