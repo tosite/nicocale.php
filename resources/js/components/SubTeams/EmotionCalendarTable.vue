@@ -87,8 +87,6 @@
         members: null,
         loading: true,
         dialog: false,
-        picker: false,
-        beforeEmotion: null,
         modalDate: null,
         modalEmotion: {
           emoji: ":bust_in_silhouette:",
@@ -103,10 +101,6 @@
       }
     },
     methods: {
-      formatDate: function (date) {
-        let d = new Date(Date.parse(date));
-        return d.getDate();
-      },
       emoji: function (emotion) {
         return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
       },
@@ -119,9 +113,6 @@
           this.loading = false;
         }).catch(e => {
         });
-      },
-      save: function () {
-        this.dialog = false;
       },
       openModal: function (emotion, day) {
         this.modalDate = day;
