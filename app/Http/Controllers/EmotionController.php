@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class EmotionController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\Emotions\Post $request)
     {
     }
 
-    public function update(Request $request, $emotionId)
+    public function update(\App\Http\Requests\Emotions\Put $request, $emotionId)
     {
     }
 }
