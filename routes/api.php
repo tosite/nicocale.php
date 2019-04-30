@@ -7,11 +7,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->prefix('/v1')->group(function () {
-    Route::resource('emotions',       'EmotionController',     ['only' => ['store', 'destroy']]);
-    Route::resource('sub_teams',      'SubTeamController',     ['only' => ['store', 'update', 'destroy']]);
-    Route::resource('sub_team_users', 'SubTeamUserController', ['only' => ['store', 'destroy']]);
-
     Route::get('side-navigations', 'SideNavigationController@index')->name('api_side_navigations.index');
     Route::get('sub-teams/{subTeamId}/info-modals', 'ApiSubTeamController@infoModals');
     Route::get('sub-teams/{subTeamId}/calendars/{year}/{month}', 'ApiSubTeamController@calendar');
+
+    Route::put('team-users/{teamUserId}', 'TeamUserController@update');
+
+    Route::post('sub-teams', 'SubTeamController@store');
+    Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');
+
+    Route::post('sub-team-users', 'SubTeamUserController@store');
+    Route::delete('sub-team-users/{subTeamUserId}', 'SubTeamUserController@destroy');
+
+    Route::post('emotions', 'EmotionController@store');
+    Route::put('emotions/{emotionId}', 'EmotionController@update');
 });

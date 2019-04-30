@@ -2,40 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class EmotionController extends Controller
 {
-    const STORE_PARAMS = ['team_user_id', 'emoji', 'entered_on', 'status_text', 'memo'];
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\Emotions\Post $request)
     {
-        $input     = $request->only(self::STORE_PARAMS);
-        $team_user = \App\TeamUser::find($input['team_user_id']);
-        $params    = $this->form_params($team_user, $input);
-        $emotion   = \App\Emotion::createOrUpdateEmotion($params['keys'], $params['params']);
-        return response()->json($emotion, 201);
+        $user = \Auth::user();
+        $input = $request->only(['team_id', 'team_user_id', 'emoji', 'status_text', 'memo', 'entered_on']);
+        $params = array_merge(['user_id' => $user->id], $input);
+
+        if (!$this->isTeamExist($params['team_id'], $user->id)) {
+            throw new \Exception('不正なアクセスです。');
+        }
+
+        return response(\App\Emotion::create($params), 201);
     }
 
-    public function destroy($id)
+    public function update(\App\Http\Requests\Emotions\Put $request, $emotionId)
     {
-        //
+        $emotion = \App\Emotion::find($emotionId);
+        $params = $request->only(['emoji', 'status_text', 'memo']);
+
+        if ($emotion->user_id !== \Auth::user()->id) {
+            throw new \Exception('不正なアクセスです。');
+        }
+
+        $emotion->fill($params)->save();
+        return response($emotion, 200);
     }
 
-    private function form_params($team_user, $input)
+    private function isTeamExist($teamId, $userId) : bool
     {
-        return [
-            'keys' => [
-                'user_id'    => $team_user->user->id,
-                'team_id'    => $team_user->team->id,
-                'entered_on' => $input['entered_on'],
-            ],
-            'params' => [
-                'team_user_id' => $team_user->id,
-                'status_text'  => $input['status_text'],
-                'emoji'        => $input['emoji'],
-                'memo'         => $input['memo'],
-            ],
-        ];
+        return \App\TeamUser::teamId($teamId)->userId($userId)->exists();
     }
 }

@@ -59,7 +59,7 @@
         <div class="text-xs-center">
           <v-dialog v-model="dialog" width="500">
             <emotion-modal
-              :team-id="me.user.team_id"
+              :team-user="me.user"
               :emotion="modalEmotion"
               :date="modalDate"
               @closeModal="closeModal()"
@@ -117,6 +117,7 @@
           this.months = res.data.months;
           this.loading = false;
         }).catch(e => {
+          // TODO: @tosite error handling
         });
       },
       openModal: function (emotion, day) {
@@ -125,6 +126,7 @@
         this.dialog = true;
       },
       closeModal: function () {
+        this.fetchParams();
         this.dialog = false;
       },
     },

@@ -45,7 +45,7 @@ class ViewTeamUserController extends Controller
             'month'    => $current,
             'emotions' => $emotions,
             'isMe'     => $isMe,
-            'teamId'   => $teamUser->team_id,
+            'user'     => $teamUser,
         ]);
     }
 
