@@ -46,10 +46,6 @@ Vue.component('team-user-me',        require('./components/TeamUserMe.vue').defa
 Vue.component('not-joined-sub-team-list', require('./components/NotJoinedSubTeamList.vue').default);
 
 Vue.component('sub-team-info-modal',  require('./components/SubTeams/SettingModal.vue').default);
-Vue.component('sub-team-info-modal-joined-user-tab',  require('./components/SubTeams/InfoModal/JoinedUserTab.vue').default);
-Vue.component('sub-team-info-modal-not-joined-user-tab',  require('./components/SubTeams/InfoModal/NotJoinedUserTab.vue').default);
-Vue.component('sub-team-info-modal-setting-tab',  require('./components/SubTeams/InfoModal/SettingTab.vue').default);
-
 Vue.component('sub-team-emotion-calendar-table',  require('./components/SubTeams/EmotionCalendarTable.vue').default);
 
 /**

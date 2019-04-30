@@ -8,11 +8,7 @@
 
     <v-card>
       <div>
-        <v-toolbar
-          color="primary"
-          dark
-          tabs
-        >
+        <v-toolbar color="primary" dark tabs>
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
@@ -35,24 +31,18 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item key="0" value="tab-0">
-            <sub-team-info-modal-joined-user-tab
-              :users="joinedUsers"
-            ></sub-team-info-modal-joined-user-tab>
+            <joined-user-tab :users="joinedUsers"></joined-user-tab>
           </v-tab-item>
 
           <v-tab-item key="1" value="tab-1">
             <v-card flat>
-              <sub-team-info-modal-not-joined-user-tab
-                :users="notJoinedUsers"
-              ></sub-team-info-modal-not-joined-user-tab>
+              <not-joined-user-tab :users="notJoinedUsers"></not-joined-user-tab>
             </v-card>
           </v-tab-item>
 
           <v-tab-item key="2" value="tab-2">
             <v-card flat>
-              <sub-team-info-modal-setting-tab
-                :sub-team="subTeam"
-              ></sub-team-info-modal-setting-tab>
+              <setting-tab :sub-team="subTeam"></setting-tab>
             </v-card>
           </v-tab-item>
 
@@ -65,8 +55,16 @@
 </template>
 
 <script>
+  import JoinedUserTab from './infoModal/JoinedUserTab';
+  import NotJoinedUserTab from './infoModal/NotJoinedUserTab';
+  import SettingTab from './infoModal/SettingTab';
   export default {
     props: ['subTeamId'],
+    components: {
+      'joined-user-tab': JoinedUserTab,
+      'not-joined-user-tab': NotJoinedUserTab,
+      'setting-tab': SettingTab,
+    },
     data() {
       return {
         dialog: false,
