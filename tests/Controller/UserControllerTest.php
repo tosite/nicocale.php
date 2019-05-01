@@ -21,9 +21,19 @@ class UserControllerTest extends TestCase
         $params = [
             'emoji_set' => 'undefined',
         ];
-
         $res = $this->actingAs($this->user, 'api')
             ->json('PUT', "/api/v1/users/{$this->user->id}", $params);
         $res->assertStatus(422);
+    }
+
+    public function test_update_成功()
+    {
+        $params = [
+            'bio' => 'Hello, world!',
+            'emoji_set' => 'google',
+        ];
+        $res = $this->actingAs($this->user, 'api')
+            ->json('PUT', "/api/v1/users/{$this->user->id}", $params);
+        $res->assertStatus(200);
     }
 }
