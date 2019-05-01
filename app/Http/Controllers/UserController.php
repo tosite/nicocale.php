@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class UserController extends Controller
 {
-    public function update(Request $request, $teamUserId)
+    public function update(\App\Http\Requests\Users\Put $request, $userId)
     {
     }
 }

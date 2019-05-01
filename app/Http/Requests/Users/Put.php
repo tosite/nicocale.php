@@ -14,16 +14,19 @@ class Put extends FormRequest
     public function rules()
     {
         return [
-            ''
+            'bio' => 'string',
+            'emoji_set' => [
+                'string',
+                Rule::in(['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']),
+            ],
         ];
     }
 
     public function attributes()
     {
         return [
-            'emoji' => 'Emoji',
-            'status_text' => 'ステータステキスト',
-            'memo' => 'メモ',
+            'bio' => '自己紹介',
+            'emoji_set' => 'Emojiスキン',
         ];
     }
 }
