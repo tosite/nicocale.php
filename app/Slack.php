@@ -23,7 +23,7 @@ class Slack extends Model
         $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
         $res = $this->client->get($url);
         $data = json_decode($res->getBody(), true);
-        if ($data["ok"] === false) throw new \Exception($data);
+        if ($data["ok"] === false) throw new \Exception(json_encode($data));
         return json_decode(json_encode($data));
     }
 
@@ -32,7 +32,7 @@ class Slack extends Model
         $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
         $res = $this->client->post($url);
         $data = json_decode($res->getBody(), true);
-        if ($data["ok"] === false) throw new \Exception($data);
+        if ($data["ok"] === false) throw new \Exception(json_encode($data));
         return json_decode(json_encode($data));
     }
 
@@ -43,22 +43,26 @@ class Slack extends Model
 
     public function channelsList()
     {
-        return $this->httpGet('channels.list');
+        $res = $this->httpGet('channels.list');
+        return (object) $res['channels'];
     }
 
     public function emojiList()
     {
-        return $this->httpGet('emoji.list')->emoji;
+        $res = $this->httpGet('emoji.list');
+        return (object)$res['emoji'];
     }
 
     public function usersList()
     {
-        return $this->httpGet('users.list')->members;
+        $res = $this->httpGet('users.list');
+        return (object)$res['members'];
     }
 
     public function usersProfileGet()
     {
-        return $this->httpGet('users.profile.get')->profile;
+        $res = $this->httpGet('users.profile.get');
+        return (object)$res['profile'];
     }
 
     // https://api.slack.com/methods/users.profile.set/test

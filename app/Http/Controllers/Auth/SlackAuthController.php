@@ -29,6 +29,7 @@ class SlackAuthController extends Controller
             'emoji:read',
             'users.profile:read',
             'users.profile:write',
+            'channels:read',
         ];
         return \Socialite::driver('slack')->scopes($scope)->redirect();
     }
