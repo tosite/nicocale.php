@@ -9,9 +9,10 @@ class UserController extends Controller
         if (\Auth::user()->id !== $userId) {
             throw new \Exception('ユーザーIDが不正です。');
         }
-        $input = $request->only(['bio', 'emoji_set']);
+        $params = $request->only(['bio', 'emoji_set']);
+        $params['bio'] = empty($params['bio']) ? "" : $params['bio'];
         $user = \App\User::find($userId);
-        $user->fill($input)->save();
+        $user->fill($params)->save();
         return response($user, 200);
     }
 }

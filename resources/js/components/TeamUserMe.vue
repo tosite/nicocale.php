@@ -35,9 +35,35 @@
               name="input-7-4"
               label="自己紹介"
               hint=""
-              :value="teamUser.user.bio"
+              v-model="teamUser.user.bio"
             ></v-textarea>
-            <v-btn color="primary">更新する</v-btn>
+
+            <v-expansion-panel class="elevation-0">
+              <v-expansion-panel-content key="1">
+                <template v-slot:header>
+                  <div>Emojiスキンを選択する</div>
+                </template>
+
+                <v-card>
+                  <v-radio-group v-model="radio">
+                    <v-radio
+                      v-for="set in emojiSet"
+                      :key="set"
+                      :value="set"
+                      color="primary"
+                    >
+                      <template v-slot:label>
+                        <emoji emoji="grin" :set="set" :size="32"></emoji>
+                        <emoji emoji="slightly_smiling_face" :set="set" :size="32"></emoji>
+                        <emoji emoji="disappointed_relieved" :set="set" :size="32"></emoji>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+
+            <v-btn color="primary" @click="save">更新する</v-btn>
           </div>
         </v-card-text>
       </v-card>
@@ -48,5 +74,27 @@
 <script>
   export default {
     props: ['teamUser',],
+    data() {
+      return {
+        radio: 'apple',
+        emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
+      }
+    },
+    created: function () {
+      this.radio = this.teamUser.user.emoji_set;
+    },
+    methods: {
+      save: function () {
+        let params = { bio: this.teamUser.user.bio, emoji_set: this.radio };
+        axios.put(`/api/v1/users/${this.teamUser.user.id}`, params)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(e => {
+            // TODO: @tosite error handling
+            console.log(e.response.data);
+          })
+      }
+    },
   }
 </script>
