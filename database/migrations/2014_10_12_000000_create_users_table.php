@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('slack_user_id')->primary();
             $table->string('avatar');
             $table->string('bio')->default('');
+            $table->string('emoji_set')->default('apple');
             $table->rememberToken();
             $table->timestamps();
         });
