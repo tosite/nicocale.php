@@ -11,7 +11,7 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
     Route::get('sub-teams/{subTeamId}/info-modals', 'ApiSubTeamController@infoModals');
     Route::get('sub-teams/{subTeamId}/calendars/{year}/{month}', 'ApiSubTeamController@calendar');
 
-    Route::put('team-users/{teamUserId}', 'TeamUserController@update');
+    Route::put('users/{userId}', 'UserController@update');
 
     Route::post('sub-teams', 'SubTeamController@store');
     Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');
