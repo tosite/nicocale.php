@@ -144,7 +144,7 @@
         if (this.emotion.hasOwnProperty('id')) {
           let e = this.emotion;
           let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo };
-          axios.put(`/emotions/${e.id}`, params)
+          axios.put(`/api/v1/emotions/${e.id}`, params)
             .then (res => {
               console.log(res);
             })
@@ -163,7 +163,7 @@
             memo: e.memo,
             entered_on: this.date,
           };
-          axios.post('/emotions', params)
+          axios.post('/api/v1/emotions', params)
             .then(res => {
               console.log(res);
             })
