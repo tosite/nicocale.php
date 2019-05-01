@@ -2,61 +2,19 @@
 
 namespace App;
 
-use GuzzleHttp\Client;
-use Illuminate\Database\Eloquent\Model;
 
-class Slack extends Model
+class Slack extends SlackBase
 {
-    protected $client = '';
-    protected $token = '';
-    protected $base_url = 'https://slack.com/api';
-
-    public function __construct($slack_token, array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->client = new Client;
-        $this->token = $slack_token;
-    }
-
-    private function httpGet($action, $param = '')
-    {
-        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
-        $res = $this->client->get($url);
-        $data = json_decode($res->getBody(), true);
-        if ($data["ok"] === false) throw new \Exception(json_encode($data));
-        return json_decode(json_encode($data));
-    }
-
-    private function httpPost($action, $param = '')
-    {
-        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
-        $res = $this->client->post($url);
-        $data = json_decode($res->getBody(), true);
-        if ($data["ok"] === false) throw new \Exception(json_encode($data));
-        return json_decode(json_encode($data));
-    }
-
-    private function to_query($params)
-    {
-        return urlencode(json_encode(array_filter($params)));
-    }
-
     public function channelsList()
     {
         $res = $this->httpGet('channels.list');
-        return (object) $res['channels'];
+        return $res['channels']; // [0 => [...]]
     }
 
     public function emojiList()
     {
         $res = $this->httpGet('emoji.list');
-        return (object)$res['emoji'];
-    }
-
-    public function usersList()
-    {
-        $res = $this->httpGet('users.list');
-        return (object)$res['members'];
+        return $res['emoji']; // ['name' => 'png']
     }
 
     public function usersProfileGet()
