@@ -43,22 +43,22 @@ class Slack extends Model
 
     public function channelsList()
     {
-        return $this->httpGet('channels.list', "&token={$this->token}");
+        return $this->httpGet('channels.list');
     }
 
     public function emojiList()
     {
-        return $this->httpGet('emoji.list', "&token={$this->token}")->emoji;
+        return $this->httpGet('emoji.list')->emoji;
     }
 
     public function usersList()
     {
-        return $this->httpGet('users.list', "&token={$this->token}")->members;
+        return $this->httpGet('users.list')->members;
     }
 
     public function usersProfileGet()
     {
-        return $this->httpGet('users.profile.get', "&token={$this->token}")->user;
+        return $this->httpGet('users.profile.get')->profile;
     }
 
     // https://api.slack.com/methods/users.profile.set/test
