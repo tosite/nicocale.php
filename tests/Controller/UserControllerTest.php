@@ -8,11 +8,22 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class UserControllerTest extends TestCase
 {
     use DatabaseTransactions;
+    protected $user;
 
-    public function testExample()
+    public function setUp()
     {
-        $response = $this->get('/');
+        parent::setUp();
+        $this->user = \App\User::first();
+    }
 
-        $response->assertStatus(200);
+    public function test_update_データ不備()
+    {
+        $params = [
+            'emoji_set' => 'undefined',
+        ];
+
+        $res = $this->actingAs($this->user, 'api')
+            ->json('PUT', "/api/v1/users/{$this->user->id}", $params);
+        $res->assertStatus(422);
     }
 }
