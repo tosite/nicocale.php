@@ -32,9 +32,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function slack ()
+    public function slack ()
     {
-        return new \App\Slack();
+        return new \App\Slack($this->slack_token);
     }
 
     public function teamUsers ()

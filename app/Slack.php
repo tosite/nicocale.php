@@ -7,81 +7,74 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slack extends Model
 {
-    protected $client   = '';
-    protected $token    = '';
+    protected $client = '';
+    protected $token = '';
     protected $base_url = 'https://slack.com/api';
 
-    public function __construct (array $attributes = [])
+    public function __construct($slack_token, array $attributes = [])
     {
         parent::__construct($attributes);
         $this->client = new Client;
-        $this->token  = \Auth::user()->slack_token;
+        $this->token = $slack_token;
     }
 
-    private function httpGet ($action, $param = '')
+    private function httpGet($action, $param = '')
     {
-        $url  = "{$this->base_url}/{$action}?token={$this->token}{$param}";
-        $res  = $this->client->get($url);
+        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
+        $res = $this->client->get($url);
         $data = json_decode($res->getBody(), true);
-        if ($data["ok"] === false) throw new \Exception('error');
+        if ($data["ok"] === false) throw new \Exception($data);
         return json_decode(json_encode($data));
     }
 
-    private function httpPost ($action, $param = '')
+    private function httpPost($action, $param = '')
     {
-        $url  = "{$this->base_url}/{$action}?token={$this->token}{$param}";
-        $res  = $this->client->post($url);
+        $url = "{$this->base_url}/{$action}?token={$this->token}{$param}";
+        $res = $this->client->post($url);
         $data = json_decode($res->getBody(), true);
-        dd($data);
-        if ($data["ok"] === false) throw new \Exception($data['error']);
+        if ($data["ok"] === false) throw new \Exception($data);
         return json_decode(json_encode($data));
     }
 
-    public function channelsList ()
+    private function to_query($params)
     {
-        return $this->httpGet('channels.list');
+        return urlencode(json_encode(array_filter($params)));
     }
 
-    public static function emojiList ()
+    public function channelsList()
     {
-        $model = new static();
-        return $model->httpGet('emoji.list')->emoji;
+        return $this->httpGet('channels.list', "&token={$this->token}");
     }
 
-    public static function usersList ()
+    public function emojiList()
     {
-        $model = new static();
-        return $model->httpGet('users.list')->members;
+        return $this->httpGet('emoji.list', "&token={$this->token}")->emoji;
     }
 
-    // https://api.slack.com/methods/users.info/test
-    public static function usersInfo ($user_id = null)
+    public function usersList()
     {
-        $user_id = $user_id ?: \Auth::user()->slack_user_id;
-        $model   = new static();
-        return $model->httpGet('users.info', "&user={$user_id}")->user;
+        return $this->httpGet('users.list', "&token={$this->token}")->members;
+    }
+
+    public function usersProfileGet()
+    {
+        return $this->httpGet('users.profile.get', "&token={$this->token}")->user;
     }
 
     // https://api.slack.com/methods/users.profile.set/test
     // {"status_text":"test","status_emoji":":100:","status_expiration":0}
     // profile=%7B%22status_text%22%3A%22test%22%2C%22status_emoji%22%3A%22%3A100%3A%22%7D
-    public static function usersProfileSet ($status_text = '', $status_emoji = '')
+    public function usersProfileSet($status_text = '', $status_emoji = '')
     {
         $params = [
-                'status_text'       => $status_text,
-                'status_emoji'      => $status_emoji,
-                'status_expiration' => strtotime(date('Y/m/d 23:59:59')),
+            'status_text' => $status_text,
+            'status_emoji' => $status_emoji,
+            'status_expiration' => strtotime(date('Y/m/d 23:59:59')),
         ];
-        $model = new static();
 
         if (empty($status_text) && empty($status_emoji)) throw new \Exception('params not exist');
-        $query = to_query($params);
-        return $model->httpPost('users.profile.set', "&profile={$query}");
-    }
-
-    public function test ()
-    {
-        return $this->httpGet('users.profile.get');
+        $query = $this->to_query($params);
+        return $this->httpPost('users.profile.set', "&profile={$query}");
     }
 
 }
