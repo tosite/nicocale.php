@@ -14,5 +14,9 @@ class SubTeamController extends Controller
 
     public function update(\App\Http\Requests\SubTeams\Put $request, $subTeamId)
     {
+        $params = $request->only(['name', 'bio']);
+        $subTeam = \App\SubTeam::find($subTeamId);
+        $subTeam->fill($params)->save();
+        return $subTeam;
     }
 }
