@@ -2,9 +2,7 @@
 
 namespace Tests\Feature;
 
-use Mockery\Exception;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class EmotionControllerTest extends TestCase

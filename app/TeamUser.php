@@ -21,7 +21,7 @@ class TeamUser extends Model
     }
 
     protected $fillable = [
-        'user_id', 'team_id', 'slack_access',
+        'user_id', 'team_id', 'slack_access', 'notify_channel',
     ];
 
     public function user ()         { return $this->belongsTo('App\User', 'user_id', 'id'); }

@@ -25,7 +25,7 @@ class User extends Authenticatable
     }
 
     protected $fillable = [
-        'name', 'slack_token', 'slack_user_id', 'sns', 'avatar',
+        'name', 'slack_token', 'slack_user_id', 'sns', 'avatar', 'bio', 'emoji_set',
     ];
 
     protected $hidden = [

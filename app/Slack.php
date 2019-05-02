@@ -29,6 +29,19 @@ class Slack extends SlackBase
         return (object)$res['team'];
     }
 
+    public function chatPostMessage($channel, $text, $emoji = ':smile:')
+    {
+        $params = [
+            'channel' => $channel,
+            'text' => $text,
+            'icon_emoji' => $emoji,
+        ];
+
+        $query = $this->to_raw_query($params);
+        $res = $this->httpPost('chat.postMessage', $query);
+        return $res;
+    }
+
     // https://api.slack.com/methods/users.profile.set/test
     // {"status_text":"test","status_emoji":":100:","status_expiration":0}
     // profile=%7B%22status_text%22%3A%22test%22%2C%22status_emoji%22%3A%22%3A100%3A%22%7D

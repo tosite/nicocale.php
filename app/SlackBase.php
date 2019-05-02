@@ -40,4 +40,14 @@ abstract class SlackBase extends Model
     {
         return urlencode(json_encode(array_filter($params)));
     }
+
+    protected function to_raw_query($params)
+    {
+        $query = '';
+        foreach($params as $key => $param)
+        {
+            $query .= "&{$key}={$param}";
+        }
+        return $query;
+    }
 }
