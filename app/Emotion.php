@@ -39,17 +39,4 @@ class Emotion extends Model
         $query->whereBetween('entered_on', [date('Y-m-01', $date_buf), date('Y-m-t', $date_buf)]);
     }
 
-    public static function createOrUpdateEmotion ($keys, $params)
-    {
-        $emotion = self::firstOrNew($keys);
-        $emotion->fill($params);
-        $emotion->save();
-        // TODO: 移設
-        if ($keys['entered_on'] == date('Y-m-d'))
-        {
-            \App\Slack::usersProfileSet($params['status_text'], $params['emoji']);
-        }
-        return $emotion;
-    }
-
 }

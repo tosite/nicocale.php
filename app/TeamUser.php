@@ -32,10 +32,4 @@ class TeamUser extends Model
     public function scopeTeamId ($query, $id) { return $query->where(['team_id' => $id]); }
     public function scopeUserId ($query, $id) { return $query->where(['user_id' => $id]); }
     public function scopeMe($query)           { return $query->userId(\Auth::user()->id); }
-
-
-    public static function findByTeamId ($team_id)
-    {
-        return self::teamId($team_id)->userId()->first();
-    }
 }

@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token', 'slack_token',
     ];
 
     public function slack ()
@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function teamUsers ()
     {
-        return $this->hasMany('App\TeamUser', 'slack_user_id', 'slack_user_id');
+        return $this->hasMany('App\TeamUser', 'user_id', 'id');
     }
 
     public function emotions ()

@@ -32,14 +32,4 @@ class SubTeamUser extends Model
     public function scopeTeamId     ($query, $teamId)     { return $query->where(['team_id' => $teamId]); }
     public function scopeSubTeamId  ($query, $subTeamId)  { return $query->where(['sub_team_id' => $subTeamId]); }
     public function scopeTeamUserId ($query, $teamUserId) { return $query->where(['team_user_id' => $teamUserId]); }
-
-    public static function findOrCreate($sub_team_id) {
-        $subTeam  = \App\SubTeam::find($sub_team_id);
-        $teamUser = \App\TeamUser::findByTeamId($subTeam->team_id);
-        return self::firstOrCreate([
-            'team_id'      => $subTeam->team_id,
-            'sub_team_id'  => $sub_team_id,
-            'team_user_id' => $teamUser->id
-        ]);
-    }
 }
