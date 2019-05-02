@@ -1,27 +1,21 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12 sm8 offset-sm2 class="pt-4">
-      <v-card v-if="subTeam != null">
+  <v-card v-if="subTeam != null" flat>
 
-        <v-card-text>
-          <v-text-field
-            label="チーム名"
-            v-model="subTeam.name"
-          ></v-text-field>
+    <v-card-text>
+      <v-text-field
+        label="チーム名"
+        v-model="subTeam.name"
+      ></v-text-field>
 
-          <v-textarea label="概要" v-model="subTeam.bio"></v-textarea>
+      <v-textarea label="概要" v-model="subTeam.bio"></v-textarea>
 
-        </v-card-text>
+    </v-card-text>
 
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="save">更新する</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" flat @click="save">更新する</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
