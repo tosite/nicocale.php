@@ -15,4 +15,6 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
 
     Route::post('emotions', 'EmotionController@store');
     Route::put('emotions/{emotionId}', 'EmotionController@update');
+
+    Route::get('slack-notify/{channel}/test', 'SlackNotifyController@test');
 });

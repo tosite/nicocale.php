@@ -117,7 +117,13 @@
           })
       },
       notifyTest: function () {
-        alert('selected');
+        axios.get(`/api/v1/slack-notify/${this.selectChannel}/test`)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(e => {
+            console.log(e.response.data);
+          });
       },
     },
   }
