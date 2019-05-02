@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class SubTeamController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\SubTeams\Post $request)
     {
+        $params = $request->only(['team_id', 'name', 'bio']);
+        return response(\App\SubTeam::create($params), 201);
     }
 
 
-    public function update(Request $request, $subTeamId)
+    public function update(\App\Http\Requests\SubTeams\Put $request, $subTeamId)
     {
+        $params = $request->only(['name', 'bio']);
+        $subTeam = \App\SubTeam::find($subTeamId);
+        if ($request->input()['team_id'] != $subTeam->team_id) {
+            throw new \Exception('不正な操作です。');
+        }
+        $subTeam->fill($params)->save();
+        return $subTeam;
     }
 }

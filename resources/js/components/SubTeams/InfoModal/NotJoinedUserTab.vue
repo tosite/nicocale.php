@@ -59,8 +59,7 @@
     },
     computed: {
       filteredUsers: function () {
-        if (this.users == null)
-        {
+        if (this.users == null) {
           return null;
         }
         return this.users.filter((user) => {

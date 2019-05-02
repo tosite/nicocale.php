@@ -23,30 +23,34 @@
             >
               <v-tab key="0" href="#tab-0">メンバー</v-tab>
               <v-tab key="1" href="#tab-1">参加していないメンバー</v-tab>
-              <v-tab key="2" href="#tab-2">Settings</v-tab>
+              <v-tab key="2" href="#tab-2">設定</v-tab>
             </v-tabs>
           </template>
 
         </v-toolbar>
 
-        <v-tabs-items v-model="tab">
-          <v-tab-item key="0" value="tab-0">
-            <joined-user-tab :users="joinedUsers"></joined-user-tab>
-          </v-tab-item>
+        <v-layout row wrap>
+          <v-flex xs12 sm8 offset-sm2 class="pt-2">
+            <v-tabs-items v-model="tab">
+              <v-tab-item key="0" value="tab-0">
+                <joined-user-tab :users="joinedUsers"></joined-user-tab>
+              </v-tab-item>
 
-          <v-tab-item key="1" value="tab-1">
-            <v-card flat>
-              <not-joined-user-tab :users="notJoinedUsers"></not-joined-user-tab>
-            </v-card>
-          </v-tab-item>
+              <v-tab-item key="1" value="tab-1">
+                <v-card flat>
+                  <not-joined-user-tab :users="notJoinedUsers"></not-joined-user-tab>
+                </v-card>
+              </v-tab-item>
 
-          <v-tab-item key="2" value="tab-2">
-            <v-card flat>
-              <setting-tab :sub-team="subTeam"></setting-tab>
-            </v-card>
-          </v-tab-item>
+              <v-tab-item key="2" value="tab-2">
+                <v-card flat>
+                  <setting-tab :sub-team="subTeam"></setting-tab>
+                </v-card>
+              </v-tab-item>
 
-        </v-tabs-items>
+            </v-tabs-items>
+          </v-flex>
+        </v-layout>
       </div>
 
     </v-card>
@@ -58,6 +62,7 @@
   import JoinedUserTab from './infoModal/JoinedUserTab';
   import NotJoinedUserTab from './infoModal/NotJoinedUserTab';
   import SettingTab from './infoModal/SettingTab';
+
   export default {
     props: ['subTeamId'],
     components: {

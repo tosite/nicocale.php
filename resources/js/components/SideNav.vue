@@ -86,11 +86,11 @@
 
           <v-list-tile @click.stop="locateSubTeamNotJoined(currentTeam.id)">
             <v-list-tile-content>
-              <v-list-tile-title>サブチームを追加する</v-list-tile-title>
+              <v-list-tile-title>チームを追加する</v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-icon color="grey lighten-1">add_circle</v-icon>
+              <v-icon color="grey lighten-1" @click.stop="dialog = !dialog">add_circle</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
@@ -128,6 +128,31 @@
         </v-list>
       </v-menu>
     </v-toolbar>
+
+    <v-dialog v-model="dialog" width="500">
+      <v-card>
+        <v-card-title class="headline primary white--text" primary-title>チームを作成する</v-card-title>
+
+        <v-card-text>
+          <v-text-field
+            label="チーム名"
+            v-model="newSubTeam.name"
+          ></v-text-field>
+
+          <v-textarea label="概要" v-model="newSubTeam.bio"></v-textarea>
+
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="disabled" flat @click="cancel">閉じる</v-btn>
+          <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
@@ -158,6 +183,10 @@
         currentTeam: {},
         user: {},
         loaded: false,
+        newSubTeam: {
+          name: '',
+          bio: '',
+        },
       }
     },
     created() {
@@ -166,6 +195,7 @@
         this.teams = res.data.teams;
         this.subTeams = res.data.subTeams;
         this.currentTeam = res.data.currentTeam;
+        this.newSubTeam.team_id = this.currentTeam.id;
         this.loaded = true;
       }).catch((e) => {
         console.log(e.data)
@@ -187,6 +217,24 @@
       },
       locateMe: function (teamId) {
         window.location = `/teams/${teamId}/me`
+      },
+      createSubTeam: function () {
+        axios.post(`/api/v1/sub-teams`, this.newSubTeam)
+          .catch(res => {
+            console.log(res);
+            // TODO: @tosite add sub-team-user
+          })
+          .then(e => {
+            console.log(e.response);
+          })
+          .finally(() => {
+            this.dialog = false;
+          });
+      },
+      cancel: function () {
+        this.newSubTeam.name = '';
+        this.newSubTeam.bio = '';
+        this.dialog = false;
       },
     },
   }

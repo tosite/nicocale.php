@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
         for($cnt = 1; $cnt <= 3; $cnt++){
             $joinedSubTeams[] = \App\SubTeam::create([
                 'team_id' => $teamUser->team_id,
-                'avatar'  => 'https://nekogazou.com/wp-content/uploads/2015/03/gazou12-e1426694824704.jpg',
                 'bio'     => 'fugafuga',
                 'name'    => "joined-{$cnt}"
             ]);
@@ -46,7 +45,6 @@ class DatabaseSeeder extends Seeder
         for($cnt = 1; $cnt <= 3; $cnt++){
             $notJoinedSubTeams[] = \App\SubTeam::create([
                 'team_id' => $teamUser->team_id,
-                'avatar'  => 'https://nekogazou.com/wp-content/uploads/2015/03/gazou12-e1426694824704.jpg',
                 'bio'     => 'piyopiyo',
                 'name'    => "not-joined-{$cnt}"
             ]);
