@@ -19,11 +19,7 @@
 
         <v-list two-line subheader class="pb-0" v-else>
           <div v-for="subTeam in notJoinedSubTeams">
-            <v-list-tile :key="subTeam.id" avatar>
-              <v-list-tile-avatar>
-                <img :src="subTeam.avatar">
-              </v-list-tile-avatar>
-
+            <v-list-tile :key="subTeam.id">
               <v-list-tile-content>
                 <v-list-tile-title>{{ subTeam.name }}</v-list-tile-title>
                 <v-list-tile-sub-title>{{ subTeam.bio }}</v-list-tile-sub-title>
