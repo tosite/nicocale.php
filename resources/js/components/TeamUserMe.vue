@@ -106,7 +106,7 @@
     },
     methods: {
       save: function () {
-        let params = {bio: this.teamUser.user.bio, emoji_set: this.radio};
+        let params = {bio: this.teamUser.user.bio, emoji_set: this.radio, name: this.displayName};
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params)
           .then(res => {
             console.log(res);
