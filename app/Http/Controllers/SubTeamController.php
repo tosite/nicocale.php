@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class SubTeamController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\SubTeams\Post $request)
     {
     }
 
