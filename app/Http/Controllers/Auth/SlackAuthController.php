@@ -1,76 +1,77 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use App\User;
-use Auth;
-use Socialite;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers,
+    App\Http\Controllers\Controller;
 
 class SlackAuthController extends Controller
 {
     use AuthenticatesUsers;
 
-    public function redirectToProvider ()
+    const AUTH_SCOPE = [
+        'identity.basic',
+        'identity.email',
+        'identity.team',
+        'identity.avatar',
+    ];
+
+    const PERMISSION_SCOPE = [
+        'emoji:read',
+        'users.profile:read',
+        'users.profile:write',
+        'channels:read',
+    ];
+
+    public function redirectToProvider()
     {
         $this->middleware('guest')->except('logout');
-        $scope = [
-            'identity.basic',
-            'identity.email',
-            'identity.team',
-            'identity.avatar',
-        ];
-        return \Socialite::driver('slack')->scopes($scope)->redirect();
+        return \Socialite::driver('slack')->scopes(self::AUTH_SCOPE)->redirect();
     }
 
-    public function getPermission () {
-        $scope = [
-            'emoji:read',
-            'users.profile:read',
-            'users.profile:write',
-        ];
-        return \Socialite::driver('slack')->scopes($scope)->redirect();
+    public function getPermission()
+    {
+        return \Socialite::driver('slack')->scopes(self::PERMISSION_SCOPE)->redirect();
     }
 
-    public function handleProviderCallback ()
+    public function handleProviderCallback()
     {
         $this->middleware('guest')->except('logout');
-        try {
-            $user = \Socialite::driver('slack')->user();
-        }
-        catch (\Exception $e) {
-            \Log::error($e);
-            return redirect('/auth/slack');
-        }
+        $user = \Socialite::driver('slack')->user();
 
-        $authUser = $this->findOrCreateUser($user);
-        Auth::login($authUser, true);
+        $authUser = $this->firstOrCreateUser($user);
+        \Auth::login($authUser, true);
 
-        $team = \App\Team::findOrCreateTeam($user['team']);
-        \App\TeamUser::firstOrCreateTeamUser($authUser, $team);
+        $scope = $user->accessTokenResponseBody['scope'];
+        $slackTeam = (object) $user['team'];
+        $team = \App\Team::firstOrNew(['slack_team_id' => $slackTeam->id]);
+        $team->fill(['name' => $slackTeam->name, 'avatar' => $slackTeam->image_230])->save();
+        $teamUser = \App\TeamUser::firstOrCreate(['user_id' => $authUser->id, 'team_id' => $team->id]);
+
+        if(strpos($scope, self::PERMISSION_SCOPE[0]) !== false) {
+            $teamUser->fill(['slack_access' => 1])->save();
+        }
 
         return redirect()->route('home');
     }
 
-
-    private function findOrCreateUser ($slackUser)
+    public function logout()
     {
-        $authUser = User::where('slack_user_id', $slackUser->id)->first();
+        $this->middleware('guest')->except('logout');
+        \Auth::logout();
+        return redirect()->route('login');
+    }
+
+    protected function firstOrCreateUser($slackUser)
+    {
+        $authUser = \App\User::where('slack_user_id', $slackUser->id)->first();
         if ($authUser) return $authUser;
 
-        return User::create([
-                'name'          => $slackUser->name,
-                'slack_token'   => $slackUser->token,
-                'slack_user_id' => $slackUser->id,
-                'avatar'        => $slackUser['user']['image_512'],
+        return \App\User::create([
+            'name' => $slackUser->name,
+            'slack_token' => $slackUser->token,
+            'slack_user_id' => $slackUser->id,
+            'avatar' => $slackUser['user']['image_512'],
         ]);
     }
 
-    public function logout ()
-    {
-        $this->middleware('guest')->except('logout');
-        Auth::logout();
-        return redirect()->route('login');
-    }
 }

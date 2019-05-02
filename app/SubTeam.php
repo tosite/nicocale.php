@@ -27,13 +27,4 @@ class SubTeam extends Model
 
     public function scopeTeamId ($query, $teamId) { return $query->where(['team_id' => $teamId]); }
 
-    public static function notJoined ($subTeamId, $teamUserId) {
-        $notJoinedSubTeamId = self::leftjoin('sub_team_users', 'sub_teams.id', '=', 'sub_team_users.sub_team_id')
-            ->where(['sub_teams.id' => $subTeamId, 'sub_team_users.team_user_id' => $teamUserId])
-            ->whereNull('sub_team_users.id')
-            ->get('sub_teams.id')
-            ->toArray()
-        ;
-        return self::whereIn(['id' => $notJoinedSubTeamId])->get()->toArray();
-    }
 }

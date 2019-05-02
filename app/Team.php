@@ -29,37 +29,4 @@ class Team extends Model
     public function teamUsers () { return $this->hasMany('App\TeamUser', 'team_id', 'id'); }
     public function emotions ()  { return $this->hasMany('App\Emotion',  'team_id', 'id'); }
     public function subTeams ()  { return $this->hasMany('App\SubTeam',  'team_id', 'id'); }
-
-    public static function findOrCreateTeam ($slack_team)
-    {
-        $team         = self::firstOrNew(['slack_team_id' => $slack_team['id']]);
-        $team->name   = $slack_team['name'];
-        $team->avatar = $slack_team['image_230'];
-        $team->save();
-        return $team;
-    }
-
-    public static function joinedTeamList ()
-    {
-        $team_list  = [];
-        foreach (\App\TeamUser::userId()->get() as $t) {
-            $team_list[$t->id]['team'] = [
-                'id'           => $t->team->id,
-                'name'         => $t->team->name,
-                'avatar'       => $t->team->avatar,
-                'team_user_id' => $t->id,
-            ];
-
-            $team_list[$t->id]['sub_teams'] = [];
-            foreach (\App\SubTeamUser::teamUserId($t->id)->get() as $s) {
-                $team_list[$t->id]['sub_teams'][] = [
-                    'id'               => $s->sub_team->id,
-                    'name'             => $s->sub_team->name,
-                    'avatar'           => $s->sub_team->avatar,
-                    'sub_team_user_id' => $s->id,
-                ];
-            }
-        }
-        return $team_list;
-    }
 }
