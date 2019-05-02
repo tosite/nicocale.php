@@ -147,7 +147,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="disabled" flat @click="dialog = false">閉じる</v-btn>
+          <v-btn color="disabled" flat @click="cancel">閉じる</v-btn>
           <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
         </v-card-actions>
       </v-card>
@@ -226,7 +226,15 @@
           })
           .then(e => {
             console.log(e.response);
+          })
+          .finally(() => {
+            this.dialog = false;
           });
+      },
+      cancel: function () {
+        this.newSubTeam.name = '';
+        this.newSubTeam.bio = '';
+        this.dialog = false;
       },
     },
   }
