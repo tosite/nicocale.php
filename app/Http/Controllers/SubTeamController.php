@@ -10,7 +10,7 @@ class SubTeamController extends Controller
     }
 
 
-    public function update(Request $request, $subTeamId)
+    public function update(\App\Http\Requests\SubTeams\Put $request, $subTeamId)
     {
     }
 }
