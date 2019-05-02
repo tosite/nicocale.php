@@ -24,16 +24,14 @@ class ViewTeamUserController extends Controller
         $current = new Carbon("{$year}-{$month}-1");
 
         $calendar = $this->createCalendar($current->format('Ym'));
-        $userEmotions  = \App\Emotion::teamUserId($teamUser->id)
+        $userEmotions = \App\Emotion::teamUserId($teamUser->id)
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
-            ->keyBy('entered_on')
-        ;
+            ->keyBy('entered_on');
 
         $emotions = [];
-        foreach ($calendar as $cal)
-        {
+        foreach ($calendar as $cal) {
             $d = $cal->format('Y-m-d');
             $emotions[$d] = [
                 'date' => $cal,
@@ -42,10 +40,10 @@ class ViewTeamUserController extends Controller
         }
 
         return view('team_users.calendars.index', [
-            'month'    => $current,
+            'month' => $current,
             'emotions' => $emotions,
-            'isMe'     => $isMe,
-            'user'     => $teamUser,
+            'isMe' => $isMe,
+            'user' => $teamUser,
         ]);
     }
 
@@ -56,8 +54,16 @@ class ViewTeamUserController extends Controller
 
     public function me($teamId)
     {
+        $teamUser = \App\TeamUser::with(['user', 'team'])->teamId($teamId)->me()->first();
+        $slack = \Auth::user()->slack();
+        $profile = $slack->usersProfileGet();
+        $names = [$profile->real_name, $profile->display_name];
+        $channels = ($teamUser->slack_access) ? $slack->channelsList() : [];
+
         return view('team_users.me.index', [
-            'teamUser' => \App\TeamUser::with(['user','team'])->teamId($teamId)->me()->first(),
+            'teamUser' => $teamUser,
+            'names' => $names,
+            'channels' => $channels,
         ]);
     }
 

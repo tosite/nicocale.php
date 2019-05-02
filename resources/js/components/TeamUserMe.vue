@@ -6,10 +6,18 @@
           <img :src="teamUser.user.avatar" alt="avatar">
         </v-avatar>
 
-        <v-card-title primary-title class="text-xs-center pb-1">
-          <div>
-            <h3 class="headline mb-0 text-xs-center">{{ teamUser.user.name }}</h3>
-          </div>
+        <v-card-title primary-title class="text-xs-center pb-1 pt-1">
+          <v-radio-group v-model="displayName">
+            <v-radio
+              v-for="name in names"
+              :key="name"
+              :value="name"
+              :label="name"
+              color="primary"
+            >
+            </v-radio>
+          </v-radio-group>
+
         </v-card-title>
         <v-card-text>
           <div>
@@ -21,11 +29,21 @@
               </p>
             </div>
             <div v-else>
-              <p>
-                お使いのアカウントはSlackと連携されています。<br>
-                <a href="">連携を解除しますか？</a>
-              </p>
-              <p>-- ここに通知先チャンネルを出す --</p>
+              <p>お使いのアカウントはSlackと連携されています。</p>
+              <v-layout wrap align-center>
+                <v-flex xs6 md8>
+                  <v-select
+                    v-model="selectChannel"
+                    :items="this.channels"
+                    item-text="name"
+                    item-value="id"
+                    label="通知先チャンネル"
+                  ></v-select>
+                </v-flex>
+                <v-flex xs6 md4>
+                  <v-btn color="primary" @click="notifyTest">テスト</v-btn>
+                </v-flex>
+              </v-layout>
             </div>
           </div>
           <v-divider></v-divider>
@@ -73,19 +91,22 @@
 
 <script>
   export default {
-    props: ['teamUser',],
+    props: ['teamUser', 'names', 'channels'],
     data() {
       return {
         radio: 'apple',
+        displayName: '',
         emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
+        selectChannel: {},
       }
     },
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
+      this.displayName = this.teamUser.user.name;
     },
     methods: {
       save: function () {
-        let params = { bio: this.teamUser.user.bio, emoji_set: this.radio };
+        let params = {bio: this.teamUser.user.bio, emoji_set: this.radio};
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params)
           .then(res => {
             console.log(res);
@@ -94,7 +115,10 @@
             // TODO: @tosite error handling
             console.log(e.response.data);
           })
-      }
+      },
+      notifyTest: function () {
+        alert('selected');
+      },
     },
   }
 </script>
