@@ -29,6 +29,18 @@ class SubTeamControllerTest extends TestCase
 //        dd($res->baseResponse->getContent());
     }
 
+    public function test_store_成功()
+    {
+        $params = [
+            'team_id' => $this->subTeamUser->team_id,
+            'name' => 'test',
+            'bio' => 'hello',
+        ];
+        $res = $this->actingAs($this->user, 'api')
+            ->json('POST', "/api/v1/sub-teams", $params);
+        $res->assertStatus(201);
+    }
+
     public function test_update_データ不備()
     {
         $params = ['name' => null];

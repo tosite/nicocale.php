@@ -7,6 +7,7 @@ class SubTeamController extends Controller
 
     public function store(\App\Http\Requests\SubTeams\Post $request)
     {
+        $params = $request->only(['team_id', 'name', 'bio']);
     }
 
 

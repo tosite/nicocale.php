@@ -15,6 +15,7 @@ class Post extends FormRequest
     public function rules()
     {
         return [
+            'team_id' => 'required|string|exists:teams,id',
             'name' => 'required|string',
             'bio' => 'string|nullable',
         ];
@@ -23,6 +24,7 @@ class Post extends FormRequest
     public function attributes()
     {
         return [
+            'team_id' => 'チームID',
             'name' => 'チーム名',
             'bio' => '概要',
         ];
