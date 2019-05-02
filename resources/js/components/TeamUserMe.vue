@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12 sm8 offset-sm2>
       <v-card class="text-xs-center pt-3">
         <v-avatar size="128">
           <img :src="teamUser.user.avatar" alt="avatar">
@@ -31,7 +31,7 @@
             <div v-else>
               <p>お使いのアカウントはSlackと連携されています。</p>
               <v-layout wrap align-center>
-                <v-flex xs6 md8>
+                <v-flex xs12>
                   <v-select
                     v-model="selectChannel"
                     :items="this.channels"
@@ -40,9 +40,13 @@
                     label="通知先チャンネル"
                   ></v-select>
                 </v-flex>
-                <v-flex xs6 md4>
-                  <v-btn color="primary" @click="setChannel">通知</v-btn>
-                </v-flex>
+              </v-layout>
+              <v-layout>
+                <v-spacer></v-spacer>
+                <v-btn flat icon>
+                  <v-icon @click="unsetChannel">close</v-icon>
+                </v-btn>
+                <v-btn color="primary" @click="setChannel">通知</v-btn>
               </v-layout>
             </div>
           </div>
@@ -97,12 +101,13 @@
         radio: 'apple',
         displayName: '',
         emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
-        selectChannel: {},
+        selectChannel: '',
       }
     },
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
       this.displayName = this.teamUser.user.name;
+      this.selectChannel = this.teamUser.notify_channel;
     },
     methods: {
       save: function () {
@@ -125,6 +130,10 @@
             console.log(e.response.data);
           });
       },
+      unsetChannel: function () {
+        this.selectChannel = '';
+        this.setChannel();
+      }
     },
   }
 </script>
