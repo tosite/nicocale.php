@@ -15,7 +15,7 @@ class SideNavigationController extends Controller
             'user' => \Auth::user()->only(['name', 'avatar']),
             'teams' => $teams,
             'currentTeam' => $teams[0],
-            'subTeams' => \App\SubTeam::whereIn('id', $subTeamIds)->get(['id', 'team_id', 'avatar', 'name']),
+            'subTeams' => \App\SubTeam::whereIn('id', $subTeamIds)->get(['id', 'team_id', 'name']),
         ];
     }
 }

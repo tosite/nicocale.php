@@ -16,7 +16,6 @@ class CreateSubTeams extends Migration
         Schema::create('sub_teams', function (Blueprint $table) {
             $table->string('id', 36)->primary();
             $table->string('name');
-            $table->string('avatar');
             $table->string('bio')->default('');
             $table->string('team_id', 36)->index();
             $table->timestamps();

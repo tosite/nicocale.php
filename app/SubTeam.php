@@ -19,7 +19,7 @@ class SubTeam extends Model
     }
 
     protected $fillable = [
-        'name', 'avatar', 'team_id',
+        'name', 'team_id',
     ];
 
     public function team ()         { return $this->belongsTo('App\Team', 'team_id', 'id'); }
