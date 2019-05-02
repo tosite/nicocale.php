@@ -29,17 +29,17 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token', 'slack_token',
     ];
 
-    public static function slack ()
+    public function slack ()
     {
-        return new \App\Slack();
+        return new \App\Slack($this->slack_token);
     }
 
     public function teamUsers ()
     {
-        return $this->hasMany('App\TeamUser', 'slack_user_id', 'slack_user_id');
+        return $this->hasMany('App\TeamUser', 'user_id', 'id');
     }
 
     public function emotions ()
