@@ -136,9 +136,10 @@
         <v-card-text>
           <v-text-field
             label="チーム名"
+            v-model="newSubTeam.name"
           ></v-text-field>
 
-          <v-textarea label="概要"></v-textarea>
+          <v-textarea label="概要" v-model="newSubTeam.bio"></v-textarea>
 
         </v-card-text>
 
@@ -147,7 +148,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="disabled" flat @click="dialog = false">閉じる</v-btn>
-          <v-btn color="primary" flat @click="dialog = false">作成する</v-btn>
+          <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -182,6 +183,10 @@
         currentTeam: {},
         user: {},
         loaded: false,
+        newSubTeam: {
+          name: '',
+          bio: '',
+        },
       }
     },
     created() {
@@ -190,6 +195,7 @@
         this.teams = res.data.teams;
         this.subTeams = res.data.subTeams;
         this.currentTeam = res.data.currentTeam;
+        this.newSubTeam.team_id = this.currentTeam.id;
         this.loaded = true;
       }).catch((e) => {
         console.log(e.data)
@@ -211,6 +217,16 @@
       },
       locateMe: function (teamId) {
         window.location = `/teams/${teamId}/me`
+      },
+      createSubTeam: function () {
+        axios.post(`/api/v1/sub-teams`, this.newSubTeam)
+          .catch(res => {
+            console.log(res);
+            // TODO: @tosite add sub-team-user
+          })
+          .then(e => {
+            console.log(e.response);
+          });
       },
     },
   }
