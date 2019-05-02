@@ -16,6 +16,7 @@ class CreateTeamUsers extends Migration
         Schema::create('team_users', function (Blueprint $table) {
             $table->string('id', 36)->index();
             $table->boolean('slack_access')->index()->default(false);
+            $table->string('notify_channel')->index()->default('');
             $table->string('user_id', 36)->index();
             $table->string('team_id', 36)->index();
             $table->timestamps();
