@@ -60,4 +60,16 @@ class SubTeamControllerTest extends TestCase
             ->json('PUT', "/api/v1/sub-teams/{$this->subTeamUser->sub_team_id}", $params);
         $res->assertStatus(200);
     }
+
+    public function test_update_不正なTeamId()
+    {
+        $params = [
+            'team_id' => 'team-id',
+            'name' => 'test2',
+            'bio' => '',
+        ];
+        $res = $this->actingAs($this->user, 'api')
+            ->json('PUT', "/api/v1/sub-teams/{$this->subTeamUser->sub_team_id}", $params);
+        $res->assertStatus(500);
+    }
 }

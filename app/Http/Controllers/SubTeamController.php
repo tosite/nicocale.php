@@ -16,6 +16,9 @@ class SubTeamController extends Controller
     {
         $params = $request->only(['name', 'bio']);
         $subTeam = \App\SubTeam::find($subTeamId);
+        if ($request->input()['team_id'] != $subTeam->team_id) {
+            throw new \Exception('不正な操作です。');
+        }
         $subTeam->fill($params)->save();
         return $subTeam;
     }
