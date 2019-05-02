@@ -23,6 +23,12 @@ class Slack extends SlackBase
         return (object)$res['profile'];
     }
 
+    public function teamInfo()
+    {
+        $res = $this->httpGet('team.info');
+        return (object)$res['team'];
+    }
+
     // https://api.slack.com/methods/users.profile.set/test
     // {"status_text":"test","status_emoji":":100:","status_expiration":0}
     // profile=%7B%22status_text%22%3A%22test%22%2C%22status_emoji%22%3A%22%3A100%3A%22%7D

@@ -21,7 +21,7 @@ class TeamUser extends Model
     }
 
     protected $fillable = [
-        'user_id', 'team_id',
+        'user_id', 'team_id', 'slack_access',
     ];
 
     public function user ()         { return $this->belongsTo('App\User', 'user_id', 'id'); }
@@ -33,12 +33,7 @@ class TeamUser extends Model
     public function scopeUserId ($query, $id) { return $query->where(['user_id' => $id]); }
     public function scopeMe($query)           { return $query->userId(\Auth::user()->id); }
 
-    public static function firstOrCreateTeamUser ($user, $team)
-    {
-        $params    = ['user_id' => $user->id, 'team_id' => $team->id];
-        $team_user = self::firstOrCreate($params);
-        return $team_user;
-    }
+
     public static function findByTeamId ($team_id)
     {
         return self::teamId($team_id)->userId()->first();

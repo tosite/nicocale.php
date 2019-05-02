@@ -30,15 +30,6 @@ class Team extends Model
     public function emotions ()  { return $this->hasMany('App\Emotion',  'team_id', 'id'); }
     public function subTeams ()  { return $this->hasMany('App\SubTeam',  'team_id', 'id'); }
 
-    public static function findOrCreateTeam ($slack_team)
-    {
-        $team         = self::firstOrNew(['slack_team_id' => $slack_team['id']]);
-        $team->name   = $slack_team['name'];
-        $team->avatar = $slack_team['image_230'];
-        $team->save();
-        return $team;
-    }
-
     public static function joinedTeamList ()
     {
         $team_list  = [];
