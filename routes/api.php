@@ -7,6 +7,8 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
 
     Route::put('users/{userId}', 'UserController@update');
 
+    Route::put('team-users/{teamUserId}', 'TeamUserController@update');
+
     Route::post('sub-teams', 'SubTeamController@store');
     Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');
 
@@ -15,6 +17,4 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
 
     Route::post('emotions', 'EmotionController@store');
     Route::put('emotions/{emotionId}', 'EmotionController@update');
-
-    Route::get('slack-notify/{channel}/test', 'SlackNotifyController@test');
 });

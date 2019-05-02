@@ -41,7 +41,7 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs6 md4>
-                  <v-btn color="primary" @click="notifyTest">テスト</v-btn>
+                  <v-btn color="primary" @click="setChannel">通知</v-btn>
                 </v-flex>
               </v-layout>
             </div>
@@ -116,8 +116,8 @@
             console.log(e.response.data);
           })
       },
-      notifyTest: function () {
-        axios.get(`/api/v1/slack-notify/${this.selectChannel}/test`)
+      setChannel: function () {
+        axios.put(`/api/v1/team-users/${this.teamUser.id}`, {notify_channel: this.selectChannel})
           .then(res => {
             console.log(res);
           })
