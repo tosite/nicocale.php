@@ -45,11 +45,6 @@ class ViewTeamUserController extends Controller
         ]);
     }
 
-    public function list($teamUserId, $year, $month)
-    {
-        return view('team_users.lists.index');
-    }
-
     public function me($teamId)
     {
         $teamUser = \App\TeamUser::with(['user', 'team'])->teamId($teamId)->me()->first();

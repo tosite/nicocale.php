@@ -61,18 +61,4 @@ class ViewSubTeamController extends Controller
         ]);
     }
 
-    public function list($subTeamId, $year, $month)
-    {
-        return view('sub_teams.lists.index', [
-
-        ]);
-    }
-
-    public function setting($subTeamId)
-    {
-        return view('sub_teams.settings.index', [
-            'subTeam' => \App\SubTeam::find($subTeamId),
-        ]);
-    }
-
 }
