@@ -32,3 +32,7 @@ Route::get('/test', function () {
     \App\Slack::usersProfileSet('hogehoge', ':100:');
 //    dd(\App\Slack::emojiList());
 });
+
+//Route::get('side-navigations', 'SideNavigationController@index')->name('api_side_navigations.index');
+//Route::get('sub-teams/{subTeamId}/info-modals', 'ApiSubTeamController@infoModals');
+//Route::get('sub-teams/{subTeamId}/calendars/{year}/{month}', 'ApiSubTeamController@calendar');

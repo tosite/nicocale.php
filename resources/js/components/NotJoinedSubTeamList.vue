@@ -27,7 +27,7 @@
 
               <v-list-tile-action>
                 <v-btn icon ripple @click.stop="">
-                  <v-icon color="grey lighten-1">add_circle</v-icon>
+                  <v-icon color="grey lighten-1" @click="addSubTeamUser(subTeam.id)">add_circle</v-icon>
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
@@ -41,6 +41,16 @@
 
 <script>
   export default {
-    props: ['notJoinedSubTeams'],
+    props: ['notJoinedSubTeams', 'user'],
+    methods: {
+      addSubTeamUser: function (subTeamId) {
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: subTeamId, user_id: this.user.id})
+          .then(res => {
+            console.log(res);
+          }).catch(e => {
+          console.log(e.response);
+        });
+      },
+    },
   }
 </script>
