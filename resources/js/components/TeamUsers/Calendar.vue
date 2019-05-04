@@ -12,21 +12,21 @@
           <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
         </v-dialog>
       </v-layout>
-      <v-sheet height="600">
+      <v-sheet height="625">
         <v-calendar :now="localToday" :value="calendarFirstDay" color="primary" locale="jp-ja">
           <template v-slot:day="{ present, past, date }">
-            <template v-if="emotions[date] != null && emotions[date].user != null">
-              <p class="text-xs-center mb-0 mt-2">
+            <p class="text-xs-center mb-0 mt-2">
+              <template v-if="isThisMonth(date)">
                 <template v-if="me">
-                  <span @click="openModal(emotions[date].user, date)">
-                    <emotion-popper :emotion="emotions[date].user" :size="48"></emotion-popper>
+                  <span @click="openModal(emotions[date], date)">
+                    <emotion-popper :emotion="emotions[date]" :size="48"></emotion-popper>
                   </span>
                 </template>
                 <template v-else>
                   <emotion-popper :emotion="emotions[date].user" :size="48"></emotion-popper>
                 </template>
-              </p>
-            </template>
+              </template>
+            </p>
           </template>
         </v-calendar>
       </v-sheet>
@@ -91,6 +91,9 @@
       },
     },
     methods: {
+      isThisMonth (date) {
+        return dayjs(this.month.date).format('M') == dayjs(date).format('M');
+      },
       openModal: function (emotion, day) {
         this.modalDate = day;
         this.modalEmotion = (emotion == null) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);

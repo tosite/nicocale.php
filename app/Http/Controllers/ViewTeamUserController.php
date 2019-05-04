@@ -33,10 +33,7 @@ class ViewTeamUserController extends Controller
         $emotions = [];
         foreach ($calendar as $cal) {
             $d = $cal->format('Y-m-d');
-            $emotions[$d] = [
-                'date' => $cal,
-                'user' => isset($userEmotions[$d]) ? $userEmotions[$d] : null,
-            ];
+            $emotions[$d] = isset($userEmotions[$d]) ? $userEmotions[$d] : null;
         }
 
         return view('team_users.calendars.index', [
