@@ -40,7 +40,7 @@
             <v-list-tile
               v-for="team in teams"
               :key="team.id"
-              @click.stop=""
+              @click.stop="locateSubTeamIndex(team.id)"
             >
               <v-list-tile-action>
                 <v-avatar size="30px">
@@ -243,17 +243,14 @@
     },
     methods: {
       locateSubTeamIndex: function (teamId) {
-        window.location = `/teams/${teamId}/sub-teams`
-      },
-      locateSubTeamNew: function (teamId) {
-        window.location = `/teams/${teamId}/new`
+        window.location.href = `/teams/${teamId}`
       },
       locateSubTeamCalendar: function (subTeamId) {
         let month = dayjs().format('YYYY/M');
-        window.location = `/sub-teams/${subTeamId}/calendars/${month}`;
+        window.location.href = `/sub-teams/${subTeamId}/calendars/${month}`;
       },
       locateMe: function (teamId) {
-        window.location = `/teams/${teamId}/me`
+        window.location.href = `/teams/${teamId}/me`
       },
       closeSnackbar: function () {
         this.snackbar.open = false;

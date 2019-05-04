@@ -9,15 +9,6 @@ class ViewSubTeamController extends Controller
 {
     use \App\Traits\Datable;
 
-    public function index($teamId)
-    {
-        $teamUser = \App\TeamUser::teamId($teamId)->me()->first();
-        $subTeamUsers = \App\SubTeamUser::teamId($teamId)->teamUserId($teamUser->id)->get();
-        return view('sub_teams.index', [
-            'subTeamUsers' => $subTeamUsers,
-        ]);
-    }
-
     public function calendar($subTeamId, $year, $month)
     {
         $current       = new Carbon("{$year}-{$month}-1");
@@ -58,20 +49,6 @@ class ViewSubTeamController extends Controller
             'month'                => $current,
             'mySubTeamUser'        => $mySubTeamUser,
             'subTeamId'            => $subTeamId,
-        ]);
-    }
-
-    public function list($subTeamId, $year, $month)
-    {
-        return view('sub_teams.lists.index', [
-
-        ]);
-    }
-
-    public function setting($subTeamId)
-    {
-        return view('sub_teams.settings.index', [
-            'subTeam' => \App\SubTeam::find($subTeamId),
         ]);
     }
 

@@ -16,21 +16,7 @@ class ViewControllerTest extends TestCase
         $user = \App\User::first();
         $this->actingAs($user)
             ->get(route('teams.index'))
-            ->assertViewIs('teams.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
-    public function team_users_index(): void
-    {
-        $user = \App\User::first();
-        $teamUser = \App\TeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('team_users.index', ['teamUserId' => $teamUser->team_id]))
-            ->assertViewIs('team_users.index')
-            ->assertStatus(200);
+            ->assertStatus(302);
     }
 
     /**
@@ -68,20 +54,7 @@ class ViewControllerTest extends TestCase
         $teamUser = \App\TeamUser::userId($user->id)->first();
         $this->actingAs($user)
             ->get(route('sub_teams.index', ['teamId' => $teamUser->team_id]))
-            ->assertViewIs('sub_teams.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
-    public function sub_teams_setting_index(): void
-    {
-        $user = \App\User::first();
-        $subTeamUser = \App\SubTeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('sub_teams.setting', ['subTeamId' => $subTeamUser->sub_team_id]))
-            ->assertViewIs('sub_teams.settings.index')
+            ->assertViewIs('teams.index')
             ->assertStatus(200);
     }
 

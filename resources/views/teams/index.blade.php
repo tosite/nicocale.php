@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Team Index</h1>
-    @foreach($teamUsers as $tu)
-        <div>
-            <h2>{{ $tu->team->name }}</h2>
-            <a href="{{ route('sub_teams.index', ['teamId' => $tu->team_id]) }}">sub teams</a>
-            <a href="{{ route('team_users.index', ['teamId' => $tu->team_id]) }}">team users</a>
-            <a href="{{ route('team_users.me', ['teamId' => $tu->team_id]) }}">me</a>
-        </div>
-    @endforeach
+  <team-index
+    :team-user="{{ json_encode($teamUser) }}"
+    :date="{{ json_encode($today->format('Y-m-d')) }}"
+  ></team-index>
 @endsection
