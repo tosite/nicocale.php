@@ -18,16 +18,6 @@ class ViewSubTeamController extends Controller
         ]);
     }
 
-    public function notJoined($teamId)
-    {
-        $joinedSubTeamIds  = \App\SubTeamUser::teamId($teamId)->me()->pluck('sub_team_id');
-        $notJoinedSubTeams = \App\SubTeam::teamId($teamId)->whereNotIn('id', $joinedSubTeamIds)->get();
-        return view('sub_teams.not_joined.index', [
-            'notJoinedSubTeams' => $notJoinedSubTeams,
-            'user' => \Auth::user(),
-        ]);
-    }
-
     public function calendar($subTeamId, $year, $month)
     {
         $current       = new Carbon("{$year}-{$month}-1");

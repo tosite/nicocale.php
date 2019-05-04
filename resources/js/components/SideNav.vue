@@ -84,13 +84,13 @@
             <v-list-tile-title v-text="subTeam.name"></v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile @click.stop="locateSubTeamNotJoined(currentTeam.id)">
+          <v-list-tile @click.stop="dialog = !dialog">
             <v-list-tile-content>
               <v-list-tile-title>チームを追加する</v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-icon color="grey lighten-1" @click.stop="dialog = !dialog">add_circle</v-icon>
+              <v-icon color="grey lighten-1">add_circle</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
@@ -156,8 +156,8 @@
                   </v-list-tile-content>
 
                   <v-list-tile-action>
-                    <v-btn icon ripple @click.stop="">
-                      <v-icon color="grey lighten-1" @click="createSubTeamUser(subTeam.id)">add_circle</v-icon>
+                    <v-btn icon ripple @click="createSubTeamUser(subTeam.id)">
+                      <v-icon color="grey lighten-1">add_circle</v-icon>
                     </v-btn>
                   </v-list-tile-action>
                 </v-list-tile>
@@ -247,9 +247,6 @@
       },
       locateSubTeamNew: function (teamId) {
         window.location = `/teams/${teamId}/new`
-      },
-      locateSubTeamNotJoined: function (teamId) {
-        window.location = `/teams/${teamId}/sub-teams/not-joined`
       },
       locateSubTeamCalendar: function (subTeamId) {
         let month = dayjs().format('YYYY/M');

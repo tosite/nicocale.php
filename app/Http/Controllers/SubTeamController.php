@@ -8,7 +8,6 @@ class SubTeamController extends Controller
     public function store(\App\Http\Requests\SubTeams\Post $request)
     {
         $params = $request->only(['team_id', 'name', 'bio']);
-        $params['bio'] = empty($params['bio']) ? '' : $params['bio'];
         return response(\App\SubTeam::create($params), 201);
     }
 
