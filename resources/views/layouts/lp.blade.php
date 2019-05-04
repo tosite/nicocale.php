@@ -14,6 +14,15 @@
 <body>
 <div id="app">
   <v-app>
+    <v-toolbar dark color="primary">
+      <v-toolbar-title class="white--text">NicoCale</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+{{--      <v-btn icon>--}}
+{{--        <v-icon>more_vert</v-icon>--}}
+{{--      </v-btn>--}}
+    </v-toolbar>
+
     <v-content>
       <v-container fluid style="overflow-x: scroll;">
         @yield('content')
