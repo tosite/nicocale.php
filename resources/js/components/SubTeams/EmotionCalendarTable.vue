@@ -5,19 +5,19 @@
       <v-layout row>
         <v-dialog v-model="pickerModal" max-width="290px">
           <template v-slot:activator="{ on }">
-            <h1>{{ currentMonth | month }}</h1>
+            <h1>{{ subTeam.name }} - <small>{{ currentMonth | month }}</small></h1>
             <v-btn color="primary" dark v-on="on" icon flat>
               <v-icon>calendar_today</v-icon>
             </v-btn>
           </template>
           <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
         </v-dialog>
-        <sub-team-info-modal :sub-team-id="subTeamId"></sub-team-info-modal>
+        <sub-team-info-modal :sub-team-id="subTeam.id"></sub-team-info-modal>
       </v-layout>
       <table class="table">
         <thead>
         <tr>
-          <th>name</th>
+          <th>ユーザー</th>
           <template v-for="date in calendar">
             <th>{{ date.date | day }}</th>
           </template>
@@ -82,7 +82,7 @@
 
 <script>
   export default {
-    props: ['subTeamId', 'month'],
+    props: ['subTeam', 'month'],
     data() {
       return {
         calendar: null,
@@ -129,7 +129,7 @@
         if (dayjs(this.month.date).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
           return;
         }
-        window.location.href = `/sub-teams/${this.subTeamId}/calendars/${this.yearAndMonth}`;
+        window.location.href = `/sub-teams/${this.subTeam.id}/calendars/${this.yearAndMonth}`;
       },
     },
     methods: {
@@ -150,7 +150,7 @@
       },
       fetchEmotion: function () {
         let d = dayjs(this.month.date);
-        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${d.format('YYYY/MM')}`).then(res => {
+        axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d.format('YYYY/MM')}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
