@@ -14,7 +14,7 @@
               <v-icon>close</v-icon>
             </v-btn>
 
-            <v-toolbar-title>Settings</v-toolbar-title>
+            <v-toolbar-title>設定</v-toolbar-title>
 
             <template v-slot:extension>
               <v-tabs
@@ -43,7 +43,8 @@
                   <v-card flat>
                     <not-joined-user-tab
                       :users="notJoinedUsers"
-                      :subTeam="subTeam"
+                      :sub-team="subTeam"
+                      @createSubTeamUser="createSubTeamUser"
                     ></not-joined-user-tab>
                   </v-card>
                 </v-tab-item>
@@ -108,8 +109,18 @@
           this.subTeam = res.data.subTeam;
           this.subTeamUser = res.data.subTeamUser;
         }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: 'エラーが発生しました。'};
         });
-      }
+      },
+      createSubTeamUser(userId) {
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: this.subTeam.id, user_id: userId})
+          .then(res => {
+            this.snackbar = {open: true, type: 'success', text: 'ユーザーを追加しました。'};
+            this.fetchParams();
+          }).catch(e => {
+            this.snackbar = {open: true, type: 'error', text: 'ユーザーの追加に失敗しました。'};
+        });
+      },
     },
     mounted() {
       this.fetchParams();
