@@ -17,7 +17,7 @@ class SideNavigationController extends Controller
         $notJoinedSubTeams = \App\SubTeam::teamId($currentTeam->id)->whereNotIn('id', $joinedSubTeamIds)->get();
 
         return [
-            'user' => \Auth::user()->only(['name', 'avatar']),
+            'user' => \Auth::user()->only(['id', 'name', 'avatar']),
             'teams' => $teams,
             'currentTeam' => $currentTeam,
             'subTeams' => \App\SubTeam::whereIn('id', $subTeamIds)->get(['id', 'team_id', 'name']),

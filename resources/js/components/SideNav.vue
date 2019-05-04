@@ -193,6 +193,8 @@
       </v-tabs>
     </v-dialog>
 
+    <snackbar :snackbar="snackbar" @closeSnackbar="closeSnackbar"></snackbar>
+
   </div>
 </template>
 
@@ -229,6 +231,11 @@
           name: '',
           bio: '',
         },
+        snackbar: {
+          open: false,
+          type: '',
+          text: '',
+        },
       }
     },
     created() {
@@ -251,6 +258,9 @@
       locateMe: function (teamId) {
         window.location = `/teams/${teamId}/me`
       },
+      closeSnackbar: function () {
+        this.snackbar.open = false;
+      },
       fetchSideNav: function () {
         axios.get('/api/v1/side-navigations').then((res) => {
           this.user = res.data.user;
@@ -260,26 +270,30 @@
           this.newSubTeam.team_id = this.currentTeam.id;
           this.notJoinedSubTeams = res.data.notJoinedSubTeams;
         }).catch((e) => {
-          console.log(e.data)
+          console.log(e.response)
         }).finally(() => {
           this.loading = false;
         });
       },
       createSubTeam: function () {
-        axios.post(`/api/v1/sub-teams`, this.currentTeam.id).catch(res => {
-            console.log(res);
-            // TODO: @tosite add sub-team-user
-          }).then(e => {
-            console.log(e.response);
-          }).finally(() => {
-            this.dialog = false;
-          });
-      },
-      createSubTeamUser: function (subTeamId) {
-        axios.post(`/api/v1/sub-team-users`, {sub_team_id: subTeamId, user_id: this.user.id}).then(res => {
-          this.snackbar = {open: true, type: 'success', text: 'チームに参加しました。'}
+        axios.post(`/api/v1/sub-teams`, this.newSubTeam).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'チームを作成しました。'};
+          this.createSubTeamUser(res.data.id, false);
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'}
+          this.snackbar = {open: true, type: 'error', text: 'チーム作成に失敗しました。'};
+        }).finally(() => {
+          this.dialog = false;
+        });
+      },
+      createSubTeamUser: function (subTeamId, notify = true) {
+        let params = {sub_team_id: subTeamId, user_id: this.user.id};
+        axios.post(`/api/v1/sub-team-users`, params).then(res => {
+          if (notify) {
+            this.snackbar = {open: true, type: 'success', text: 'チームに参加しました。'};
+          }
+          this.fetchSideNav();
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'};
         });
       },
       cancel: function () {
