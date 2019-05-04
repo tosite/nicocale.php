@@ -30,13 +30,11 @@
               {{ me.user.user.name }}
             </a>
           </th>
-          <template v-for="(emotion, day) in me.emotions">
-            <td>
-              <span @click="openModal(emotion, day)" class="pointer">
-                <emotion-popper :emotion="emotion" :size="48"></emotion-popper>
-              </span>
-            </td>
-          </template>
+          <td v-for="(emotion, day) in me.emotions" :key="day">
+            <span @click="openModal(emotion, day)" class="pointer">
+              <emotion-popper :emotion="emotion" :size="48"></emotion-popper>
+            </span>
+          </td>
         </tr>
         <template v-for="user in members">
           <tr>
@@ -143,6 +141,7 @@
           console.log(e.response);
         }).finally(() => {
           this.dialog = false;
+          this.fetchEmotion();
         });
       },
       createEmotion: function (params) {
@@ -153,6 +152,7 @@
           console.log(e.response.data);
         }).finally(() => {
           this.dialog = false;
+          this.fetchEmotion();
         });
       },
     },

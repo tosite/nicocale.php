@@ -29,5 +29,10 @@
       this.e = (!this.emotion) ? this.defaultEmotion : this.emotion;
       this.localSize = (this.size != null) ? this.size : this.localSize;
     },
+    watch: {
+      emotion: function () {
+        this.e = (!this.emotion) ? this.defaultEmotion : this.emotion;
+      },
+    },
   }
 </script>
