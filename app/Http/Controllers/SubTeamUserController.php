@@ -23,5 +23,8 @@ class SubTeamUserController extends Controller
 
     public function destroy($subTeamUserId)
     {
+        $subTeamUser = \App\SubTeamUser::find($subTeamUserId);
+        $subTeamUser->delete();
+        return response($subTeamUser, 200);
     }
 }

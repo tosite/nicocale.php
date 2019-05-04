@@ -40,4 +40,22 @@ class SubTeamUserControllerTest extends TestCase
         $res->assertStatus(201);
 //        dd($res->baseResponse->getContent());
     }
+
+    public function test_destroy_データ不備()
+    {
+        $res = $this->actingAs($this->user, 'api')
+            ->json('DELETE', "/api/v1/sub-team-users/not-exist-id");
+        $res->assertStatus(500);
+//        dd($res->baseResponse->getContent());
+    }
+
+    public function test_destroy_成功()
+    {
+        $subTeamUser = \App\SubTeamUser::first();
+        $res = $this->actingAs($this->user, 'api')
+            ->json('DELETE', "/api/v1/sub-team-users/{$subTeamUser->id}");
+        $res->assertStatus(200);
+//        dd($res->baseResponse->getContent());
+    }
+
 }
