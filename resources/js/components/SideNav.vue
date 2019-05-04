@@ -133,7 +133,42 @@
       <v-tabs v-model="active" color="primary" dark slider-color="accent">
         <v-tab ripple key="1">チームに参加する</v-tab>
         <v-tab ripple key="2">チームを作成する</v-tab>
+
         <v-tab-item key="1">
+          <v-card>
+            <v-alert
+              :value="true"
+              color="warning"
+              icon="priority_high"
+              class="mt-0"
+              outline
+              v-if="notJoinedSubTeams == false"
+            >
+              未参加のサブチームはありません。
+            </v-alert>
+
+            <v-list two-line subheader class="pb-0" v-else>
+              <div v-for="subTeam in notJoinedSubTeams">
+                <v-list-tile :key="subTeam.id">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ subTeam.name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>{{ subTeam.bio }}</v-list-tile-sub-title>
+                  </v-list-tile-content>
+
+                  <v-list-tile-action>
+                    <v-btn icon ripple @click.stop="">
+                      <v-icon color="grey lighten-1" @click="createSubTeamUser(subTeam.id)">add_circle</v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-divider class="ma-0"></v-divider>
+              </div>
+            </v-list>
+          </v-card>
+        </v-tab-item>
+
+
+        <v-tab-item key="2">
           <v-card>
             <v-card-text>
               <v-text-field
@@ -153,10 +188,8 @@
               <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
             </v-card-actions>
           </v-card>
+        </v-tab-item>
 
-        </v-tab-item>
-        <v-tab-item key="2">
-        </v-tab-item>
       </v-tabs>
     </v-dialog>
 
@@ -189,6 +222,7 @@
         teams: [],
         subTeams: [],
         currentTeam: {},
+        notJoinedSubTeams: [],
         user: {},
         loading: true,
         newSubTeam: {
@@ -224,6 +258,7 @@
           this.subTeams = res.data.subTeams;
           this.currentTeam = res.data.currentTeam;
           this.newSubTeam.team_id = this.currentTeam.id;
+          this.notJoinedSubTeams = res.data.notJoinedSubTeams;
         }).catch((e) => {
           console.log(e.data)
         }).finally(() => {
@@ -231,24 +266,21 @@
         });
       },
       createSubTeam: function () {
-        axios.post(`/api/v1/sub-teams`, this.newSubTeam)
-          .catch(res => {
+        axios.post(`/api/v1/sub-teams`, this.currentTeam.id).catch(res => {
             console.log(res);
             // TODO: @tosite add sub-team-user
-          })
-          .then(e => {
+          }).then(e => {
             console.log(e.response);
-          })
-          .finally(() => {
+          }).finally(() => {
             this.dialog = false;
           });
       },
-      createSubTeamUser: function () {
-        // axios.post(`/api/v1/sub-team-users`, {sub_team_id: subTeamId, user_id: this.user.id}).then(res => {
-        //   this.snackbar = {open: true, type: 'success', text: 'チームに参加しました。'}
-        // }).catch(e => {
-        //   this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'}
-        // });
+      createSubTeamUser: function (subTeamId) {
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: subTeamId, user_id: this.user.id}).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'チームに参加しました。'}
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'}
+        });
       },
       cancel: function () {
         this.newSubTeam.name = '';
