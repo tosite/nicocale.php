@@ -1,6 +1,6 @@
 <template>
   <v-layout wrap>
-    <v-flex xs12 v-if="today != null">
+    <v-flex xs12 v-if="localToday != null">
       <v-layout row>
         <v-dialog v-model="pickerModal" max-width="290px">
           <template v-slot:activator="{ on }">
@@ -13,7 +13,7 @@
         </v-dialog>
       </v-layout>
       <v-sheet height="600">
-        <v-calendar :now="today" :value="today" color="primary" locale="jp-ja">
+        <v-calendar :now="localToday" :value="calendarFirstDay" color="primary" locale="jp-ja">
           <template v-slot:day="{ present, past, date }">
             <template v-if="emotions[date] != null && emotions[date].user != null">
               <p class="text-xs-center mb-0 mt-2">
@@ -52,9 +52,10 @@
 
 <script>
   export default {
-    props: ['emotions', 'month', 'me', 'teamUser'],
+    props: ['emotions', 'month', 'today', 'me', 'teamUser'],
     data: () => ({
-      today: null,
+      localToday: null,
+      calendarFirstDay: null,
       currentMonth: null,
       pickerModal: false,
       emotionModal: false,
@@ -71,13 +72,22 @@
       },
     }),
     created() {
-      console.log(this.me);
-      this.today = dayjs(this.month.date).format('YYYY-MM-DD');
-      this.currentMonth = dayjs(this.today).format('YYYY-MM');
+      this.localToday = dayjs(this.today.date).format('YYYY-MM-DD');
+      this.currentMonth = dayjs(this.month.date).format('YYYY-MM');
+      this.calendarFirstDay = dayjs(this.month.date).format('YYYY-MM-DD');
     },
     filters: {
       month: function (date) {
         return dayjs(date).format('YYYY年M月');
+      },
+    },
+    watch: {
+      currentMonth: function () {
+        let d = dayjs(this.currentMonth);
+        if (dayjs(this.month.date).format('YYYY-MM') == d.format('YYYY-MM')) {
+          return;
+        }
+        window.location.href = `/team-users/${this.teamUser.id}/calendars/${d.format('YYYY')}/${d.format('M')}`;
       },
     },
     methods: {

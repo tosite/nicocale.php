@@ -41,6 +41,7 @@ class ViewTeamUserController extends Controller
 
         return view('team_users.calendars.index', [
             'month' => $current,
+            'today' => new Carbon(),
             'emotions' => $emotions,
             'isMe' => $isMe,
             'user' => $teamUser,
