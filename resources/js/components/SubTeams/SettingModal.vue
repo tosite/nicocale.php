@@ -38,7 +38,7 @@
 
               <v-tab-item key="1" value="tab-1">
                 <v-card flat>
-                  <not-joined-user-tab :users="notJoinedUsers"></not-joined-user-tab>
+                  <not-joined-user-tab :users="notJoinedUsers" :subTeam="subTeam"></not-joined-user-tab>
                 </v-card>
               </v-tab-item>
 

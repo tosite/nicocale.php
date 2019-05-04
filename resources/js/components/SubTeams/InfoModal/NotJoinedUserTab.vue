@@ -35,7 +35,7 @@
 
             <v-list-tile-action>
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1">add</v-icon>
+                <v-icon color="grey lighten-1" @click.stop="addSubTeam">add_circle</v-icon>
               </v-btn>
             </v-list-tile-action>
 
@@ -51,7 +51,7 @@
 
 <script>
   export default {
-    props: ['users'],
+    props: ['users', 'subTeam'],
     data() {
       return {
         search: '',
@@ -66,6 +66,11 @@
           return (user.name.indexOf(this.search) !== -1);
         })
       }
+    },
+    methods: {
+      addSubTeam: function () {
+        alert(this.subTeam.id);
+      },
     },
   }
 </script>
