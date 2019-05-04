@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
 class EmotionController extends Controller
 {
 
@@ -14,8 +16,9 @@ class EmotionController extends Controller
         if (!$this->isTeamExist($params['team_id'], $user->id)) {
             throw new \Exception('不正なアクセスです。');
         }
-
-        return response(\App\Emotion::create($params), 201);
+        $emotion = \App\Emotion::create($params);
+        $this->notifySlack($emotion, '登録');
+        return response($emotion, 201);
     }
 
     public function update(\App\Http\Requests\Emotions\Put $request, $emotionId)
@@ -28,11 +31,47 @@ class EmotionController extends Controller
         }
 
         $emotion->fill($params)->save();
+        $this->notifySlack($emotion, '更新');
         return response($emotion, 200);
     }
 
-    private function isTeamExist($teamId, $userId) : bool
+    private function isTeamExist($teamId, $userId): bool
     {
         return \App\TeamUser::teamId($teamId)->userId($userId)->exists();
+    }
+
+    private function notifySlack($emotion, $type)
+    {
+        if (empty($emotion->teamUser->notify_channel)) {
+            return false;
+        }
+
+        $date = new Carbon($emotion->entered_on);
+        $attachments = [
+            'fallback' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
+            'text' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
+            'title' => $date->format('Y年n月j日のカレンダーを見る'),
+            'color' => 'good',
+            'title_link' => env('APP_URL') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
+            'author_name' => $emotion->user->name,
+            'fields' => [
+                [
+                    'title' => '感情',
+                    'value' => $emotion->emoji,
+                    'short' => true,
+                ],
+                [
+                    'title' => 'ひとこと',
+                    'value' => $emotion->status_text,
+                    'short' => true,
+                ],
+            ],
+        ];
+
+        $slack = $emotion->user->slackNotify();
+        $slack->channel($emotion->teamUser->notify_channel)
+            ->emoji($emotion->emoji)
+            ->attachments($attachments)
+            ->send();
     }
 }

@@ -19,7 +19,7 @@ class ViewTeamUserController extends Controller
 
     public function calendar($teamUserId, $year, $month)
     {
-        $teamUser = \App\TeamUser::find($teamUserId);
+        $teamUser = \App\TeamUser::with('user')->find($teamUserId);
         $isMe = $teamUser->user_id === \Auth::user()->id;
         $current = new Carbon("{$year}-{$month}-1");
 

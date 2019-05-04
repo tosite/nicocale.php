@@ -48,7 +48,7 @@ class ViewSubTeamController extends Controller
             'subTeamUsers'         => $subTeamUsers,
             'month'                => $current,
             'mySubTeamUser'        => $mySubTeamUser,
-            'subTeamId'            => $subTeamId,
+            'subTeam'              => \App\SubTeam::find($subTeamId),
         ]);
     }
 

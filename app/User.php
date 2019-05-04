@@ -37,6 +37,11 @@ class User extends Authenticatable
         return new \App\Slack($this->slack_token);
     }
 
+    public function slackNotify ()
+    {
+        return new \App\SlackNotify($this->slack_token);
+    }
+
     public function teamUsers ()
     {
         return $this->hasMany('App\TeamUser', 'user_id', 'id');
