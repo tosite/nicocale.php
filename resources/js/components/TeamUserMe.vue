@@ -44,10 +44,8 @@
                 </v-layout>
                 <v-layout>
                   <v-spacer></v-spacer>
-                  <v-btn flat icon>
-                    <v-icon @click="unsetChannel">close</v-icon>
-                  </v-btn>
-                  <v-btn color="primary" @click="setChannel">通知</v-btn>
+                  <v-btn color="error" flat @click="unsetChannel">通知設定を解除する</v-btn>
+                  <v-btn color="primary" flat @click="setChannel">通知する</v-btn>
                 </v-layout>
               </div>
             </div>
