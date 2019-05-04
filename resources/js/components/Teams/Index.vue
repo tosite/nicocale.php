@@ -5,6 +5,7 @@
         :team-user="teamUser"
         :emotion="emotion"
         :date="date"
+        :closeButton="false"
         @createEmotion="createEmotion"
         @updateEmotion="updateEmotion"
       ></emotion-modal>

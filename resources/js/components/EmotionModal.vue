@@ -59,8 +59,8 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="disabled" flat @click="$emit('closeModal')">閉じる</v-btn>
-      <v-btn color="accent" @click="save">更新する</v-btn>
+      <v-btn color="disabled" flat @click="$emit('closeModal')" v-if="closeButton != false">閉じる</v-btn>
+      <v-btn color="primary" @click="save">更新する</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -73,7 +73,7 @@
 
 <script>
   export default {
-    props: ['teamId', 'date', 'emotion', 'teamUser'],
+    props: ['teamId', 'date', 'emotion', 'teamUser', 'closeButton'],
     data() {
       return {
         picker: false,
