@@ -35,7 +35,7 @@
 
             <v-list-tile-action>
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1" @click.stop="addSubTeamUser">add_circle</v-icon>
+                <v-icon color="grey lighten-1" @click.stop="addSubTeamUser(user.id)">add_circle</v-icon>
               </v-btn>
             </v-list-tile-action>
 
@@ -68,8 +68,13 @@
       }
     },
     methods: {
-      addSubTeamUser: function () {
-        alert(this.subTeam.id);
+      addSubTeamUser: function (user_id) {
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: this.subTeam.id, user_id: user_id})
+          .then(res => {
+            console.log(res);
+          }).catch(e => {
+          console.log(e.response);
+        });
       },
     },
   }

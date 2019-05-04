@@ -20,7 +20,7 @@ class ApiSubTeamController extends Controller
             ->whereNotIn('user_id', $joinedUserIds)
             ->pluck('user_id');
         $notJoinedUsers = \App\User::whereIn('id', $notJoinedTeamUserIds)
-            ->get(['avatar', 'name', 'bio']);
+            ->get(['id', 'avatar', 'name', 'bio']);
 
         return response([
             'joinedUsers' => $joinedUsers,
