@@ -2,18 +2,18 @@
   <v-fade-transition mode="out-in">
     <loading v-if="loading"></loading>
     <div v-else>
-      <h1>
-        <v-btn flat icon color="secondary"
-               :href="`/sub-teams/${subTeamId}/calendars/${months.prev.year}/${months.prev.month}`">
-          <v-icon>keyboard_arrow_left</v-icon>
-        </v-btn>
-        {{ months.current.display }}
-        <v-btn flat icon color="secondary"
-               :href="`/sub-teams/${subTeamId}/calendars/${months.next.year}/${months.next.month}`">
-          <v-icon>keyboard_arrow_right</v-icon>
-        </v-btn>
+      <v-layout row>
+        <v-dialog v-model="pickerModal" max-width="290px">
+          <template v-slot:activator="{ on }">
+            <h1>{{ currentMonth | month }}</h1>
+            <v-btn color="primary" dark v-on="on" icon flat>
+              <v-icon>calendar_today</v-icon>
+            </v-btn>
+          </template>
+          <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
+        </v-dialog>
         <sub-team-info-modal :sub-team-id="subTeamId"></sub-team-info-modal>
-      </h1>
+      </v-layout>
       <table class="table">
         <thead>
         <tr>
@@ -26,7 +26,7 @@
         <tbody>
         <tr>
           <th>
-            <a :href="`/team-users/${me.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+            <a :href="`/team-users/${me.user.team_user_id}/calendars/${yearAndMonth}`">
               {{ me.user.user.name }}
             </a>
           </th>
@@ -39,8 +39,7 @@
         <template v-for="user in members">
           <tr>
             <th>
-              <a
-                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+              <a :href="`/team-users/${user.user.team_user_id}/calendars/${yearAndMonth}`">
                 {{ user.user.user.name }}
               </a>
             </th>
@@ -83,15 +82,16 @@
 
 <script>
   export default {
-    props: ['subTeamId', 'year', 'month'],
+    props: ['subTeamId', 'month'],
     data() {
       return {
-        months: null,
         calendar: null,
         me: null,
         members: null,
         loading: true,
         dialog: false,
+        pickerModal: false,
+        currentMonth: null,
         modalDate: null,
         modalEmotion: {
           emoji: ":bust_in_silhouette:",
@@ -114,6 +114,23 @@
       day: function (date) {
         return dayjs(date).format('D');
       },
+      month: function (date) {
+        return dayjs(date).format('YYYY年M月');
+      },
+    },
+    computed: {
+      yearAndMonth: function () {
+        let d = dayjs(this.currentMonth);
+        return `${d.format('YYYY')}/${d.format('M')}`;
+      },
+    },
+    watch: {
+      currentMonth: function () {
+        if (dayjs(this.month.date).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
+          return;
+        }
+        window.location.href = `/sub-teams/${this.subTeamId}/calendars/${this.yearAndMonth}`;
+      },
     },
     methods: {
       emoji: function (emotion) {
@@ -132,22 +149,23 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
+        let d = dayjs(this.month.date);
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${d.format('YYYY/MM')}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
-          this.months = res.data.months;
+          this.currentMonth = dayjs(res.data.current.date).format('YYYY-MM');
         }).catch(e => {
-          this.snackbar = { open: true, type: 'error', text: '処理に失敗しました。' }
+          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'}
         }).finally(() => {
           this.loading = false;
         });
       },
       updateEmotion: function (emotionId, params) {
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
-          this.snackbar = { open: true, type: 'success', text: '更新しました。' }
+          this.snackbar = {open: true, type: 'success', text: '更新しました。'}
         }).catch(e => {
-          this.snackbar = { open: true, type: 'error', text: '更新に失敗しました。' }
+          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'}
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();
@@ -155,9 +173,9 @@
       },
       createEmotion: function (params) {
         axios.post('/api/v1/emotions', params).then(res => {
-          this.snackbar = { open: true, type: 'success', text: '作成しました。' }
+          this.snackbar = {open: true, type: 'success', text: '作成しました。'}
         }).catch(e => {
-          this.snackbar = { open: true, type: 'error', text: '作成に失敗しました。' }
+          this.snackbar = {open: true, type: 'error', text: '作成に失敗しました。'}
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();

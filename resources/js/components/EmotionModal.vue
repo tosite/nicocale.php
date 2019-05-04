@@ -148,9 +148,10 @@
         } else {
           let me = this.teamUser;
           let e = this.emotion;
+          let team_user_id = (!me.team_user_id) ? me.id : me.team_user_id;
           let params = {
             team_id: me.team_id,
-            team_user_id: me.team_user_id,
+            team_user_id: team_user_id,
             emoji: e.emoji,
             status_text: e.status_text,
             memo: e.memo,

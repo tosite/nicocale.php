@@ -78,23 +78,7 @@ class ApiSubTeamController extends Controller
         $prev = $current->copy()->subMonth();
 
         return response([
-            'months' => [
-                'current' => [
-                    'display' => $current->format('Y年n月'),
-                    'year' => $current->format('Y'),
-                    'month' => $current->format('n'),
-                ],
-                'next' => [
-                    'display' => $next->format('Y年n月'),
-                    'year' => $next->format('Y'),
-                    'month' => $next->format('n'),
-                ],
-                'prev' => [
-                    'display' => $prev->format('Y年n月'),
-                    'year' => $prev->format('Y'),
-                    'month' => $prev->format('n'),
-                ],
-            ],
+            'current' => $current,
             'me' => $me,
             'members' => $users,
             'calendar' => $calendar,
