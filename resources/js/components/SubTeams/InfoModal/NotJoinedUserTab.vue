@@ -35,7 +35,7 @@
 
             <v-list-tile-action>
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1" @click.stop="addSubTeam">add_circle</v-icon>
+                <v-icon color="grey lighten-1" @click.stop="addSubTeamUser">add_circle</v-icon>
               </v-btn>
             </v-list-tile-action>
 
@@ -68,7 +68,7 @@
       }
     },
     methods: {
-      addSubTeam: function () {
+      addSubTeamUser: function () {
         alert(this.subTeam.id);
       },
     },
