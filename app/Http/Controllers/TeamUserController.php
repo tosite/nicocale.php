@@ -16,7 +16,7 @@ class TeamUserController extends Controller
             $user->slackNotify()
                 ->channel($teamUser->notify_channel)
                 ->text($user->name.'さんがチャンネル通知を設定しました。')
-                ->notify();
+                ->send();
         }
         return response($teamUser, 200);
     }

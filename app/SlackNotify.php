@@ -35,17 +35,17 @@ class SlackNotify extends SlackBase
         return $this;
     }
 
-    public function notify()
+    public function send()
     {
         $params = [
             'channel' => $this->channel,
             'icon_emoji' => $this->emoji,
+            'text' => $this->text,
         ];
 
         if (!empty($this->attachments)) {
-            $params['attachments'] = $this->attachments;
-        } else {
-            $params['text'] = $this->text;
+            $params['attachments'] = json_encode([$this->attachments]);
+            $params['text'] = '';
         }
 
         $query = $this->to_raw_query($params);
