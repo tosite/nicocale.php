@@ -16,11 +16,9 @@ class ViewTeamController extends Controller
     {
         $today = new Carbon();
         $teamUser = \App\TeamUser::teamId($teamId)->me()->first();
-        $emotion = \App\Emotion::teamUserId($teamUser->id)->where('entered_on', $today->format('Y-m-d'))->first();
 
         return view('teams.index', [
             'teamUser' => $teamUser,
-            'emotion' => $emotion,
             'today' => $today,
         ]);
     }
