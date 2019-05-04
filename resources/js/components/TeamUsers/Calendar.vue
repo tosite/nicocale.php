@@ -44,6 +44,7 @@
         </div>
       </template>
 
+      <snackbar :snackbar="snackbar" @closeSnackbar="closeSnackbar"></snackbar>
 
     </v-flex>
   </v-layout>
@@ -69,6 +70,11 @@
         emoji: ":bust_in_silhouette:",
         status_text: '',
         memo: ''
+      },
+      snackbar: {
+        open: false,
+        type: '',
+        text: '',
       },
     }),
     created() {
@@ -101,6 +107,9 @@
       },
       closeModal: function () {
         this.emotionModal = false;
+      },
+      closeSnackbar: function () {
+        this.snackbar.open = false;
       },
     },
   }
