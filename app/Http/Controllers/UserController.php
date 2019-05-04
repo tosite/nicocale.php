@@ -10,7 +10,6 @@ class UserController extends Controller
             throw new \Exception('ユーザーIDが不正です。');
         }
         $params = $request->only(['bio', 'emoji_set', 'name',]);
-        $params['bio'] = empty($params['bio']) ? "" : $params['bio'];
         $user = \App\User::find($userId);
         $user->fill($params)->save();
         return response($user, 200);

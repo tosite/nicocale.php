@@ -23,7 +23,7 @@ class EmotionControllerTest extends TestCase
         ];
 
         $this->actingAs($this->user, 'api')
-            ->json('POST', '/emotions', $params)
+            ->json('POST', '/api/v1/emotions', $params)
             ->assertStatus(422);
     }
 
@@ -40,7 +40,7 @@ class EmotionControllerTest extends TestCase
         ];
 
         $this->actingAs($this->user, 'api')
-            ->json('POST', '/emotions', $params)
+            ->json('POST', '/api/v1/emotions', $params)
             ->assertStatus(201);
     }
 
@@ -56,7 +56,7 @@ class EmotionControllerTest extends TestCase
             'entered_on' => $emotion->entered_on,
         ];
         $this->actingAs($this->user, 'api')
-            ->json('POST', '/emotions', $params)
+            ->json('POST', '/api/v1/emotions', $params)
             ->assertStatus(500);
 //        dd($res->baseResponse->getContent());
     }
@@ -73,7 +73,7 @@ class EmotionControllerTest extends TestCase
             'entered_on' => $emotion->entered_on,
         ];
         $this->actingAs($this->user, 'api')
-            ->json('POST', '/emotions', $params)
+            ->json('POST', '/api/v1/emotions', $params)
             ->assertStatus(500);
     }
 
@@ -83,7 +83,7 @@ class EmotionControllerTest extends TestCase
         $params = [];
 
         $this->actingAs($this->user, 'api')
-            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->json('PUT', "/api/v1/emotions/{$emotion->id}", $params)
             ->assertStatus(422);
     }
 
@@ -96,7 +96,7 @@ class EmotionControllerTest extends TestCase
             'memo' => $emotion->memo,
         ];
         $this->actingAs($this->user, 'api')
-            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->json('PUT', "/api/v1/emotions/{$emotion->id}", $params)
             ->assertStatus(200)
         ;
     }
@@ -111,7 +111,7 @@ class EmotionControllerTest extends TestCase
             'entered_on' => '1990-05-01',
         ];
         $this->actingAs($this->user, 'api')
-            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->json('PUT', "/api/v1/emotions/{$emotion->id}", $params)
             ->assertStatus(200);
     }
 
@@ -125,7 +125,7 @@ class EmotionControllerTest extends TestCase
             'memo' => $emotion->memo,
         ];
         $this->actingAs($this->user, 'api')
-            ->json('PUT', "/emotions/{$emotion->id}", $params)
+            ->json('PUT', "/api/v1/emotions/{$emotion->id}", $params)
             ->assertStatus(500);
     }
 }

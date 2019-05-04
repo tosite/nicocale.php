@@ -37,13 +37,12 @@ Vue.use(Vuetify, {
 Vue.component('emoji', Emoji);
 Vue.component('emoji-picker', Picker);
 Vue.component('side-nav',            require('./components/SideNav.vue').default);
+Vue.component('snackbar',            require('./components/Snackbar.vue').default);
 Vue.component('loading',             require('./components/Loading.vue').default);
 Vue.component('emotion-popper',      require('./components/EmotionPopper.vue').default);
 Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
-Vue.component('sub-team-form-modal', require('./components/SubTeamFormModal.vue').default);
 Vue.component('sub-team-user-list',  require('./components/SubTeamUserList.vue').default);
 Vue.component('team-user-me',        require('./components/TeamUserMe.vue').default);
-Vue.component('not-joined-sub-team-list', require('./components/NotJoinedSubTeamList.vue').default);
 
 Vue.component('sub-team-info-modal',  require('./components/SubTeams/SettingModal.vue').default);
 Vue.component('sub-team-emotion-calendar-table',  require('./components/SubTeams/EmotionCalendarTable.vue').default);

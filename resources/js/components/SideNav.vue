@@ -10,7 +10,7 @@
       <v-progress-linear
         :indeterminate="true"
         color="secondary"
-        v-if="!loaded"
+        v-if="loading"
         class="mt-1"
       ></v-progress-linear>
       <v-layout fill-height v-else>
@@ -84,13 +84,13 @@
             <v-list-tile-title v-text="subTeam.name"></v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile @click.stop="locateSubTeamNotJoined(currentTeam.id)">
+          <v-list-tile @click.stop="dialog = !dialog">
             <v-list-tile-content>
               <v-list-tile-title>チームを追加する</v-list-tile-title>
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-icon color="grey lighten-1" @click.stop="dialog = !dialog">add_circle</v-icon>
+              <v-icon color="grey lighten-1">add_circle</v-icon>
             </v-list-tile-action>
           </v-list-tile>
 
@@ -130,28 +130,70 @@
     </v-toolbar>
 
     <v-dialog v-model="dialog" width="500">
-      <v-card>
-        <v-card-title class="headline primary white--text" primary-title>チームを作成する</v-card-title>
+      <v-tabs v-model="active" color="primary" dark slider-color="accent">
+        <v-tab ripple key="1">チームに参加する</v-tab>
+        <v-tab ripple key="2">チームを作成する</v-tab>
 
-        <v-card-text>
-          <v-text-field
-            label="チーム名"
-            v-model="newSubTeam.name"
-          ></v-text-field>
+        <v-tab-item key="1">
+          <v-card>
+            <v-alert
+              :value="true"
+              color="warning"
+              icon="priority_high"
+              class="mt-0"
+              outline
+              v-if="notJoinedSubTeams == false"
+            >
+              未参加のサブチームはありません。
+            </v-alert>
 
-          <v-textarea label="概要" v-model="newSubTeam.bio"></v-textarea>
+            <v-list two-line subheader class="pb-0" v-else>
+              <div v-for="subTeam in notJoinedSubTeams">
+                <v-list-tile :key="subTeam.id">
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ subTeam.name }}</v-list-tile-title>
+                    <v-list-tile-sub-title>{{ subTeam.bio }}</v-list-tile-sub-title>
+                  </v-list-tile-content>
 
-        </v-card-text>
+                  <v-list-tile-action>
+                    <v-btn icon ripple @click="createSubTeamUser(subTeam.id)">
+                      <v-icon color="grey lighten-1">add_circle</v-icon>
+                    </v-btn>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-divider class="ma-0"></v-divider>
+              </div>
+            </v-list>
+          </v-card>
+        </v-tab-item>
 
-        <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="disabled" flat @click="cancel">閉じる</v-btn>
-          <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
-        </v-card-actions>
-      </v-card>
+        <v-tab-item key="2">
+          <v-card>
+            <v-card-text>
+              <v-text-field
+                label="チーム名"
+                v-model="newSubTeam.name"
+              ></v-text-field>
+
+              <v-textarea label="概要" v-model="newSubTeam.bio"></v-textarea>
+
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="disabled" flat @click="cancel">閉じる</v-btn>
+              <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-tab-item>
+
+      </v-tabs>
     </v-dialog>
+
+    <snackbar :snackbar="snackbar" @closeSnackbar="closeSnackbar"></snackbar>
 
   </div>
 </template>
@@ -175,31 +217,29 @@
     data() {
       return {
         dialog: false,
+        active: null,
         drawer: null,
         mini: true,
         right: null,
         teams: [],
         subTeams: [],
         currentTeam: {},
+        notJoinedSubTeams: [],
         user: {},
-        loaded: false,
+        loading: true,
         newSubTeam: {
           name: '',
           bio: '',
         },
+        snackbar: {
+          open: false,
+          type: '',
+          text: '',
+        },
       }
     },
     created() {
-      axios.get('/api/v1/side-navigations').then((res) => {
-        this.user = res.data.user;
-        this.teams = res.data.teams;
-        this.subTeams = res.data.subTeams;
-        this.currentTeam = res.data.currentTeam;
-        this.newSubTeam.team_id = this.currentTeam.id;
-        this.loaded = true;
-      }).catch((e) => {
-        console.log(e.data)
-      });
+      this.fetchSideNav();
     },
     methods: {
       locateSubTeamIndex: function (teamId) {
@@ -208,9 +248,6 @@
       locateSubTeamNew: function (teamId) {
         window.location = `/teams/${teamId}/new`
       },
-      locateSubTeamNotJoined: function (teamId) {
-        window.location = `/teams/${teamId}/sub-teams/not-joined`
-      },
       locateSubTeamCalendar: function (subTeamId) {
         let month = dayjs().format('YYYY/M');
         window.location = `/sub-teams/${subTeamId}/calendars/${month}`;
@@ -218,18 +255,43 @@
       locateMe: function (teamId) {
         window.location = `/teams/${teamId}/me`
       },
+      closeSnackbar: function () {
+        this.snackbar.open = false;
+      },
+      fetchSideNav: function () {
+        axios.get('/api/v1/side-navigations').then((res) => {
+          this.user = res.data.user;
+          this.teams = res.data.teams;
+          this.subTeams = res.data.subTeams;
+          this.currentTeam = res.data.currentTeam;
+          this.newSubTeam.team_id = this.currentTeam.id;
+          this.notJoinedSubTeams = res.data.notJoinedSubTeams;
+        }).catch((e) => {
+          console.log(e.response)
+        }).finally(() => {
+          this.loading = false;
+        });
+      },
       createSubTeam: function () {
-        axios.post(`/api/v1/sub-teams`, this.newSubTeam)
-          .catch(res => {
-            console.log(res);
-            // TODO: @tosite add sub-team-user
-          })
-          .then(e => {
-            console.log(e.response);
-          })
-          .finally(() => {
-            this.dialog = false;
-          });
+        axios.post(`/api/v1/sub-teams`, this.newSubTeam).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'チームを作成しました。'};
+          this.createSubTeamUser(res.data.id, false);
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: 'チーム作成に失敗しました。'};
+        }).finally(() => {
+          this.dialog = false;
+        });
+      },
+      createSubTeamUser: function (subTeamId, notify = true) {
+        let params = {sub_team_id: subTeamId, user_id: this.user.id};
+        axios.post(`/api/v1/sub-team-users`, params).then(res => {
+          if (notify) {
+            this.snackbar = {open: true, type: 'success', text: 'チームに参加しました。'};
+          }
+          this.fetchSideNav();
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'};
+        });
       },
       cancel: function () {
         this.newSubTeam.name = '';

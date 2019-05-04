@@ -36,19 +36,6 @@ class ViewControllerTest extends TestCase
     /**
      * @test
      */
-    public function team_users_me_index(): void
-    {
-        $user = \App\User::first();
-        $teamUser = \App\TeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('team_users.me', ['teamUserId' => $teamUser->id]))
-            ->assertViewIs('team_users.me.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
     public function team_users_calendar_index(): void
     {
         $user = \App\User::first();
@@ -82,19 +69,6 @@ class ViewControllerTest extends TestCase
         $this->actingAs($user)
             ->get(route('sub_teams.index', ['teamId' => $teamUser->team_id]))
             ->assertViewIs('sub_teams.index')
-            ->assertStatus(200);
-    }
-
-    /**
-     * @test
-     */
-    public function sub_teams_not_joined_index(): void
-    {
-        $user = \App\User::first();
-        $teamUser = \App\TeamUser::userId($user->id)->first();
-        $this->actingAs($user)
-            ->get(route('sub_teams.not_joined', ['teamId' => $teamUser->team_id]))
-            ->assertViewIs('sub_teams.not_joined.index')
             ->assertStatus(200);
     }
 
