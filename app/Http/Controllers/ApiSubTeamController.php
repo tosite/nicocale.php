@@ -74,9 +74,6 @@ class ApiSubTeamController extends Controller
             $users[] = $params;
         }
 
-        $next = $current->copy()->addMonth();
-        $prev = $current->copy()->subMonth();
-
         return response([
             'current' => $current,
             'me' => $me,
