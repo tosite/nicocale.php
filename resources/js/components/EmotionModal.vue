@@ -59,7 +59,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="disabled" flat @click="close">閉じる</v-btn>
+      <v-btn color="disabled" flat @click="$emit('closeModal')">閉じる</v-btn>
       <v-btn color="accent" @click="save">更新する</v-btn>
     </v-card-actions>
   </v-card>
@@ -144,14 +144,7 @@
         if (this.emotion.hasOwnProperty('id')) {
           let e = this.emotion;
           let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo };
-          axios.put(`/api/v1/emotions/${e.id}`, params)
-            .then (res => {
-              console.log(res);
-            })
-            .catch(e => {
-              // TODO: @tosite error handling
-              console.log(e);
-            });
+          this.$emit('updateEmotion', e.id, params);
         } else {
           let me = this.teamUser;
           let e = this.emotion;
@@ -163,22 +156,11 @@
             memo: e.memo,
             entered_on: this.date,
           };
-          axios.post('/api/v1/emotions', params)
-            .then(res => {
-              console.log(res);
-            })
-            .catch(e => {
-              // TODO: @tosite error handling
-              console.log(e.response.data);
-            });
+          this.$emit('createEmotion', params);
         }
-        this.$emit('closeModal');
       },
       selectEmoji: function (emoji) {
         this.emotion.emoji = emoji.colons;
-      },
-      close: function () {
-        this.$emit('closeModal');
       },
     },
   }

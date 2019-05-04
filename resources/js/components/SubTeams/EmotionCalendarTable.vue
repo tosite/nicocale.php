@@ -41,7 +41,8 @@
         <template v-for="user in members">
           <tr>
             <th>
-              <a :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
+              <a
+                :href="`/team-users/${user.user.team_user_id}/calendars/${months.current.year}/${months.current.month}`">
                 {{ user.user.user.name }}
               </a>
             </th>
@@ -62,7 +63,9 @@
               :team-user="me.user"
               :emotion="modalEmotion"
               :date="modalDate"
-              @closeModal="closeModal()"
+              @createEmotion="createEmotion"
+              @updateEmotion="updateEmotion"
+              @closeModal="closeModal"
             ></emotion-modal>
           </v-dialog>
         </div>
@@ -73,7 +76,9 @@
 </template>
 
 <style scoped>
-  .pointer { cursor: pointer; }
+  .pointer {
+    cursor: pointer;
+  }
 </style>
 
 <script>
@@ -128,6 +133,32 @@
       closeModal: function () {
         this.fetchParams();
         this.dialog = false;
+      },
+      updateEmotion: function (emotionId, params) {
+        axios.put(`/api/v1/emotions/${emotionId}`, params)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(e => {
+            // TODO: @tosite error handling
+            console.log(e.response);
+          })
+          .finally(() => {
+            this.dialog = false;
+          });
+      },
+      createEmotion: function (params) {
+        axios.post('/api/v1/emotions', params)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(e => {
+            // TODO: @tosite error handling
+            console.log(e.response.data);
+          })
+          .finally(() => {
+            this.dialog = false;
+          });
       },
     },
     mounted() {
