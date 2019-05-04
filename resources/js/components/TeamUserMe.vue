@@ -126,9 +126,9 @@
       updateUser: function () {
         let params = {bio: this.teamUser.user.bio, emoji_set: this.radio, name: this.displayName};
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params).then(res => {
-          this.snackbar = {open: true, type: 'success', text: '更新しました。'};
+          this.snackbar = {open: true, type: 'success', text: 'チャンネルに通知しました。'};
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'};
+          this.snackbar = {open: true, type: 'error', text: '通知に失敗しました。'};
         });
       },
       setChannel: function () {
