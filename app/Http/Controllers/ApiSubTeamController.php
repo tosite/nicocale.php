@@ -26,6 +26,7 @@ class ApiSubTeamController extends Controller
             'joinedUsers' => $joinedUsers,
             'notJoinedUsers' => $notJoinedUsers,
             'subTeam' => $subTeam,
+            'subTeamUser' => \App\SubTeamUser::subTeamId($subTeamId)->me()->first(),
         ]);
     }
 

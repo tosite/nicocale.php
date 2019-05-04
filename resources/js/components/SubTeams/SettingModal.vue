@@ -33,18 +33,26 @@
           <v-flex xs12 sm8 offset-sm2 class="pt-2">
             <v-tabs-items v-model="tab">
               <v-tab-item key="0" value="tab-0">
-                <joined-user-tab :users="joinedUsers"></joined-user-tab>
+                <joined-user-tab
+                  :users="joinedUsers"
+                ></joined-user-tab>
               </v-tab-item>
 
               <v-tab-item key="1" value="tab-1">
                 <v-card flat>
-                  <not-joined-user-tab :users="notJoinedUsers" :subTeam="subTeam"></not-joined-user-tab>
+                  <not-joined-user-tab
+                    :users="notJoinedUsers"
+                    :subTeam="subTeam"
+                  ></not-joined-user-tab>
                 </v-card>
               </v-tab-item>
 
               <v-tab-item key="2" value="tab-2">
                 <v-card flat>
-                  <setting-tab :sub-team="subTeam"></setting-tab>
+                  <setting-tab
+                    :sub-team="subTeam"
+                    :subTeamUser="subTeamUser"
+                  ></setting-tab>
                 </v-card>
               </v-tab-item>
 
@@ -78,6 +86,7 @@
         joinedUsers: null,
         notJoinedUsers: null,
         subTeam: null,
+        subTeamUser: null,
       }
     },
     methods: {
@@ -86,6 +95,7 @@
           this.joinedUsers = res.data.joinedUsers;
           this.notJoinedUsers = res.data.notJoinedUsers;
           this.subTeam = res.data.subTeam;
+          this.subTeamUser = res.data.subTeamUser;
         }).catch(e => {
         });
       }
