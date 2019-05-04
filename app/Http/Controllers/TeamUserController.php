@@ -13,7 +13,10 @@ class TeamUserController extends Controller
         $teamUser->fill($params)->save();
         if (!empty($params['notify_channel'])) {
             $user = $teamUser->user;
-            $user->slack()->chatPostMessage($teamUser->notify_channel, $user->name.'さんがチャンネル通知を設定しました。');
+            $user->slackNotify()
+                ->channel($teamUser->notify_channel)
+                ->text($user->name.'さんがチャンネル通知を設定しました。')
+                ->notify();
         }
         return response($teamUser, 200);
     }
