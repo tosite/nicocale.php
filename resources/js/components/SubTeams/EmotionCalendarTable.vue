@@ -69,6 +69,8 @@
         </div>
       </template>
 
+      <snackbar :snackbar="snackbar" @closeSnackbar="closeSnackbar"></snackbar>
+
     </div>
   </v-fade-transition>
 </template>
@@ -101,6 +103,11 @@
           status_text: '',
           memo: ''
         },
+        snackbar: {
+          open: false,
+          type: '',
+          text: '',
+        },
       }
     },
     filters: {
@@ -121,6 +128,9 @@
         this.fetchEmotion();
         this.dialog = false;
       },
+      closeSnackbar: function () {
+        this.snackbar.open = false;
+      },
       fetchEmotion: function () {
         axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
           this.calendar = res.data.calendar;
@@ -135,10 +145,9 @@
       },
       updateEmotion: function (emotionId, params) {
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
-          console.log(res);
+          this.snackbar = { open: true, type: 'success', text: '更新しました。' }
         }).catch(e => {
-          // TODO: @tosite error handling
-          console.log(e.response);
+          this.snackbar = { open: true, type: 'error', text: '更新に失敗しました。' }
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();
@@ -146,10 +155,9 @@
       },
       createEmotion: function (params) {
         axios.post('/api/v1/emotions', params).then(res => {
-          console.log(res);
+          this.snackbar = { open: true, type: 'success', text: '作成しました。' }
         }).catch(e => {
-          // TODO: @tosite error handling
-          console.log(e.response.data);
+          this.snackbar = { open: true, type: 'error', text: '作成に失敗しました。' }
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();

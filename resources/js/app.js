@@ -37,6 +37,7 @@ Vue.use(Vuetify, {
 Vue.component('emoji', Emoji);
 Vue.component('emoji-picker', Picker);
 Vue.component('side-nav',            require('./components/SideNav.vue').default);
+Vue.component('snackbar',            require('./components/Snackbar.vue').default);
 Vue.component('loading',             require('./components/Loading.vue').default);
 Vue.component('emotion-popper',      require('./components/EmotionPopper.vue').default);
 Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
