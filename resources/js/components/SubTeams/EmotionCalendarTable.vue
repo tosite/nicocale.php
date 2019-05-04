@@ -138,7 +138,7 @@
           this.members = res.data.members;
           this.months = res.data.months;
         }).catch(e => {
-          // TODO: @tosite error handling
+          this.snackbar = { open: true, type: 'error', text: '処理に失敗しました。' }
         }).finally(() => {
           this.loading = false;
         });
