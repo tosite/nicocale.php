@@ -5,8 +5,8 @@
         <v-dialog v-model="pickerModal" max-width="290px">
           <template v-slot:activator="{ on }">
             <h1>{{ currentMonth | month }}</h1>
-            <v-btn color="accent" dark v-on="on" icon flat>
-              <v-icon>more_vert</v-icon>
+            <v-btn color="primary" dark v-on="on" icon flat>
+              <v-icon>calendar_today</v-icon>
             </v-btn>
           </template>
           <v-date-picker v-model="currentMonth" type="month" color="primary" locale="jp-ja"></v-date-picker>
