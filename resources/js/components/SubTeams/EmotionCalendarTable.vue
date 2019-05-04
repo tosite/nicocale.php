@@ -114,55 +114,50 @@
       emoji: function (emotion) {
         return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
       },
-      fetchParams: function () {
-        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
-          this.calendar = res.data.calendar;
-          this.me = res.data.me;
-          this.members = res.data.members;
-          this.months = res.data.months;
-          this.loading = false;
-        }).catch(e => {
-          // TODO: @tosite error handling
-        });
-      },
       openModal: function (emotion, day) {
         this.modalDate = day;
         this.modalEmotion = (emotion == null) ? Object.assign({}, this.defaultEmotion) : Object.assign({}, emotion);
         this.dialog = true;
       },
       closeModal: function () {
-        this.fetchParams();
+        this.fetchEmotion();
         this.dialog = false;
       },
+      fetchEmotion: function () {
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
+          this.calendar = res.data.calendar;
+          this.me = res.data.me;
+          this.members = res.data.members;
+          this.months = res.data.months;
+        }).catch(e => {
+          // TODO: @tosite error handling
+        }).finally(() => {
+          this.loading = false;
+        });
+      },
       updateEmotion: function (emotionId, params) {
-        axios.put(`/api/v1/emotions/${emotionId}`, params)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(e => {
-            // TODO: @tosite error handling
-            console.log(e.response);
-          })
-          .finally(() => {
-            this.dialog = false;
-          });
+        axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
+          console.log(res);
+        }).catch(e => {
+          // TODO: @tosite error handling
+          console.log(e.response);
+        }).finally(() => {
+          this.dialog = false;
+        });
       },
       createEmotion: function (params) {
-        axios.post('/api/v1/emotions', params)
-          .then(res => {
-            console.log(res);
-          })
-          .catch(e => {
-            // TODO: @tosite error handling
-            console.log(e.response.data);
-          })
-          .finally(() => {
-            this.dialog = false;
-          });
+        axios.post('/api/v1/emotions', params).then(res => {
+          console.log(res);
+        }).catch(e => {
+          // TODO: @tosite error handling
+          console.log(e.response.data);
+        }).finally(() => {
+          this.dialog = false;
+        });
       },
     },
     mounted() {
-      this.fetchParams();
+      this.fetchEmotion();
     }
   }
 </script>
