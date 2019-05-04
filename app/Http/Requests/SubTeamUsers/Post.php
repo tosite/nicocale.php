@@ -15,7 +15,8 @@ class Post extends FormRequest
     public function rules()
     {
         return [
-            'sub_team_id' => 'required|string|exist:sub_teams,id',
+            'sub_team_id' => 'required|string|exists:sub_teams,id',
+            'user_id' => 'required|string|exists:users,id',
         ];
     }
 
@@ -23,6 +24,7 @@ class Post extends FormRequest
     {
         return [
             'sub_team_id' => 'チームID',
+            'user_id' => 'ユーザーID',
         ];
     }
 }
