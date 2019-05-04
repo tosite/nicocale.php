@@ -23,7 +23,7 @@
                   </span>
                 </template>
                 <template v-else>
-                  <emotion-popper :emotion="emotions[date].user" :size="48"></emotion-popper>
+                  <emotion-popper :emotion="emotions[date]" :size="48"></emotion-popper>
                 </template>
               </template>
             </p>
