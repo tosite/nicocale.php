@@ -82,7 +82,7 @@
 
 <script>
   export default {
-    props: ['subTeamId', 'year', 'month'],
+    props: ['subTeamId', 'month'],
     data() {
       return {
         calendar: null,
@@ -126,7 +126,7 @@
     },
     watch: {
       currentMonth: function () {
-        if (this.month == dayjs(this.currentMonth).format('M')) {
+        if (dayjs(this.month.date).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
           return;
         }
         window.location.href = `/sub-teams/${this.subTeamId}/calendars/${this.yearAndMonth}`;
@@ -149,7 +149,8 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${this.year}/${this.month}`).then(res => {
+        let d = dayjs(this.month.date);
+        axios.get(`/api/v1/sub-teams/${this.subTeamId}/calendars/${d.format('YYYY/MM')}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
