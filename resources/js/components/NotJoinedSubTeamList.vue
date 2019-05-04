@@ -44,7 +44,12 @@
     props: ['notJoinedSubTeams', 'user'],
     methods: {
       addSubTeamUser: function (subTeamId) {
-
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: subTeamId, user_id: this.user.id})
+          .then(res => {
+            console.log(res);
+          }).catch(e => {
+          console.log(e.response);
+        });
       },
     },
   }
