@@ -38,7 +38,9 @@
               :team-user="teamUser"
               :emotion="modalEmotion"
               :date="modalDate"
-              @closeModal="closeModal()"
+              @closeModal="closeModal"
+              @createEmotion="createEmotion"
+              @updateEmotion="updateEmotion"
             ></emotion-modal>
           </v-dialog>
         </div>
@@ -93,11 +95,15 @@
         if (dayjs(this.month.date).format('YYYY-MM') == d.format('YYYY-MM')) {
           return;
         }
-        window.location.href = `/team-users/${this.teamUser.id}/calendars/${d.format('YYYY')}/${d.format('M')}`;
+        this.reload();
       },
     },
     methods: {
-      isThisMonth (date) {
+      reload: function () {
+        let d = dayjs(this.currentMonth);
+        window.location.href = `/team-users/${this.teamUser.id}/calendars/${d.format('YYYY')}/${d.format('M')}`;
+      },
+      isThisMonth(date) {
         return dayjs(this.month.date).format('M') == dayjs(date).format('M');
       },
       openModal: function (emotion, day) {
@@ -110,6 +116,26 @@
       },
       closeSnackbar: function () {
         this.snackbar.open = false;
+      },
+      updateEmotion: function (emotionId, params) {
+        axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
+          this.snackbar = {open: true, type: 'success', text: '更新しました。'}
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'}
+        }).finally(() => {
+          this.emotionModal = false;
+          this.reload();
+        });
+      },
+      createEmotion: function (params) {
+        axios.post('/api/v1/emotions', params).then(res => {
+          this.snackbar = {open: true, type: 'success', text: '作成しました。'}
+        }).catch(e => {
+          this.snackbar = {open: true, type: 'error', text: '作成に失敗しました。'}
+        }).finally(() => {
+          this.emotionModal = false;
+          this.reload();
+        });
       },
     },
   }
