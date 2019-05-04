@@ -53,7 +53,9 @@
                   <v-card flat>
                     <setting-tab
                       :sub-team="subTeam"
-                      :subTeamUser="subTeamUser"
+                      :sub-team-user="subTeamUser"
+                      @updateSubTeam="updateSubTeam"
+                      @deleteSubTeamUser="deleteSubTeamUser"
                     ></setting-tab>
                   </v-card>
                 </v-tab-item>
@@ -118,8 +120,28 @@
             this.snackbar = {open: true, type: 'success', text: 'ユーザーを追加しました。'};
             this.fetchParams();
           }).catch(e => {
-            this.snackbar = {open: true, type: 'error', text: 'ユーザーの追加に失敗しました。'};
+          this.snackbar = {open: true, type: 'error', text: 'ユーザーの追加に失敗しました。'};
         });
+      },
+      updateSubTeam() {
+        axios.put(`/api/v1/sub-teams/${this.subTeam.id}`, this.subTeam)
+          .then(res => {
+            this.snackbar = {open: true, type: 'success', text: 'チームを更新しました。'};
+            window.location.reload();
+          })
+          .catch(e => {
+            this.snackbar = {open: true, type: 'error', text: 'チームの更新に失敗しました。'};
+          });
+      },
+      deleteSubTeamUser() {
+        axios.delete(`/api/v1/sub-team-users/${this.subTeamUser.id}`)
+          .then(res => {
+            this.snackbar = {open: true, type: 'success', text: 'チームから退出しました。'};
+            window.location.href = '/teams';
+          })
+          .catch(e => {
+            this.snackbar = {open: true, type: 'error', text: 'チームからの退出に失敗しました。'};
+          })
       },
     },
     mounted() {
