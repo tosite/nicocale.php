@@ -24,6 +24,7 @@ class ViewSubTeamController extends Controller
         $notJoinedSubTeams = \App\SubTeam::teamId($teamId)->whereNotIn('id', $joinedSubTeamIds)->get();
         return view('sub_teams.not_joined.index', [
             'notJoinedSubTeams' => $notJoinedSubTeams,
+            'user' => \Auth::user(),
         ]);
     }
 
