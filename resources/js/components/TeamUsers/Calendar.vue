@@ -1,10 +1,10 @@
 <template>
   <v-layout wrap>
-    <v-flex xs12 v-if="localToday != null">
+    <v-flex xs12 md8 offset-md2 v-if="localToday != null">
       <v-layout row>
         <v-dialog v-model="pickerModal" max-width="290px">
           <template v-slot:activator="{ on }">
-            <h1>{{ currentMonth | month }}</h1>
+            <h1>{{ teamUser.user.name }}さん - <small>{{ currentMonth | month }}</small></h1>
             <v-btn color="primary" dark v-on="on" icon flat>
               <v-icon>calendar_today</v-icon>
             </v-btn>
