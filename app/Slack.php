@@ -23,6 +23,12 @@ class Slack extends SlackBase
         return (object)$res['profile'];
     }
 
+    public function usersIdentity()
+    {
+        $res = $this->httpGet('users.identity');
+        return (object)$res['user'];
+    }
+
     public function teamInfo()
     {
         $res = $this->httpGet('team.info');
