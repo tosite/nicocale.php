@@ -14,6 +14,9 @@
 
 <title>{{ config('app.name', 'Laravel') }}</title>
 
+<script src="{{ secure_asset('js/app.js') }}" defer></script>
+<script>window.Laravel = {csrfToken: "{{ csrf_token() }}"};</script>
+
 <link rel="icon" href="{{ secure_asset('favicon.ico') }}" type="image/vnd.microsoft.icon">
 <link rel="shortcut icon" href="{{ secure_asset('shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
 <link rel=apple-touch-icon href="{{ secure_asset('shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
@@ -23,5 +26,3 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
 <link rel=canonical href="ニコカレ">
 
-<script src="{{ secure_asset('js/app.js') }}" defer></script>
-<script>window.Laravel = {csrfToken: "{{ csrf_token() }}"};</script>
