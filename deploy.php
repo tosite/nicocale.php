@@ -38,6 +38,7 @@ task('upload:key', function () {
 })->desc('.keyをアップロード');
 
 after('deploy:failed', 'deploy:unlock');
+
 before('deploy:shared','upload:env');
-after('upload:env','upload:key');
+before('deploy:symlink','upload:key');
 before('deploy:symlink', 'artisan:migrate');
