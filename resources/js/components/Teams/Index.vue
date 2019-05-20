@@ -26,7 +26,11 @@
           type: '',
           text: '',
         },
-        emotion: null,
+        emotion: {
+          emoji: ":bust_in_silhouette:",
+          status_text: '',
+          memo: ''
+        },
       }
     },
     created() {
@@ -38,7 +42,9 @@
       },
       fetchEmotion: function () {
         axios.get(`/api/v1/team-users/${this.teamUser.id}/emotions`).then(res => {
-          this.emotion = res.data;
+          if (res.data != false) {
+            this.emotion = res.data;
+          }
         }).catch(e => {
           this.snackbar = {open: true, type: 'error', text: 'エラーが発生しました。'}
         });
