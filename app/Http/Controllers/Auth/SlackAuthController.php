@@ -12,6 +12,7 @@ class SlackAuthController extends Controller
     const AUTH_SCOPE = [
         'identity.basic',
         'identity.team',
+        'identity.email',
         'identity.avatar',
     ];
 
