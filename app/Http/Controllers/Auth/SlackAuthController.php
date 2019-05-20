@@ -38,7 +38,11 @@ class SlackAuthController extends Controller
     public function handleProviderCallback()
     {
         $this->middleware('guest')->except('logout');
-        $user = \Socialite::driver('slack')->user();
+        try {
+            $user = \Socialite::driver('slack')->user();
+        } catch (\Exception $e) {
+            $user = \Socialite::driver('slack')->stateless()->user();
+        }
 
         $authUser = $this->firstOrCreateUser($user);
         \Auth::login($authUser, true);
