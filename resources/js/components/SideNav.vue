@@ -100,7 +100,9 @@
 
     <v-toolbar color="primary" dark app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>NicoCale</v-toolbar-title>
+      <v-toolbar-title>
+        <a href="/" class="white--text" style="text-decoration: none;">NicoCale</a>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
