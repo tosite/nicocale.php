@@ -43,7 +43,7 @@ class SlackAuthController extends Controller
             try {
                 $user = \Socialite::driver('slack')->stateless()->user();
             } catch (\Exception $e) {
-                return redirect()->route('/');
+                return redirect('/');
             }
         }
 
