@@ -40,7 +40,11 @@ class SlackAuthController extends Controller
         try {
             $user = \Socialite::driver('slack')->user();
         } catch (\Exception $e) {
-            $user = \Socialite::driver('slack')->stateless()->user();
+            try {
+                $user = \Socialite::driver('slack')->stateless()->user();
+            } catch (\Exception $e) {
+                return redirect()->roure('/');
+            }
         }
 
         $authUser = $this->firstOrCreateUser($user);
