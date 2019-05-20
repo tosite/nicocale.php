@@ -3,7 +3,7 @@
 <head>
   @include('layouts.header')
 </head>
-<body>
+<body class="ma-0">
 <div id="app">
   <v-app>
     <side-nav></side-nav>

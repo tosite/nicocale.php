@@ -3,7 +3,7 @@
 <head>
   @include('layouts.header')
 </head>
-<body>
+<body class="ma-0">
 <div id="app">
   <v-app>
     <v-toolbar dark color="primary">
@@ -27,6 +27,12 @@
         </v-layout>
       </v-container>
     </v-content>
+
+    <v-footer class="pa-3 primary darken-1 white--text" dark>
+      <v-spacer></v-spacer>
+      <div>&copy; 2019 - <a href="https://twitter.com/mao_sum" class="white--text" style="text-decoration: none;">@mao_sum</a></div>
+    </v-footer>
+
   </v-app>
 </div>
 </body>
