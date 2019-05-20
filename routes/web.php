@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['prefix' => 'auth/slack'], function () {
     Route::get('access',   'Auth\SlackAuthController@getPermission');
     Route::get('',         'Auth\SlackAuthController@redirectToProvider');
@@ -15,6 +11,10 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('/policy', function () {
     return view('policy.index');
+});
+
+Route::get('/', function () {
+    return view('landing.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
