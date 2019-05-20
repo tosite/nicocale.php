@@ -49,9 +49,18 @@ class ViewTeamUserController extends Controller
     {
         $teamUser = \App\TeamUser::with(['user', 'team'])->teamId($teamId)->me()->first();
         $slack = \Auth::user()->slack();
-        $profile = $slack->usersProfileGet();
-        $names = [$profile->real_name, $profile->display_name];
-        $channels = ($teamUser->slack_access) ? $slack->channelsList() : [];
+        $channels = [];
+
+        try {
+            $profile = $slack->usersProfileGet();
+            $names = [$profile->real_name, $profile->display_name];
+            $channels = $slack->channelsList();
+        } catch (\Exception $e) {
+            $teamUser->slack_access = 0;
+            $teamUser->save();
+            $profile = $slack->usersIdentity();
+            $names = [$profile->name];
+        }
 
         return view('team_users.me.index', [
             'teamUser' => $teamUser,
