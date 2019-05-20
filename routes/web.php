@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['prefix' => 'auth/slack'], function () {
     Route::get('access',   'Auth\SlackAuthController@getPermission');
     Route::get('',         'Auth\SlackAuthController@redirectToProvider');
@@ -13,12 +9,13 @@ Route::group(['prefix' => 'auth/slack'], function () {
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
-Route::get('/policy', function () {
-    return view('policy.index');
-});
+
+Route::get('/', 'LandingController@index');
+Route::get('/landing', 'LandingController@index');
+Route::get('/policy', 'LandingController@policy');
+Route::get('/how-to-use', 'LandingController@howtouse');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');
     Route::get('teams',                                             'ViewTeamController@index'           )->name('teams.index');
     Route::get('teams/{teamId}/me',                                 'ViewTeamUserController@me'          )->name('team_users.me');
     Route::get('/team-users/{teamUserId}/calendars/{year}/{month}', 'ViewTeamUserController@calendar'    )->name('team_users.calendar');

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Foundation\Auth\AuthenticatesUsers,
     App\Http\Controllers\Controller;
 
@@ -10,8 +11,8 @@ class SlackAuthController extends Controller
 
     const AUTH_SCOPE = [
         'identity.basic',
-        'identity.email',
         'identity.team',
+        'identity.email',
         'identity.avatar',
     ];
 
@@ -37,18 +38,30 @@ class SlackAuthController extends Controller
     public function handleProviderCallback()
     {
         $this->middleware('guest')->except('logout');
-        $user = \Socialite::driver('slack')->user();
+        try {
+            $user = \Socialite::driver('slack')->user();
+        } catch (\Exception $e) {
+            try {
+                $user = \Socialite::driver('slack')->stateless()->user();
+            } catch (\Exception $e) {
+                return redirect('/');
+            }
+        }
 
         $authUser = $this->firstOrCreateUser($user);
         \Auth::login($authUser, true);
+        if ($authUser->slack_token != $user->token) {
+            $authUser->slack_token = $user->token;
+            $authUser->save();
+        }
 
         $scope = $user->accessTokenResponseBody['scope'];
-        $slackTeam = (object) $user['team'];
+        $slackTeam = (object)$user['team'];
         $team = \App\Team::firstOrNew(['slack_team_id' => $slackTeam->id]);
         $team->fill(['name' => $slackTeam->name, 'avatar' => $slackTeam->image_230])->save();
         $teamUser = \App\TeamUser::firstOrCreate(['user_id' => $authUser->id, 'team_id' => $team->id]);
 
-        if(strpos($scope, self::PERMISSION_SCOPE[0]) !== false) {
+        if (strpos($scope, self::PERMISSION_SCOPE[0]) !== false) {
             $teamUser->fill(['slack_access' => 1])->save();
         }
 
