@@ -65,7 +65,7 @@ class SlackAuthController extends Controller
             $teamUser->fill(['slack_access' => 1])->save();
         }
 
-        return redirect()->route('home');
+        return redirect()->route('teams.index');
     }
 
     public function logout()
