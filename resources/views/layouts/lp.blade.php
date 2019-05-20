@@ -21,6 +21,8 @@
       </a>
     </v-toolbar>
 
+    @yield('jumbo-tron')
+
     <v-content>
       <v-container fluid style="overflow-x: scroll;">
         <v-layout row wrap>
