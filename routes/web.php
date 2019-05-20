@@ -13,7 +13,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('/', 'LandingController@index');
 Route::get('/policy', 'LandingController@policy');
 // TODO
-Route::get('/summary', 'LandingController@summary');
+Route::get('/how-to-use', 'LandingController@howtouse');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');

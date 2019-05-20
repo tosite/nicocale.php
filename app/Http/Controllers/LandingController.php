@@ -12,11 +12,11 @@ class LandingController extends Controller
 
     public function policy()
     {
-        return view('policy.index');
+        return view('landing.policy.index');
     }
 
-    public function summary()
+    public function howtouse()
     {
-        return view('landing.summary.index');
+        return view('landing.howtouse.index');
     }
 }
