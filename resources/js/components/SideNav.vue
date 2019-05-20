@@ -104,6 +104,8 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn flat href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">お問い合わせ</v-btn>
+
       <v-menu offset-y min-width="200">
         <template v-slot:activator="{ on }">
           <v-btn

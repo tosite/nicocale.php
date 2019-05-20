@@ -9,6 +9,7 @@
     <v-toolbar dark color="primary">
       <v-toolbar-title class="white--text">NicoCale</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn flat href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">お問い合わせ</v-btn>
       <a
         href="https://slack.com/oauth/authorize?client_id=306106578305.492917770354&scope=emoji:read,users.profile:read,users.profile:write"
       >
