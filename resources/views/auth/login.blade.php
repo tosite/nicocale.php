@@ -2,7 +2,7 @@
 
 @section('content')
   <v-layout row>
-    <v-flex xs10 offset-xs1 sm8 offset-sm2 md6 offset-md3>
+    <v-flex xs12 sm10 offset-sm1 md8 offset-md2>
       <v-card>
         <v-card-title class="white--text headline primary">Slackアカウントでログインする</v-card-title>
         <v-card-text>
