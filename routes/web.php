@@ -13,6 +13,9 @@ Route::group(['prefix' => 'auth/slack'], function () {
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
+Route::get('/policy', function () {
+    return view('policy.index');
+});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', function () { return redirect()->route('teams.index'); })->name('home');
