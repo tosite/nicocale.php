@@ -18,8 +18,8 @@
 <script>window.Laravel = {csrfToken: "{{ csrf_token() }}"};</script>
 
 <link rel="icon" href="{{ secure_asset('favicon.ico') }}" type="image/vnd.microsoft.icon">
-<link rel="shortcut icon" href="{{ secure_asset('shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
-<link rel=apple-touch-icon href="{{ secure_asset('shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
+<link rel="shortcut icon" href="{{ secure_asset('img/shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
+<link rel=apple-touch-icon href="{{ secure_asset('img/shortcut-icon.png') }}" type="image/vnd.microsoft.icon">
 
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
