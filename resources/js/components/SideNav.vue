@@ -268,7 +268,7 @@
           this.newSubTeam.team_id = this.currentTeam.id;
           this.notJoinedSubTeams = res.data.notJoinedSubTeams;
         }).catch((e) => {
-          console.log(e.response)
+          alert('読み込み時にエラーが発生しました。');
         }).finally(() => {
           this.loading = false;
         });
@@ -278,7 +278,7 @@
           this.snackbar = {open: true, type: 'success', text: 'チームを作成しました。'};
           this.createSubTeamUser(res.data.id, false);
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: 'チーム作成に失敗しました。'};
+          alert('チーム作成に失敗しました。');
         }).finally(() => {
           this.dialog = false;
         });
@@ -291,7 +291,7 @@
           }
           this.fetchSideNav();
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'};
+          alert('処理に失敗しました。');
         });
       },
       cancel: function () {

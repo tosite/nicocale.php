@@ -126,14 +126,14 @@
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: 'チャンネルに通知しました。'};
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '通知に失敗しました。'};
+          alert('通知に失敗しました。');
         });
       },
       setChannel: function () {
         axios.put(`/api/v1/team-users/${this.teamUser.id}`, {notify_channel: this.selectChannel}).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'};
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'};
+          alert('更新に失敗しました。');
         });
       },
       unsetChannel: function () {

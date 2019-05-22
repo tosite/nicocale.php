@@ -2336,7 +2336,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.newSubTeam.team_id = _this.currentTeam.id;
         _this.notJoinedSubTeams = res.data.notJoinedSubTeams;
       }).catch(function (e) {
-        console.log(e.response);
+        alert('読み込み時にエラーが発生しました。');
       }).finally(function () {
         _this.loading = false;
       });
@@ -2353,11 +2353,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.createSubTeamUser(res.data.id, false);
       }).catch(function (e) {
-        _this2.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'チーム作成に失敗しました。'
-        };
+        alert('チーム作成に失敗しました。');
       }).finally(function () {
         _this2.dialog = false;
       });
@@ -2381,11 +2377,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.fetchSideNav();
       }).catch(function (e) {
-        _this3.snackbar = {
-          open: true,
-          type: 'error',
-          text: '処理に失敗しました。'
-        };
+        alert('処理に失敗しました。');
       });
     },
     cancel: function cancel() {
@@ -2648,7 +2640,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var d = dayjs(this.month).format('YYYY/MM');
-      console.log("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d));
       axios.get("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d)).then(function (res) {
         _this.calendar = res.data.calendar;
         _this.me = res.data.me;
@@ -2827,11 +2818,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.subTeam = res.data.subTeam;
         _this.subTeamUser = res.data.subTeamUser;
       }).catch(function (e) {
-        _this.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'エラーが発生しました。'
-        };
+        alert('エラーが発生しました。');
       });
     },
     createSubTeamUser: function createSubTeamUser(userId) {
@@ -2849,11 +2836,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.fetchParams();
       }).catch(function (e) {
-        _this2.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'ユーザーの追加に失敗しました。'
-        };
+        alert('ユーザーの追加に失敗しました。');
       });
     },
     updateSubTeam: function updateSubTeam() {
@@ -2867,11 +2850,7 @@ __webpack_require__.r(__webpack_exports__);
         };
         window.location.reload();
       }).catch(function (e) {
-        _this3.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'チームの更新に失敗しました。'
-        };
+        alert('チームの更新に失敗しました。');
       });
     },
     deleteSubTeamUser: function deleteSubTeamUser() {
@@ -2885,11 +2864,7 @@ __webpack_require__.r(__webpack_exports__);
         };
         window.location.href = '/teams';
       }).catch(function (e) {
-        _this4.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'チームからの退出に失敗しました。'
-        };
+        alert('チームからの退出に失敗しました。');
       });
     }
   },
@@ -3250,11 +3225,7 @@ __webpack_require__.r(__webpack_exports__);
           text: 'チャンネルに通知しました。'
         };
       }).catch(function (e) {
-        _this.snackbar = {
-          open: true,
-          type: 'error',
-          text: '通知に失敗しました。'
-        };
+        alert('通知に失敗しました。');
       });
     },
     setChannel: function setChannel() {
@@ -3269,11 +3240,7 @@ __webpack_require__.r(__webpack_exports__);
           text: '更新しました。'
         };
       }).catch(function (e) {
-        _this2.snackbar = {
-          open: true,
-          type: 'error',
-          text: '更新に失敗しました。'
-        };
+        alert('更新に失敗しました。');
       });
     },
     unsetChannel: function unsetChannel() {
@@ -3513,11 +3480,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.emotion = res.data;
         }
       }).catch(function (e) {
-        _this.snackbar = {
-          open: true,
-          type: 'error',
-          text: 'エラーが発生しました。'
-        };
+        alert('エラーが発生しました。');
       });
     },
     updateEmotion: function updateEmotion(emotionId, params) {
@@ -3530,11 +3493,7 @@ __webpack_require__.r(__webpack_exports__);
           text: '更新しました。'
         };
       }).catch(function (e) {
-        _this2.snackbar = {
-          open: true,
-          type: 'error',
-          text: '更新に失敗しました。'
-        };
+        alert('更新に失敗しました。');
       }).finally(function () {
         _this2.emotionModal = false;
 
@@ -3551,11 +3510,7 @@ __webpack_require__.r(__webpack_exports__);
           text: '作成しました。'
         };
       }).catch(function (e) {
-        _this3.snackbar = {
-          open: true,
-          type: 'error',
-          text: '作成に失敗しました。'
-        };
+        alert('作成に失敗しました。');
       }).finally(function () {
         _this3.emotionModal = false;
 

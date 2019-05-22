@@ -111,7 +111,7 @@
           this.subTeam = res.data.subTeam;
           this.subTeamUser = res.data.subTeamUser;
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: 'エラーが発生しました。'};
+          alert('エラーが発生しました。');
         });
       },
       createSubTeamUser(userId) {
@@ -120,7 +120,7 @@
             this.snackbar = {open: true, type: 'success', text: 'ユーザーを追加しました。'};
             this.fetchParams();
           }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: 'ユーザーの追加に失敗しました。'};
+          alert('ユーザーの追加に失敗しました。');
         });
       },
       updateSubTeam() {
@@ -130,7 +130,7 @@
             window.location.reload();
           })
           .catch(e => {
-            this.snackbar = {open: true, type: 'error', text: 'チームの更新に失敗しました。'};
+            alert('チームの更新に失敗しました。');
           });
       },
       deleteSubTeamUser() {
@@ -140,7 +140,7 @@
             window.location.href = '/teams';
           })
           .catch(e => {
-            this.snackbar = {open: true, type: 'error', text: 'チームからの退出に失敗しました。'};
+            alert('チームからの退出に失敗しました。');
           })
       },
     },
