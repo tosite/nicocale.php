@@ -155,7 +155,7 @@
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
-          this.currentMonth = dayjs(res.data.current.date).format('YYYY-MM');
+          this.currentMonth = dayjs(res.data.current).format('YYYY-MM');
         }).catch(e => {
           alert('処理に失敗しました。');
         }).finally(() => {

@@ -2653,7 +2653,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.calendar = res.data.calendar;
         _this.me = res.data.me;
         _this.members = res.data.members;
-        _this.currentMonth = dayjs(res.data.current.date).format('YYYY-MM');
+        _this.currentMonth = dayjs(res.data.current).format('YYYY-MM');
       }).catch(function (e) {
         alert('処理に失敗しました。');
       }).finally(function () {
