@@ -126,7 +126,7 @@
     },
     watch: {
       currentMonth: function () {
-        if (dayjs(this.month.date).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
+        if (dayjs(this.month).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
           return;
         }
         window.location.href = `/sub-teams/${this.subTeam.id}/calendars/${this.yearAndMonth}`;
@@ -149,14 +149,14 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        let d = dayjs(this.month.date);
+        let d = dayjs(this.month);
         axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d.format('YYYY/MM')}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
           this.currentMonth = dayjs(res.data.current.date).format('YYYY-MM');
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'}
+          alert('処理に失敗しました。');
         }).finally(() => {
           this.loading = false;
         });
@@ -165,7 +165,7 @@
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'}
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'}
+          alert('処理に失敗しました。');
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();
@@ -175,7 +175,7 @@
         axios.post('/api/v1/emotions', params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '作成しました。'}
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '作成に失敗しました。'}
+          alert('処理に失敗しました。');
         }).finally(() => {
           this.dialog = false;
           this.fetchEmotion();

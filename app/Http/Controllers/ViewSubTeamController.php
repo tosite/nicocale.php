@@ -46,7 +46,7 @@ class ViewSubTeamController extends Controller
         return view('sub_teams.calendars.index', [
             'calendarWithEmotions' => $emotions,
             'subTeamUsers'         => $subTeamUsers,
-            'month'                => $current,
+            'month'                => $current->format('Y-m-d'),
             'mySubTeamUser'        => $mySubTeamUser,
             'subTeam'              => \App\SubTeam::find($subTeamId),
         ]);
