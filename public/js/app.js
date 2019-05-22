@@ -3377,9 +3377,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.localToday = dayjs(this.today.date).format('YYYY-MM-DD');
-    this.currentMonth = dayjs(this.month.date).format('YYYY-MM');
-    this.calendarFirstDay = dayjs(this.month.date).format('YYYY-MM-DD');
+    this.localToday = dayjs(this.today.date.slice(0, 10)).format('YYYY-MM-DD');
+    this.currentMonth = dayjs(this.month.date.slice(0, 10)).format('YYYY-MM');
+    this.calendarFirstDay = dayjs(this.month.date.slice(0, 10)).format('YYYY-MM-DD');
   },
   filters: {
     month: function month(date) {
@@ -3390,7 +3390,7 @@ __webpack_require__.r(__webpack_exports__);
     currentMonth: function currentMonth() {
       var d = dayjs(this.currentMonth);
 
-      if (dayjs(this.month.date).format('YYYY-MM') == d.format('YYYY-MM')) {
+      if (dayjs(this.month.date.slice(0, 10)).format('YYYY-MM') == d.format('YYYY-MM')) {
         return;
       }
 
@@ -3403,7 +3403,7 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = "/team-users/".concat(this.teamUser.id, "/calendars/").concat(d.format('YYYY'), "/").concat(d.format('M'));
     },
     isThisMonth: function isThisMonth(date) {
-      return dayjs(this.month.date).format('M') == dayjs(date).format('M');
+      return dayjs(this.month.date.slice(0, 10)).format('M') == dayjs(date).format('M');
     },
     openModal: function openModal(emotion, day) {
       this.modalDate = day;
@@ -3426,11 +3426,7 @@ __webpack_require__.r(__webpack_exports__);
           text: '更新しました。'
         };
       }).catch(function (e) {
-        _this.snackbar = {
-          open: true,
-          type: 'error',
-          text: '更新に失敗しました。'
-        };
+        alert('更新に失敗しました。');
       }).finally(function () {
         _this.emotionModal = false;
 
@@ -3447,11 +3443,7 @@ __webpack_require__.r(__webpack_exports__);
           text: '作成しました。'
         };
       }).catch(function (e) {
-        _this2.snackbar = {
-          open: true,
-          type: 'error',
-          text: '作成に失敗しました。'
-        };
+        alert('作成に失敗しました。');
       }).finally(function () {
         _this2.emotionModal = false;
 
