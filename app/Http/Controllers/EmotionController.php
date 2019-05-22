@@ -18,6 +18,11 @@ class EmotionController extends Controller
         }
         $emotion = \App\Emotion::create($params);
         $this->notifySlack($emotion, '登録');
+
+        if ($emotion->teamUser->slack_access)
+        {
+            $this->setSlackStatus($emotion);
+        }
         return response($emotion, 201);
     }
 
@@ -32,12 +37,23 @@ class EmotionController extends Controller
 
         $emotion->fill($params)->save();
         $this->notifySlack($emotion, '更新');
+
+        if ($emotion->teamUser->slack_access)
+        {
+            $this->setSlackStatus($emotion);
+        }
         return response($emotion, 200);
     }
 
     private function isTeamExist($teamId, $userId): bool
     {
         return \App\TeamUser::teamId($teamId)->userId($userId)->exists();
+    }
+
+    private function setSlackStatus($emotion)
+    {
+        $slack = $emotion->user->slack();
+        $slack->usersProfileSet($emotion->status_text, $emotion->emoji);
     }
 
     private function notifySlack($emotion, $type)
