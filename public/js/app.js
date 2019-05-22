@@ -2648,6 +2648,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var d = dayjs(this.month);
+      console.log(this.month, dayjs(this.month), dayjs(this.month).format('YYYY/MM'));
       axios.get("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d.format('YYYY/MM'))).then(function (res) {
         _this.calendar = res.data.calendar;
         _this.me = res.data.me;

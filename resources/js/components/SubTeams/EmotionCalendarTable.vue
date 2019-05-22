@@ -150,6 +150,7 @@
       },
       fetchEmotion: function () {
         let d = dayjs(this.month);
+        console.log(this.month, dayjs(this.month), dayjs(this.month).format('YYYY/MM'));
         axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d.format('YYYY/MM')}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
