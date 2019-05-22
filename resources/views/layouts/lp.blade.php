@@ -2,9 +2,14 @@
 <html lang="ja">
 <head>
   @include('layouts.header')
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
 </head>
 <body class="ma-0">
-<div id="app">
+<div id="app" v-cloak>
   <v-app>
     <v-toolbar dark color="primary">
       <v-toolbar-title class="white--text">
