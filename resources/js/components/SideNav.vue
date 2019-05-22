@@ -106,7 +106,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn flat href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">お問い合わせ</v-btn>
 
       <v-menu offset-y min-width="200">
         <template v-slot:activator="{ on }">
@@ -120,12 +119,19 @@
         </template>
         <v-list>
           <v-list-tile :href="`/teams/${currentTeam.id}/me`">
-            <v-list-tile-title>
+            <v-list-tile-title class="text-xs-center">
               ユーザー設定
             </v-list-tile-title>
           </v-list-tile>
+
+          <v-list-tile href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">
+            <v-list-tile-title class="text-xs-center">
+              お問い合わせ
+            </v-list-tile-title>
+          </v-list-tile>
+
           <v-list-tile href="/auth/slack/logout">
-            <v-list-tile-title>
+            <v-list-tile-title class="text-xs-center">
               ログアウト
             </v-list-tile-title>
           </v-list-tile>
@@ -268,7 +274,7 @@
           this.newSubTeam.team_id = this.currentTeam.id;
           this.notJoinedSubTeams = res.data.notJoinedSubTeams;
         }).catch((e) => {
-          console.log(e.response)
+          alert('読み込み時にエラーが発生しました。');
         }).finally(() => {
           this.loading = false;
         });
@@ -278,7 +284,7 @@
           this.snackbar = {open: true, type: 'success', text: 'チームを作成しました。'};
           this.createSubTeamUser(res.data.id, false);
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: 'チーム作成に失敗しました。'};
+          alert('チーム作成に失敗しました。');
         }).finally(() => {
           this.dialog = false;
         });
@@ -291,7 +297,7 @@
           }
           this.fetchSideNav();
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '処理に失敗しました。'};
+          alert('処理に失敗しました。');
         });
       },
       cancel: function () {

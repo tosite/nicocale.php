@@ -46,14 +46,14 @@
             this.emotion = res.data;
           }
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: 'エラーが発生しました。'}
+          alert('エラーが発生しました。');
         });
       },
       updateEmotion: function (emotionId, params) {
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'}
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '更新に失敗しました。'}
+          alert('更新に失敗しました。');
         }).finally(() => {
           this.emotionModal = false;
           this.fetchEmotion();
@@ -63,7 +63,7 @@
         axios.post('/api/v1/emotions', params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '作成しました。'}
         }).catch(e => {
-          this.snackbar = {open: true, type: 'error', text: '作成に失敗しました。'}
+          alert('作成に失敗しました。');
         }).finally(() => {
           this.emotionModal = false;
           this.fetchEmotion();

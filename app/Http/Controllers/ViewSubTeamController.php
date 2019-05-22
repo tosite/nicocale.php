@@ -35,7 +35,7 @@ class ViewSubTeamController extends Controller
         $emotions = [];
         foreach ($calendar as $cal)
         {
-            $d = $cal->format('Y-m-d');
+            $d = $cal;
             $emotions[$d] = [
                 'date'    => $cal,
                 'me'      => isset($myEmotions[$d]) ? $myEmotions[$d] : null,
@@ -46,7 +46,7 @@ class ViewSubTeamController extends Controller
         return view('sub_teams.calendars.index', [
             'calendarWithEmotions' => $emotions,
             'subTeamUsers'         => $subTeamUsers,
-            'month'                => $current,
+            'month'                => $current->format('Y-m-d'),
             'mySubTeamUser'        => $mySubTeamUser,
             'subTeam'              => \App\SubTeam::find($subTeamId),
         ]);
