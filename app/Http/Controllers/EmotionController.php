@@ -68,7 +68,7 @@ class EmotionController extends Controller
             'text' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
             'title' => $date->format('Y年n月j日のカレンダーを見る'),
             'color' => 'good',
-            'title_link' => env('APP_URL') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
+            'title_link' => env('APP_URL', 'https://nicocale.app') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
             'author_name' => $emotion->user->name,
             'fields' => [
                 [
