@@ -2647,9 +2647,9 @@ __webpack_require__.r(__webpack_exports__);
     fetchEmotion: function fetchEmotion() {
       var _this = this;
 
-      var d = dayjs(this.month);
-      console.log(this.month, dayjs(this.month), dayjs(this.month).format('YYYY/MM'));
-      axios.get("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d.format('YYYY/MM'))).then(function (res) {
+      var d = dayjs(this.month).format('YYYY/MM');
+      console.log("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d));
+      axios.get("/api/v1/sub-teams/".concat(this.subTeam.id, "/calendars/").concat(d)).then(function (res) {
         _this.calendar = res.data.calendar;
         _this.me = res.data.me;
         _this.members = res.data.members;

@@ -149,9 +149,9 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        let d = dayjs(this.month);
-        console.log(this.month, dayjs(this.month), dayjs(this.month).format('YYYY/MM'));
-        axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d.format('YYYY/MM')}`).then(res => {
+        let d = dayjs(this.month).format('YYYY/MM');
+        console.log(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d}`);
+        axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
