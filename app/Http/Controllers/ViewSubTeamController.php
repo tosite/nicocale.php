@@ -35,7 +35,7 @@ class ViewSubTeamController extends Controller
         $emotions = [];
         foreach ($calendar as $cal)
         {
-            $d = $cal->format('Y-m-d');
+            $d = $cal;
             $emotions[$d] = [
                 'date'    => $cal,
                 'me'      => isset($myEmotions[$d]) ? $myEmotions[$d] : null,

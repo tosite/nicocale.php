@@ -70,7 +70,7 @@ class ApiSubTeamController extends Controller
         }
 
         return response([
-            'current' => $current->format('Y-m-d'),
+            'current' => $current,
             'me' => $me,
             'members' => $users,
             'calendar' => $calendar,
