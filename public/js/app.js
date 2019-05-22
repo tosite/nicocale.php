@@ -46679,7 +46679,11 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.calendar, function(date) {
                         return [
-                          _c("th", [_vm._v(_vm._s(_vm._f("day")(date.date)))])
+                          _c("th", [
+                            _vm._v(
+                              _vm._s(_vm._f("day")(date.date.slice(0, 10)))
+                            )
+                          ])
                         ]
                       })
                     ],

@@ -19,7 +19,7 @@
         <tr>
           <th>ユーザー</th>
           <template v-for="date in calendar">
-            <th>{{ date.date | day }}</th>
+            <th>{{ date.date.slice(0, 10) | day }}</th>
           </template>
         </tr>
         </thead>
