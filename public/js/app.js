@@ -2283,6 +2283,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -46059,18 +46065,6 @@ var render = function() {
           _c("v-spacer"),
           _vm._v(" "),
           _c(
-            "v-btn",
-            {
-              attrs: {
-                flat: "",
-                href:
-                  "https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform"
-              }
-            },
-            [_vm._v("お問い合わせ")]
-          ),
-          _vm._v(" "),
-          _c(
             "v-menu",
             {
               attrs: { "offset-y": "", "min-width": "200" },
@@ -46105,9 +46099,29 @@ var render = function() {
                     "v-list-tile",
                     { attrs: { href: "/teams/" + _vm.currentTeam.id + "/me" } },
                     [
-                      _c("v-list-tile-title", [
-                        _vm._v("\n            ユーザー設定\n          ")
-                      ])
+                      _c(
+                        "v-list-tile-title",
+                        { staticClass: "text-xs-center" },
+                        [_vm._v("\n            ユーザー設定\n          ")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile",
+                    {
+                      attrs: {
+                        href:
+                          "https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-list-tile-title",
+                        { staticClass: "text-xs-center" },
+                        [_vm._v("\n            お問い合わせ\n          ")]
+                      )
                     ],
                     1
                   ),
@@ -46116,9 +46130,11 @@ var render = function() {
                     "v-list-tile",
                     { attrs: { href: "/auth/slack/logout" } },
                     [
-                      _c("v-list-tile-title", [
-                        _vm._v("\n            ログアウト\n          ")
-                      ])
+                      _c(
+                        "v-list-tile-title",
+                        { staticClass: "text-xs-center" },
+                        [_vm._v("\n            ログアウト\n          ")]
+                      )
                     ],
                     1
                   )
