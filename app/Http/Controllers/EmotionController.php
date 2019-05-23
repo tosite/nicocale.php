@@ -66,7 +66,7 @@ class EmotionController extends Controller
         $attachments = [
             'fallback' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
             'text' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
-            'title' => $date->format('Y年n月j日のカレンダーを見る'),
+            'title' => $date->format('n月j日のカレンダーを見る'),
             'color' => 'good',
             'title_link' => env('APP_URL', 'https://nicocale.app') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
             'fields' => [
