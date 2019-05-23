@@ -17,11 +17,10 @@ class SlackAuthController extends Controller
     ];
 
     const PERMISSION_SCOPE = [
-        'emoji:read',
-        'users.profile:read',
-        'users.profile:write',
         'channels:read',
         'chat:write:bot',
+        'emoji:read',
+        'users.profile:write',
     ];
 
     public function redirectToProvider()
