@@ -24,7 +24,7 @@
     @yield('jumbo-tron')
 
     <v-content id="scrolling-techniques">
-      <v-container fluid style="overflow-x: scroll;" class="pa-0">
+      <v-container fluid style="overflow-x: scroll;">
         <v-layout row wrap>
           <v-flex xs12 sm10 offset-sm1 md8 offset-md2 lg6 offset-lg3>
             @yield('content')
