@@ -3,23 +3,14 @@
     <v-layout>
       <v-flex xs12 sm8 offset-sm2>
         <v-card class="text-xs-center pt-3">
-          <v-avatar size="128">
-            <img :src="teamUser.user.avatar" alt="avatar">
-          </v-avatar>
 
-          <v-card-title primary-title class="text-xs-center pb-1 pt-1">
-            <v-radio-group v-model="displayName">
-              <v-radio
-                v-for="name in names"
-                :key="name"
-                :value="name"
-                :label="name"
-                color="primary"
-              >
-              </v-radio>
-            </v-radio-group>
-
+          <v-card-title primary-title class="text-xs-center pb-1 pt-1 headline">
+            <v-avatar size="128">
+              <img :src="teamUser.user.avatar" alt="avatar">
+            </v-avatar>
+            {{ teamUser.user.name }}
           </v-card-title>
+
           <v-card-text>
             <div>
               <div v-if="teamUser.slack_access === 0">
@@ -98,11 +89,10 @@
 
 <script>
   export default {
-    props: ['teamUser', 'names', 'channels'],
+    props: ['teamUser', 'channels'],
     data() {
       return {
         radio: 'apple',
-        displayName: '',
         emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
         selectChannel: '',
         snackbar: {
@@ -114,7 +104,6 @@
     },
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
-      this.displayName = this.teamUser.user.name;
       this.selectChannel = this.teamUser.notify_channel;
     },
     methods: {
@@ -122,16 +111,16 @@
         this.snackbar.open = false;
       },
       updateUser: function () {
-        let params = {bio: this.teamUser.user.bio, emoji_set: this.radio, name: this.displayName};
+        let params = {bio: this.teamUser.user.bio, emoji_set: this.radio};
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params).then(res => {
-          this.snackbar = {open: true, type: 'success', text: 'チャンネルに通知しました。'};
+          this.snackbar = {open: true, type: 'success', text: '更新しました。'};
         }).catch(e => {
           alert('通知に失敗しました。');
         });
       },
       setChannel: function () {
         axios.put(`/api/v1/team-users/${this.teamUser.id}`, {notify_channel: this.selectChannel}).then(res => {
-          this.snackbar = {open: true, type: 'success', text: '更新しました。'};
+          this.snackbar = {open: true, type: 'success', text: 'チャンネルに通知しました。'};
         }).catch(e => {
           alert('更新に失敗しました。');
         });

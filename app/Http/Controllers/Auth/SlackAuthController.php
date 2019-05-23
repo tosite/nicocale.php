@@ -51,7 +51,7 @@ class SlackAuthController extends Controller
         $scope = $user->accessTokenResponseBody['scope'];
         $slackTeam = (object)$user['team'];
         $team = \App\Team::firstOrNew(['slack_team_id' => $slackTeam->id]);
-        $team->fill(['name' => $slackTeam->name, 'avatar' => $slackTeam->image_230])->save();
+        $team->fill(['avatar' => $slackTeam->image_230])->save();
         $teamUser = \App\TeamUser::firstOrCreate(['user_id' => $authUser->id, 'team_id' => $team->id]);
 
         if (strpos($scope, self::PERMISSION_SCOPE[1]) !== false) {

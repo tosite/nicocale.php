@@ -20,7 +20,6 @@ class Put extends FormRequest
                 'string',
                 Rule::in(['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook']),
             ],
-            'name' => 'string',
         ];
     }
 
@@ -29,7 +28,6 @@ class Put extends FormRequest
         return [
             'bio' => '自己紹介',
             'emoji_set' => 'Emojiスキン',
-            'name' => '名前',
         ];
     }
 }
