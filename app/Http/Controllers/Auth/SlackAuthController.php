@@ -21,7 +21,7 @@ class SlackAuthController extends Controller
         'users.profile:read',
         'users.profile:write',
         'channels:read',
-        'chat:write:user',
+        'chat:write:bot',
     ];
 
     public function redirectToProvider()
