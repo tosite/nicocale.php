@@ -8,7 +8,7 @@ class SlackNotify extends SlackBase
     protected $channel;
     protected $text;
     protected $attachments;
-    protected $emoji = ':smile:';
+    protected $emoji = '';
 
     public function channel($channel)
     {

@@ -17,12 +17,6 @@ class Slack extends SlackBase
         return $res['emoji']; // ['name' => 'png']
     }
 
-    public function usersProfileGet()
-    {
-        $res = $this->httpGet('users.profile.get');
-        return (object)$res['profile'];
-    }
-
     public function usersIdentity()
     {
         $res = $this->httpGet('users.identity');

@@ -6,6 +6,7 @@
 
     <v-card-text>
       <p class="display-4 text-xs-center ma-0">
+        <!-- TODO: set="charset" -->
         <emoji :emoji="emotion.emoji" :size="64"></emoji>
       </p>
 

@@ -52,19 +52,14 @@ class ViewTeamUserController extends Controller
         $channels = [];
 
         try {
-            $profile = $slack->usersProfileGet();
-            $names = [$profile->real_name, $profile->display_name];
             $channels = $slack->channelsList();
         } catch (\Exception $e) {
             $teamUser->slack_access = 0;
             $teamUser->save();
-            $profile = $slack->usersIdentity();
-            $names = [$profile->name];
         }
 
         return view('team_users.me.index', [
             'teamUser' => $teamUser,
-            'names' => $names,
             'channels' => $channels,
         ]);
     }
