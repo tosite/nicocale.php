@@ -18,9 +18,7 @@
       <v-spacer></v-spacer>
       <v-btn flat href="/login">ログイン</v-btn>
       <v-btn flat href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">お問い合わせ</v-btn>
-      <a href="https://slack.com/oauth/authorize?client_id=306106578305.492917770354&scope=emoji:read,users.profile:read,users.profile:write,channels:read,chat:write:user"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
-    </v-toolbar>
-
+      <a href="https://slack.com/oauth/authorize?client_id=306106578305.492917770354&scope=emoji:read,users.profile:write,channels:read,chat:write:bot,identity.avatar,identity.basic,identity.email,identity.team"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
     @yield('jumbo-tron')
 
     <v-content id="scrolling-techniques">
