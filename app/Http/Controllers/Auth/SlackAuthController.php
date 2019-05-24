@@ -34,7 +34,6 @@ class SlackAuthController extends Controller
 
     public function handleProviderCallback()
     {
-        $this->middleware('guest')->except('logout');
         try {
             $user = \Socialite::driver('slack')->user();
         } catch (\Exception $e) {
