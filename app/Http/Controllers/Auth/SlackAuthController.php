@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers,
     App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class SlackAuthController extends Controller
 {
@@ -32,8 +33,12 @@ class SlackAuthController extends Controller
         return \Socialite::driver('slack')->scopes(self::PERMISSION_SCOPE)->redirect();
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
+        if(!empty($request->get('error'))){
+            return redirect()->back()->with('flash_message', 'ログインに失敗しました。');
+        }
+
         try {
             $user = \Socialite::driver('slack')->user();
         } catch (\Exception $e) {
