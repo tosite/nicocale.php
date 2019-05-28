@@ -25,7 +25,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sub-teams/{subTeamId}/sub-team-users',              'ViewSubTeamUserController@index'    )->name('sub_team_users.index');
     Route::get('sub-teams/{subTeamId}/sub-team-users/not-joined',   'ViewSubTeamUserController@notJoined')->name('sub_team_users.not_joined');
 });
-
-//Route::get('side-navigations', 'SideNavigationController@index')->name('api_side_navigations.index');
-//Route::get('sub-teams/{subTeamId}/info-modals', 'ApiSubTeamController@infoModals');
-//Route::get('sub-teams/{subTeamId}/calendars/{year}/{month}', 'ApiSubTeamController@calendar');
