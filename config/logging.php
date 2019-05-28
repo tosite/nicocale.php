@@ -36,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'slack'],
+            'channels' => array_merge(['daily'], explode(',', env('LOG_CHANNEL'))),
         ],
 
         'single' => [
@@ -58,10 +58,11 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => 'error',
+            'context' => false,
         ],
 
         'papertrail' => [
-            'driver'  => 'monolog',
+            'driver' => 'monolog',
             'level' => 'debug',
             'handler' => SyslogUdpHandler::class,
             'handler_with' => [
