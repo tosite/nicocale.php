@@ -36,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => array_merge(['daily'], explode(',', env('LOG_CHANNEL'))),
+            'channels' => ['daily'],
         ],
 
         'single' => [
