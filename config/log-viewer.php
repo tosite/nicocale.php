@@ -30,7 +30,7 @@ return [
      |    'pl', 'pt-BR', 'ro', 'ru', 'sv', 'th', 'tr', 'zh-TW', 'zh'
      */
 
-    'locale'        => 'auto',
+    'locale'        => 'ja',
 
     /* -----------------------------------------------------------------
      |  Theme
@@ -53,7 +53,7 @@ return [
         'attributes' => [
             'prefix'     => 'log-viewer',
 
-            'middleware' => env('ARCANEDEV_LOGVIEWER_MIDDLEWARE') ? explode(',', env('ARCANEDEV_LOGVIEWER_MIDDLEWARE')) : null,
+            'middleware' => ['web', 'auth', 'ip.admin'],
         ],
     ],
 
