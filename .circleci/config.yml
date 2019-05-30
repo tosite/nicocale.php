@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3.2-apache-node-browsers
+      - image: circleci/7.3.2-apache-stretch
       - image: circleci/mysql:5.7
     parallelism: 4
 
@@ -20,8 +20,8 @@ jobs:
       - checkout
 
       - run: sudo docker-php-ext-install pdo_mysql
-      - run: sudo add-apt-repository ppa:ondrej/php
-      - run: sudo apt-get install php7.3-bcmath
+#      - run: sudo add-apt-repository ppa:ondrej/php
+#      - run: sudo apt-get install php7.3-bcmath
 
       - restore_cache:
           keys:
