@@ -1,12 +1,11 @@
 # ~/.circleci/config.yml
 version: 2
 jobs:
-  test:
+  build:
     docker:
-      - image: circleci/<language>:<version TAG>
+      - image: circleci/php:7.3.2-apache-node-browsers
     parallelism: 4
     steps:
       - run:
           command: |
             echo $(circleci tests glob "foo/**/*" "bar/**/*")
-            circleci tests glob "foo/**/*" "bar/**/*" | xargs -n 1 echo
