@@ -35,7 +35,7 @@ class SlackAuthController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-        if(!empty($request->get('error'))){
+        if (!empty($request->get('error'))) {
             return redirect()->back()->with('flash_message', 'ログインに失敗しました。');
         }
 
@@ -45,22 +45,24 @@ class SlackAuthController extends Controller
             $user = \Socialite::driver('slack')->stateless()->user();
         }
 
-        $authUser = $this->firstOrCreateUser($user);
-        \Auth::login($authUser, true);
-        if ($authUser->slack_token != $user->token) {
-            $authUser->slack_token = $user->token;
-            $authUser->save();
-        }
+        \DB::transaction(function () use ($user) {
+            $authUser = $this->firstOrCreateUser($user);
+            \Auth::login($authUser, true);
+            if ($authUser->slack_token != $user->token) {
+                $authUser->slack_token = $user->token;
+                $authUser->save();
+            }
 
-        $scope = $user->accessTokenResponseBody['scope'];
-        $slackTeam = (object)$user['team'];
-        $team = \App\Team::firstOrNew(['slack_team_id' => $slackTeam->id]);
-        $team->fill(['avatar' => $slackTeam->image_230, 'name' => $slackTeam->name])->save();
-        $teamUser = \App\TeamUser::firstOrCreate(['user_id' => $authUser->id, 'team_id' => $team->id]);
+            $scope = $user->accessTokenResponseBody['scope'];
+            $slackTeam = (object)$user['team'];
+            $team = \App\Team::firstOrNew(['slack_team_id' => $slackTeam->id]);
+            $team->fill(['avatar' => $slackTeam->image_230, 'name' => $slackTeam->name])->save();
+            $teamUser = \App\TeamUser::firstOrCreate(['user_id' => $authUser->id, 'team_id' => $team->id]);
 
-        if (strpos($scope, self::PERMISSION_SCOPE[1]) !== false) {
-            $teamUser->fill(['slack_access' => 1])->save();
-        }
+            if (strpos($scope, self::PERMISSION_SCOPE[1]) !== false) {
+                $teamUser->fill(['slack_access' => 1])->save();
+            }
+        });
 
         return redirect()->route('teams.index');
     }
