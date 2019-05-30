@@ -20,7 +20,7 @@ jobs:
       - checkout
 
       - run: sudo docker-php-ext-install pdo_mysql
-      - run: sudo apt update
+      - run: sudo apt-get update
       - run: sudo apt-get install php7.3-bcmath
 
       - restore_cache:
