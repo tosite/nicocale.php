@@ -11,11 +11,13 @@ class SlackAuthController extends Controller
     use AuthenticatesUsers;
 
     const AUTH_SCOPE = [
-        'identify',
+        'identity.basic',
+        'identity.team',
+        'identity.avatar',
+        'identity.email',
     ];
 
     const PERMISSION_SCOPE = [
-        'identify',
         'channels:read',
         'chat:write:bot',
         'emoji:read',
