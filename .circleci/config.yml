@@ -4,8 +4,34 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.3.2-apache-node-browsers
+      - image: circleci/mysql:5.7
     parallelism: 4
+
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: testing
+      - APP_KEY: APP_KEYを入れてください
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+    working_directory: ~/repo
+
     steps:
-      - run:
-          command: |
-            echo $(circleci tests glob "foo/**/*" "bar/**/*")
+      - checkout
+
+      - run: sudo docker-php-ext-install pdo_mysql
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: php artisan migrate
+      - run: php artisan db:seed
