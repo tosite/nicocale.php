@@ -56,8 +56,8 @@ before('deploy:shared', 'upload:env');
 before('deploy:symlink', 'upload:key');
 before('deploy:symlink', 'artisan:migrate');
 
-after('deploy:writable', 'artisan:cache:clear');
-after('deploy:writable', 'artisan:config:clear');
+after('deploy:symlink', 'artisan:cache:clear');
+after('deploy:symlink', 'artisan:config:clear');
 
 after('cleanup', 'deploy:notify:success');
 
