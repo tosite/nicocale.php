@@ -27,9 +27,23 @@ class TeamUser extends Model
     public function user ()         { return $this->belongsTo('App\User', 'user_id', 'id'); }
     public function team ()         { return $this->belongsTo('App\Team', 'team_id', 'id'); }
     public function subTeamUsers () { return $this->hasMany('App\SubTeamUser', 'team_user_id', 'id'); }
-     public function emotions ()    { return $this->hasMany('App\Emotion', 'team_user_id', 'id'); }
+    public function emotions ()     { return $this->hasMany('App\Emotion', 'team_user_id', 'id'); }
+    public function settings ()     { return $this->hasMany('App\Setting', 'team_user_id', 'id'); }
 
     public function scopeTeamId ($query, $id) { return $query->where(['team_id' => $id]); }
     public function scopeUserId ($query, $id) { return $query->where(['user_id' => $id]); }
     public function scopeMe($query)           { return $query->userId(\Auth::user()->id); }
+
+    private function setting($key, $value, $type)
+    {
+        $setting = Setting::firstOrNew(['team_user_id' => $this->id, 'key' => $key]);
+        if (!empty($setting->created_at)) {
+            return $setting;
+        }
+        $setting->fill(['value' => $value, 'type' => $type])->save();
+        return $setting;
+    }
+
+    public function slack_access($value = '')   { return $this->setting('slack_access', $value, 'bool'); }
+    public function notify_channel($value = '') { return $this->setting('notify_channel', $value, 'string'); }
 }
