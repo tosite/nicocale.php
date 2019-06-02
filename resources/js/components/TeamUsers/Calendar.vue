@@ -80,9 +80,9 @@
       },
     }),
     created() {
-      this.localToday = dayjs(this.today.date.slice(0, 10)).format('YYYY-MM-DD');
-      this.currentMonth = dayjs(this.month.date.slice(0, 10)).format('YYYY-MM');
-      this.calendarFirstDay = dayjs(this.month.date.slice(0, 10)).format('YYYY-MM-DD');
+      this.localToday = dayjs(this.today).format('YYYY-MM-DD');
+      this.currentMonth = dayjs(this.month).format('YYYY-MM');
+      this.calendarFirstDay = dayjs(this.month).format('YYYY-MM-DD');
     },
     filters: {
       month: function (date) {
@@ -92,7 +92,7 @@
     watch: {
       currentMonth: function () {
         let d = dayjs(this.currentMonth);
-        if (dayjs(this.month.date.slice(0, 10)).format('YYYY-MM') == d.format('YYYY-MM')) {
+        if (dayjs(this.month).format('YYYY-MM') == d.format('YYYY-MM')) {
           return;
         }
         this.reload();
@@ -104,7 +104,7 @@
         window.location.href = `/team-users/${this.teamUser.id}/calendars/${d.format('YYYY')}/${d.format('M')}`;
       },
       isThisMonth(date) {
-        return dayjs(this.month.date.slice(0, 10)).format('M') == dayjs(date).format('M');
+        return dayjs(this.month).format('M') == dayjs(date).format('M');
       },
       openModal: function (emotion, day) {
         this.modalDate = day;

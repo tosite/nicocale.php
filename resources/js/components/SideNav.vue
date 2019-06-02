@@ -166,7 +166,7 @@
                   </v-list-tile-content>
 
                   <v-list-tile-action>
-                    <v-btn icon ripple @click="createSubTeamUser(subTeam.id)">
+                    <v-btn icon ripple @click.stop="createSubTeamUser(subTeam.id)">
                       <v-icon color="grey lighten-1">add_circle</v-icon>
                     </v-btn>
                   </v-list-tile-action>

@@ -19,7 +19,7 @@
         <tr>
           <th>ユーザー</th>
           <template v-for="date in calendar">
-            <th>{{ date.date.slice(0, 10) | day }}</th>
+            <th>{{ date.slice(0, 10) | day }}</th>
           </template>
         </tr>
         </thead>
@@ -126,7 +126,7 @@
     },
     watch: {
       currentMonth: function () {
-        if (dayjs(this.month.date.slice(0, 10)).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
+        if (dayjs(this.month.format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM'))) {
           return;
         }
         window.location.href = `/sub-teams/${this.subTeam.id}/calendars/${this.yearAndMonth}`;
@@ -149,12 +149,12 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        let d = dayjs(this.month.date.slice(0, 10)).format('YYYY/MM');
+        let d = dayjs(this.month.format('YYYY/MM'));
         axios.get(`/api/v1/sub-teams/${this.subTeam.id}/calendars/${d}`).then(res => {
           this.calendar = res.data.calendar;
           this.me = res.data.me;
           this.members = res.data.members;
-          this.currentMonth = dayjs(res.data.current.date.slice(0, 10)).format('YYYY-MM');
+          this.currentMonth = dayjs(res.data.current.format('YYYY-MM'));
         }).catch(e => {
           alert('処理に失敗しました。');
         }).finally(() => {
