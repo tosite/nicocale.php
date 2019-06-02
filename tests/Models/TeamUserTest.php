@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Models;
 
 use App\TeamUser,
@@ -34,5 +35,21 @@ class TeamUserTest extends TestCase
         $this->assertSame('channel', $this->teamUser->notify_channel());
         $this->teamUser->notify_channel('new_channel');
         $this->assertSame('new_channel', $this->teamUser->notify_channel());
+    }
+
+    public function test_remind_at()
+    {
+        $this->teamUser->remind_at('12:00:00');
+        $this->assertSame('12:00:00', $this->teamUser->remind_at());
+        $this->teamUser->remind_at('13:00:00');
+        $this->assertSame('13:00:00', $this->teamUser->remind_at());
+    }
+
+    public function test_skip_holiday()
+    {
+        $this->teamUser->skip_holiday(true);
+        $this->assertTrue($this->teamUser->skip_holiday());
+        $this->teamUser->skip_holiday(false);
+        $this->assertFalse($this->teamUser->skip_holiday());
     }
 }

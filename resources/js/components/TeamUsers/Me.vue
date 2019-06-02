@@ -12,6 +12,7 @@
           </v-card-title>
 
           <v-card-text>
+            <p class="headline">Slack連携</p>
             <div>
               <div v-if="settings.slack_access === 0">
                 <p>
@@ -35,8 +36,33 @@
                 </v-layout>
                 <v-layout>
                   <v-spacer></v-spacer>
-                  <v-btn color="error" flat @click="unsetChannel">通知設定を解除する</v-btn>
+                  <v-btn color="error" flat @click="unsetChannel">解除する</v-btn>
                   <v-btn color="primary" flat @click="setChannel">通知する</v-btn>
+                </v-layout>
+
+                <v-layout>
+                  <v-flex xs3>
+                    <v-select
+                      v-model="remindHour"
+                      :items="[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]"
+                      item-text="name"
+                      item-value="id"
+                      label="時"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs3>
+                    <v-select
+                      v-model="remindMin"
+                      :items="['00', 10, 20, 30, 40, 50]"
+                      item-text="name"
+                      item-value="id"
+                      label="分"
+                    ></v-select>
+                  </v-flex>
+                  <v-flex xs6>
+                    <v-btn color="error" flat @click="unsetChannel">解除する</v-btn>
+                    <v-btn color="primary" flat @click="setRemind">設定する</v-btn>
+                  </v-flex>
                 </v-layout>
               </div>
             </div>
@@ -95,6 +121,8 @@
         radio: 'apple',
         emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
         selectChannel: '',
+        remindHour: 8,
+        remindMin: '00',
         snackbar: {
           open: false,
           type: '',
@@ -104,7 +132,7 @@
     },
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
-      this.selectChannel = this.teamUser.notify_channel;
+      this.selectChannel = this.settings.notify_channel;
     },
     methods: {
       closeSnackbar: function () {
@@ -119,7 +147,8 @@
         });
       },
       setChannel: function () {
-        axios.put(`/api/v1/team-users/${this.teamUser.id}`, {notify_channel: this.selectChannel}).then(res => {
+        let params = {notify_channel: this.selectChannel,};
+        axios.put(`/api/v1/team-users/${this.teamUser.id}/channels`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: 'チャンネルに通知しました。'};
         }).catch(e => {
           alert('更新に失敗しました。');
@@ -128,6 +157,21 @@
       unsetChannel: function () {
         this.selectChannel = '';
         this.setChannel();
+      },
+      setRemind: function () {
+        if (this.remindHour === '' || this.remindMin === '') { return; }
+        let params = {remind_at: `${this.remindHour}:${this.remindMin}:00`};
+        console.log(params);
+        axios.put(`/api/v1/team-users/${this.teamUser.id}/reminders`, params).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'リマインダーを設定しました。'};
+        }).catch(e => {
+          alert('更新に失敗しました。');
+        });
+      },
+      unsetRemind: function () {
+        this.remindHour = '';
+        this.remindMin = '';
+        this.setRemind();
       }
     },
   }
