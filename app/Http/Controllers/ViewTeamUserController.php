@@ -46,14 +46,14 @@ class ViewTeamUserController extends Controller
 
     public function me($teamId)
     {
-        $teamUser = \App\TeamUser::with(['user', 'team'])->teamId($teamId)->me()->first();
+        $teamUser = \App\TeamUser::with(['user', 'team', 'settings'])->teamId($teamId)->me()->first();
         $slack = \Auth::user()->slack();
         $channels = [];
 
         try {
             $channels = $slack->channelsList();
         } catch (\Exception $e) {
-            $teamUser->slack_access = 0;
+            $teamUser->slack_access(0);
             $teamUser->save();
         }
 
