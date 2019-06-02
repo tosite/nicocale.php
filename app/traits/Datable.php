@@ -22,7 +22,7 @@ trait Datable
         $calendar = [];
 
         for ($i = 0; $i < $count; $i++, $date->addDay()) {
-            $calendar[] = $date->copy();
+            $calendar[] = $date->copy()->format('Y-m-d');
         }
 
         return $calendar;
@@ -30,11 +30,11 @@ trait Datable
 
     public function createDateList($yyyymm)
     {
-        $date = new Carbon(date('Y-m-01', strtotime("{$yyyymm}01")));
+        $date = (new Carbon("{$yyyymm}01"));
         $list = [];
-        $end_day = (int)$date->format('t');
+        $end_day = $date->copy()->endOfMonth()->day;
         for ($i = 1; $i <= $end_day; $i++, $date->addDay()) {
-            $list[] = $date->copy();
+            $list[] = $date->copy()->format('Y-m-d');
         }
         return $list;
     }
@@ -42,8 +42,8 @@ trait Datable
     public function createMonthsList($yyyymm)
     {
         $list = [];
-        $current_date = new \DateTime(date('Y-m-01'));
-        $date = new \DateTime("{$yyyymm}01");
+        $current_date = (new Carbon)->firstOfMonth();
+        $date = new Carbon("{$yyyymm}01");
 
         $list['items'][] = [
             'display' => $current_date->format('Y年n月'),
@@ -55,7 +55,7 @@ trait Datable
             'value'   => $date->format('Ym'),
         ];
 
-        for ($i = 0; $i < 5; $i++, $date->modify('-1 months')) {
+        for ($i = 0; $i < 5; $i++, $date->subMonth()) {
             if ($date == $current_date) { $i--; continue; }
             $list['items'][] = [
                 'display' => $date->format('Y年n月'),
