@@ -61,7 +61,9 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn color="disabled" flat @click="$emit('closeModal')" v-if="closeButton != false">閉じる</v-btn>
-      <v-btn color="primary" @click="save">更新する</v-btn>
+      <v-btn color="green" outline @click="save(score['good'])">いい感じ</v-btn>
+      <v-btn color="light-blue" outline @click="save(score['soso'])">まあまあ</v-btn>
+      <v-btn color="amber darken-1" outline @click="save(score['bad'])">よくない</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -133,6 +135,11 @@
             unified: "1f625",
           },
         ],
+        score: {
+          good: 1,
+          soso: 2,
+          bad: 3,
+        },
       }
     },
     filters: {
@@ -141,10 +148,10 @@
       }
     },
     methods: {
-      save: function () {
+      save: function (score) {
         if (this.emotion.hasOwnProperty('id')) {
           let e = this.emotion;
-          let params = { emoji: e.emoji, status_text: e.status_text, memo: e.memo };
+          let params = { emoji: e.emoji, score: score, status_text: e.status_text, memo: e.memo };
           this.$emit('updateEmotion', e.id, params);
         } else {
           let me = this.teamUser;
