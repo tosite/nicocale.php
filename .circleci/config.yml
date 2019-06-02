@@ -36,6 +36,7 @@ jobs:
       - run: php -m
       - run: apt list --installed
       - run: which php
+      - run: sudo apt --enablerepo=epel,remi,remi-php73 search php73
       - run: sudo apt install php7.3-bcmath
       - run: composer install -n --prefer-dist
 
