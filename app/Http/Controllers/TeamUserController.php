@@ -10,7 +10,7 @@ class TeamUserController extends Controller
     {
         $params = $request->only(['notify_channel']);
         $teamUser = \App\TeamUser::find($teamUserId);
-        $teamUser->notify_channel();
+        $teamUser->notify_channel($params['notify_channel']);
         if (!empty($params['notify_channel'])) {
             $user = $teamUser->user;
             $user->slackNotify()
