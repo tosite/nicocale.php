@@ -47,4 +47,5 @@ class TeamUser extends Model
     public function slack_access($value = '')   { return $this->setting('slack_access', $value, 'bool'); }
     public function notify_channel($value = '') { return $this->setting('notify_channel', $value, 'string'); }
     public function remind_at($value = '')      { return $this->setting('remind_at', $value, 'string'); }
+    public function skip_holiday($value = '')   { return $this->setting('skip_holiday', $value, 'bool'); }
 }

@@ -44,4 +44,12 @@ class TeamUserTest extends TestCase
         $this->teamUser->remind_at('13:00:00');
         $this->assertSame('13:00:00', $this->teamUser->remind_at());
     }
+
+    public function test_skip_holiday()
+    {
+        $this->teamUser->skip_holiday(true);
+        $this->assertTrue($this->teamUser->skip_holiday());
+        $this->teamUser->skip_holiday(false);
+        $this->assertFalse($this->teamUser->skip_holiday());
+    }
 }
