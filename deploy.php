@@ -8,7 +8,7 @@ with(\Dotenv\Dotenv::create(__DIR__)->load());
 
 set('application', env('APP_NAME'));
 set('repository', 'git@github.com:tosite0345/nicocale.php.git');
-set('branch', 'master');
+set('branch', 'develop');
 set('git_tty', false);
 set('http_user', 'www-data');
 set('writable_mode', 'chmod');
