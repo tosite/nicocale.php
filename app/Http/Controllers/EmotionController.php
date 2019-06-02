@@ -67,11 +67,11 @@ class EmotionController extends Controller
             'fallback' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
             'text' => "{$emotion->user->name}さんがニコカレを{$type}しました。",
             'title' => $date->format('n月j日のカレンダーを見る'),
-            'color' => 'good',
+            'color' => $emotion->score()->get('color'),
             'title_link' => env('APP_URL', 'https://nicocale.app') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
             'fields' => [
                 [
-                    'title' => '感情',
+                    'title' => "感情（{$emotion->score()->get('name')}）",
                     'value' => $emotion->emoji,
                     'short' => true,
                 ],

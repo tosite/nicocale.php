@@ -26,9 +26,9 @@ class Emotion extends Model
     ];
 
     const SCORE = [
-        'good' => ['value' => 1, 'score' => 3, 'color' => '#66BB6A'],
-        'soso' => ['value' => 2, 'score' => 2, 'color' => '#29B6F6'],
-        'bad'  => ['value' => 3, 'score' => 1, 'color' => '#FFCA28'],
+        'good' => ['value' => 1, 'score' => 3, 'color' => '66BB6A', 'name' => 'いい感じ'],
+        'soso' => ['value' => 2, 'score' => 2, 'color' => '29B6F6', 'name' => 'まあまあ'],
+        'bad'  => ['value' => 3, 'score' => 1, 'color' => 'FFCA28', 'name' => 'よくない'],
     ];
 
     public function score() {
