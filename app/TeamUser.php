@@ -37,11 +37,11 @@ class TeamUser extends Model
     private function setting($key, $value, $type)
     {
         $setting = Setting::firstOrNew(['team_user_id' => $this->id, 'key' => $key]);
-        if (!empty($setting->created_at)) {
-            return $setting;
+        if ($value === '') {
+            return $setting->value();
         }
         $setting->fill(['value' => $value, 'type' => $type])->save();
-        return $setting;
+        return $setting->value();
     }
 
     public function slack_access($value = '')   { return $this->setting('slack_access', $value, 'bool'); }
