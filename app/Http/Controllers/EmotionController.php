@@ -71,7 +71,7 @@ class EmotionController extends Controller
             'title_link' => env('APP_URL', 'https://nicocale.app') . "/team-users/{$emotion->team_user_id}/calendars/{$date->format('Y/n')}",
             'fields' => [
                 [
-                    'title' => "感情（{$emotion->score()->get('name')}）",
+                    'title' => "キモチ（{$emotion->score()->get('name')}）",
                     'value' => $emotion->emoji,
                     'short' => true,
                 ],
