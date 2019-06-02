@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
 
     public function run(Faker $faker)
     {
-        $user = \App\User::first();
-        if (empty($user) && env('APP_ENV') != 'testing') {
+        if (empty(\App\User::first()) && env('APP_ENV') != 'testing') {
             echo "先にユーザー登録を行ってください。\n";
             exit();
         }
         $this->createFirstUser();
+        $user = \App\User::first();
 
         if (!empty(\App\Emotion::first())) {
             echo "一度DBをロールバックしてください。\n`php artisan migrate:reset && php artisan migrate`\n";
@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         }
 
         echo "処理開始\n";
-        dd($user);
 
         $teamUser = \App\TeamUser::userId($user->id)->first();
 
