@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(Faker $faker)
     {
         $user = \App\User::first();
-        if (empty($user) && env('APP_ENV' != 'testing')) {
+        if (empty($user) && env('APP_ENV') != 'testing') {
             echo "先にユーザー登録を行ってください。\n";
             exit();
         }
