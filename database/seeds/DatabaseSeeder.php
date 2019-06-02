@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         }
 
         echo "処理開始\n";
+        dd($user);
 
         $teamUser = \App\TeamUser::userId($user->id)->first();
 
