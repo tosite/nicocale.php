@@ -28,9 +28,7 @@ class DatabaseSeeder extends Seeder
 
         echo "処理開始\n";
 
-        \Auth::login($user);
-
-        $teamUser = \App\TeamUser::me()->first();
+        $teamUser = \App\TeamUser::userId($user->id)->first();
 
         // joined sub teams
         $joinedSubTeams = [];
