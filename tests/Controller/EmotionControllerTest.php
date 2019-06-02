@@ -10,7 +10,7 @@ class EmotionControllerTest extends TestCase
     use DatabaseTransactions;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->user = \App\User::first();
@@ -34,6 +34,7 @@ class EmotionControllerTest extends TestCase
             'team_id' => $emotion->team_id,
             'team_user_id' => $emotion->team_user_id,
             'emoji' => ':smile:',
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => 'happy',
             'memo' => $emotion->memo,
             'entered_on' => '2000-01-01',
@@ -51,13 +52,14 @@ class EmotionControllerTest extends TestCase
             'team_id' => $emotion->team_id,
             'team_user_id' => $emotion->team_user_id,
             'emoji' => $emotion->emoji,
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => $emotion->status_text,
             'memo' => $emotion->memo,
             'entered_on' => $emotion->entered_on,
         ];
-        $this->actingAs($this->user, 'api')
-            ->json('POST', '/api/v1/emotions', $params)
-            ->assertStatus(500);
+        $res = $this->actingAs($this->user, 'api')
+            ->json('POST', '/api/v1/emotions', $params);
+        $res->assertStatus(500);
 //        dd($res->baseResponse->getContent());
     }
 
@@ -68,6 +70,7 @@ class EmotionControllerTest extends TestCase
             'team_id' => $emotion->team_id,
             'team_user_id' => $emotion->team_user_id,
             'emoji' => $emotion->emoji,
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => $emotion->status_text,
             'memo' => $emotion->memo,
             'entered_on' => $emotion->entered_on,
@@ -92,6 +95,7 @@ class EmotionControllerTest extends TestCase
         $emotion = \App\Emotion::userId($this->user->id)->first();
         $params = [
             'emoji' => $emotion->emoji,
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => $emotion->status_text,
             'memo' => $emotion->memo,
         ];
@@ -106,6 +110,7 @@ class EmotionControllerTest extends TestCase
         $emotion = \App\Emotion::userId($this->user->id)->first();
         $params = [
             'emoji' => $emotion->emoji,
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => $emotion->status_text,
             'memo' => $emotion->memo,
             'entered_on' => '1990-05-01',
@@ -121,6 +126,7 @@ class EmotionControllerTest extends TestCase
         $emotion = \App\Emotion::where('user_id', '!=', $this->user->id)->first();
         $params = [
             'emoji' => $emotion->emoji,
+            'score' => \App\Emotion::SCORE['good']['value'],
             'status_text' => $emotion->status_text,
             'memo' => $emotion->memo,
         ];
