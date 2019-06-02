@@ -161,6 +161,7 @@
             team_id: me.team_id,
             team_user_id: team_user_id,
             emoji: e.emoji,
+            score: score,
             status_text: e.status_text,
             memo: e.memo,
             entered_on: this.date,
