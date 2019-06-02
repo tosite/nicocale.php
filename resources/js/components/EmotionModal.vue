@@ -60,9 +60,9 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="green lighten-1" outline @click="save(score['good'])">いい感じ</v-btn>
-      <v-btn color="light-blue lighten-1" outline @click="save(score['soso'])">まあまあ</v-btn>
-      <v-btn color="amber lighten-1" outline @click="save(score['bad'])">よくない</v-btn>
+      <v-btn color="green" outline @click="save(score['good'])">いい感じ</v-btn>
+      <v-btn color="light-blue" outline @click="save(score['soso'])">まあまあ</v-btn>
+      <v-btn color="amber darken-1" outline @click="save(score['bad'])">よくない</v-btn>
 
       <v-btn color="disabled" flat @click="$emit('closeModal')" v-if="closeButton != false">閉じる</v-btn>
     </v-card-actions>
