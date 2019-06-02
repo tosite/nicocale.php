@@ -8,6 +8,7 @@ class Setting extends Model
 {
     protected $table = 'team_user_settings';
     public $incrementing = false;
+    protected $primaryKey = 'team_user_id';
 
     protected $fillable = [
         'team_user_id', 'key', 'value', 'type',
