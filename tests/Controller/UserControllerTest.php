@@ -10,7 +10,7 @@ class UserControllerTest extends TestCase
     use DatabaseTransactions;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->user = \App\User::first();

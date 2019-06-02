@@ -11,7 +11,7 @@ class SubTeamControllerTest extends TestCase
     protected $subTeamUser;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subTeamUser = \App\SubTeamUser::first();
