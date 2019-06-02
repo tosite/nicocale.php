@@ -5,13 +5,21 @@ use Faker\Generator as Faker;
 
 class DatabaseSeeder extends Seeder
 {
+    private function createFirstUser()
+    {
+        $teamId = factory(\App\Team::class, 1)->create()[0]->id->toString();
+        $userId = factory(\App\User::class, 1)->create()[0]->id;
+        \App\TeamUser::create(['user_id' => $userId, 'team_id' => $teamId]);
+    }
+
     public function run(Faker $faker)
     {
         $user = \App\User::first();
-        if (empty($user)) {
+        if (empty($user) && env('APP_ENV' != 'testing')) {
             echo "先にユーザー登録を行ってください。\n";
             exit();
         }
+        $this->createFirstUser();
 
         if (!empty(\App\Emotion::first())) {
             echo "一度DBをロールバックしてください。\n`php artisan migrate:reset && php artisan migrate`\n";
