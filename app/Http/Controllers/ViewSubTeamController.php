@@ -33,20 +33,19 @@ class ViewSubTeamController extends Controller
         $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
 
         $emotions = [];
-        foreach ($calendar as $cal)
+        foreach ($calendar as $day)
         {
-            $d = $cal->format('Y-m-d');
-            $emotions[$d] = [
-                'date'    => $cal,
-                'me'      => isset($myEmotions[$d]) ? $myEmotions[$d] : null,
-                'members' => isset($teamEmotions[$d]) ? $teamEmotions[$d]->keyBy('user_id') : null,
+            $emotions[$day] = [
+                'date'    => $day,
+                'me'      => isset($myEmotions[$day]) ? $myEmotions[$day] : null,
+                'members' => isset($teamEmotions[$day]) ? $teamEmotions[$day]->keyBy('user_id') : null,
             ];
         }
 
         return view('sub_teams.calendars.index', [
             'calendarWithEmotions' => $emotions,
             'subTeamUsers'         => $subTeamUsers,
-            'month'                => $current,
+            'month'                => $current->format('Y-m-d'),
             'mySubTeamUser'        => $mySubTeamUser,
             'subTeam'              => \App\SubTeam::find($subTeamId),
         ]);
