@@ -153,7 +153,6 @@
         if (this.emotion.hasOwnProperty('id')) {
           let e = this.emotion;
           let params = { emoji: e.emoji, score: score, status_text: e.status_text, memo: e.memo };
-          console.log(params);
           this.$emit('updateEmotion', e.id, params);
         } else {
           let me = this.teamUser;
