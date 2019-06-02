@@ -8,7 +8,8 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
 
     Route::put('users/{userId}', 'UserController@update');
 
-    Route::put('team-users/{teamUserId}', 'TeamUserController@update');
+    Route::put('team-users/{teamUserId}/channels',  'TeamUserController@channel');
+    Route::put('team-users/{teamUserId}/reminders', 'TeamUserController@reminder');
 
     Route::post('sub-teams', 'SubTeamController@store');
     Route::put('sub-teams/{subTeamId}', 'SubTeamController@update');

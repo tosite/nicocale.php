@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 
 class TeamUserController extends Controller
 {
-    public function update(\App\Http\Requests\TeamUsers\Put $request, $teamUserId)
+    public function channel(\App\Http\Requests\TeamUsers\Put $request, $teamUserId)
     {
-        $params = $request->only(['notify_channel', 'remind_at', 'skip_holiday']);
+        $params = $request->only(['notify_channel']);
         $teamUser = \App\TeamUser::find($teamUserId);
         $teamUser->notify_channel($params['notify_channel']);
-        (empty($params['remind_at'])) ?: $teamUser->remind_at($params['remind_at']);
         if (!empty($params['notify_channel'])) {
             $user = $teamUser->user;
             $user->slackNotify()
@@ -19,6 +18,14 @@ class TeamUserController extends Controller
                 ->text($user->name.'さんがチャンネル通知を設定しました。')
                 ->send();
         }
+        return response($teamUser, 200);
+    }
+
+    public function reminder(\App\Http\Requests\TeamUsers\Put $request, $teamUserId)
+    {
+        $params = $request->only(['remind_at', 'skip_holiday']);
+        $teamUser = \App\TeamUser::find($teamUserId);
+        $teamUser->remind_at($params['remind_at']);
         return response($teamUser, 200);
     }
 }

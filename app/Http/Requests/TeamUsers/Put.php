@@ -15,8 +15,8 @@ class Put extends FormRequest
     public function rules()
     {
         return [
-            'notify_channel' => 'string|nullable',
-            'remind_at'      => ['regex:/^(0[0-9]{1}|1{1}[0-9]{1}|2{1}[0-3]{1}):(0[0-9]{1}|[1-5]{1}[0-9]{1}):(0[0-9]{1}|[1-5]{1}[0-9]{1})$/'],
+            'notify_channel' => 'string',
+            'remind_at'      => 'date_format:H:i:s',
             'skip_holiday'   => 'boolean',
         ];
     }
