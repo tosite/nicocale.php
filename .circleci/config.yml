@@ -60,8 +60,8 @@ jobs:
 
       # prepare the database
       - run: cp .env.example .env
-      - run: php artisan key:generate
       - run: php artisan config:clear || php artisan cache:clear
+      - run: php artisan key:generate
       - run: php artisan migrate
       - run: php artisan db:seed
 
