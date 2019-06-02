@@ -34,7 +34,7 @@ jobs:
 
       - run: php --ini
       - run: php -m
-      - run: sudo apt show php
+      - run: apt list --installed
       - run: composer install -n --prefer-dist
 
       - save_cache:
