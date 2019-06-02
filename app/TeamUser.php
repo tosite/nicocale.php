@@ -37,10 +37,9 @@ class TeamUser extends Model
     private function setting($key, $value, $type)
     {
         $setting = Setting::firstOrNew(['team_user_id' => $this->id, 'key' => $key]);
-        if ($value === '') {
-            return $setting->value();
+        if ($value !== '') {
+            $setting->fill(['value' => $value, 'type' => $type])->save();
         }
-        $setting->fill(['value' => $value, 'type' => $type])->save();
         return $setting->value();
     }
 
