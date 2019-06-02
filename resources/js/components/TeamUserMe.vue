@@ -13,7 +13,7 @@
 
           <v-card-text>
             <div>
-              <div v-if="teamUser.slack_access === 0">
+              <div v-if="settings.slack_access === 0">
                 <p>
                   お使いのアカウントはまだSlackと連携されていないようです。<br>
                   連携することでステータスアイコンの変更・ステータスメッセージの変更・チャンネル通知などがご利用いただけます。<br>
@@ -89,7 +89,7 @@
 
 <script>
   export default {
-    props: ['teamUser', 'channels'],
+    props: ['teamUser', 'channels', 'settings'],
     data() {
       return {
         radio: 'apple',
