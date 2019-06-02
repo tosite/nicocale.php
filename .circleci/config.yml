@@ -33,8 +33,7 @@ jobs:
             - v1-dependencies-
 
       - run: php --ini
-      - run: php -v
-      - run: which php
+      - run: php -m
       - run: composer install -n --prefer-dist
 
       - save_cache:
