@@ -12,6 +12,7 @@
           </v-card-title>
 
           <v-card-text>
+            <p class="headline">Slack連携</p>
             <div>
               <div v-if="settings.slack_access === 0">
                 <p>
@@ -104,7 +105,7 @@
     },
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
-      this.selectChannel = this.teamUser.notify_channel;
+      this.selectChannel = this.settings.notify_channel;
     },
     methods: {
       closeSnackbar: function () {
