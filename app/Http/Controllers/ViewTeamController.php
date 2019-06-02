@@ -19,7 +19,7 @@ class ViewTeamController extends Controller
 
         return view('teams.index', [
             'teamUser' => $teamUser,
-            'today' => $today,
+            'today' => $today->format('Y-m-d'),
         ]);
     }
 

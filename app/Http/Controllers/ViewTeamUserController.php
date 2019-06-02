@@ -31,14 +31,13 @@ class ViewTeamUserController extends Controller
             ->keyBy('entered_on');
 
         $emotions = [];
-        foreach ($calendar as $cal) {
-            $d = $cal->format('Y-m-d');
-            $emotions[$d] = isset($userEmotions[$d]) ? $userEmotions[$d] : null;
+        foreach ($calendar as $day) {
+            $emotions[$day] = isset($userEmotions[$day]) ? $userEmotions[$day] : null;
         }
 
         return view('team_users.calendars.index', [
-            'month' => $current,
-            'today' => new Carbon(),
+            'month' => $current->format('Y-m-d'),
+            'today' => (new Carbon())->format('Y-m-d'),
             'emotions' => $emotions,
             'isMe' => $isMe,
             'user' => $teamUser,
