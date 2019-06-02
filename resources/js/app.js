@@ -42,7 +42,7 @@ Vue.component('loading',             require('./components/Loading.vue').default
 Vue.component('emotion-popper',      require('./components/EmotionPopper.vue').default);
 Vue.component('month-selector',      require('./components/MonthSelector.vue').default);
 Vue.component('sub-team-user-list',  require('./components/SubTeamUserList.vue').default);
-Vue.component('team-user-me',        require('./components/TeamUserMe.vue').default);
+Vue.component('team-user-me',        require('./components/TeamUsers/Me.vue').default);
 Vue.component('team-index',          require('./components/Teams/Index.vue').default);
 
 Vue.component('sub-team-info-modal',  require('./components/SubTeams/SettingModal.vue').default);
