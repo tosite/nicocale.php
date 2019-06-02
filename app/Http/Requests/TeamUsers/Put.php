@@ -16,7 +16,7 @@ class Put extends FormRequest
     {
         return [
             'notify_channel' => 'string',
-            'remind_at'      => 'date_format:H:i:s',
+            'remind_at'      => 'date_format:G:i:s',
             'skip_holiday'   => 'boolean',
         ];
     }
