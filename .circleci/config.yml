@@ -35,6 +35,8 @@ jobs:
       - run: php --ini
       - run: php -m
       - run: apt list --installed
+      - run: which php
+      - run: sudo apt install php7.3-bcmath
       - run: composer install -n --prefer-dist
 
       - save_cache:
