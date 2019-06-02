@@ -8,7 +8,7 @@ with(\Dotenv\Dotenv::create(__DIR__)->load());
 
 set('application', env('APP_NAME'));
 set('repository', 'git@github.com:tosite0345/nicocale.php.git');
-set('branch', 'master');
+set('branch', 'develop');
 set('git_tty', false);
 set('http_user', 'www-data');
 set('writable_mode', 'chmod');
@@ -45,12 +45,19 @@ task('deploy:notify:failed', function () {
     slack_notify('failed');
 })->desc('デプロイ失敗時に通知');
 
+task('artisan:config:clear', function () {
+    run('{{bin/php}} {{release_path}}/artisan config:clear');
+})->desc('Execute artisan config:clear');
+
 after('deploy:failed', 'deploy:unlock');
 after('deploy:failed', 'deploy:notify:failed');
 
 before('deploy:shared', 'upload:env');
 before('deploy:symlink', 'upload:key');
 before('deploy:symlink', 'artisan:migrate');
+
+after('deploy:symlink', 'artisan:cache:clear');
+after('deploy:symlink', 'artisan:config:clear');
 
 after('cleanup', 'deploy:notify:success');
 

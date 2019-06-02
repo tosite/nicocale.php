@@ -22,8 +22,28 @@ class Emotion extends Model
 
     protected $fillable = [
         'user_id', 'team_id', 'team_user_id', 'emoji',
-        'status_text', 'memo', 'entered_on',
+        'score', 'status_text', 'memo', 'entered_on',
     ];
+
+    const SCORE = [
+        'good' => ['value' => 1, 'score' => 3, 'color' => '66BB6A', 'name' => 'いい感じ'],
+        'soso' => ['value' => 2, 'score' => 2, 'color' => '29B6F6', 'name' => 'まあまあ'],
+        'bad'  => ['value' => 3, 'score' => 1, 'color' => 'FFCA28', 'name' => 'よくない'],
+    ];
+
+    public function score() {
+        $score = \App\Emotion::SCORE;
+        switch ($this->score) {
+            case $score['good']['value']:
+                return collect($score['good']);
+            case $score['soso']['value']:
+                return collect($score['soso']);
+            case $score['bad']['value']:
+                return collect($score['bad']);
+            default:
+                throw new \Exception("score didn't find.");
+        }
+    }
 
     public function team ()     { return $this->belongsTo('App\Team',     'team_id','id'); }
     public function user ()     { return $this->belongsTo('App\User',     'user_id','id'); }

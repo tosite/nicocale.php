@@ -44,7 +44,7 @@ class SlackNotify extends SlackBase
         ];
 
         if (!empty($this->attachments)) {
-            $params['attachments'] = json_encode([$this->attachments]);
+            $params['attachments'] = json_encode([$this->attachments], JSON_UNESCAPED_UNICODE);
             $params['text'] = '';
         }
 

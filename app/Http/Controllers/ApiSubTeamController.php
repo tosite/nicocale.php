@@ -53,24 +53,22 @@ class ApiSubTeamController extends Controller
 
         $me = [];
         $me['user'] = $mySubTeamUser;
-        foreach ($calendar as $cal) {
-            $d = $cal->format('Y-m-d');
-            $me['emotions'][$cal->format('Y-m-d')] = isset($myEmotions[$d]) ? $myEmotions[$d] : null;
+        foreach ($calendar as $day) {
+            $me['emotions'][$day] = isset($myEmotions[$day]) ? $myEmotions[$day] : null;
         }
 
         $users = [];
         foreach ($subTeamUsers as $u) {
             $params = [];
             $params['user'] = $u;
-            foreach ($calendar as $cal) {
-                $d = $cal->format('Y-m-d');
-                $params['emotions'][$cal->format('Y-m-d')] = isset($teamEmotions[$d]) ? $teamEmotions[$d]->keyBy('user_id')[$u->user_id] : null;
+            foreach ($calendar as $day) {
+                $params['emotions'][$day] = isset($teamEmotions[$day]) ? $teamEmotions[$day]->keyBy('user_id')[$u->user_id] : null;
             }
             $users[] = $params;
         }
 
         return response([
-            'current' => $current,
+            'current' => $current->format('Y-m-d'),
             'me' => $me,
             'members' => $users,
             'calendar' => $calendar,
