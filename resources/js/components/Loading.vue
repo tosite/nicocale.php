@@ -1,7 +1,19 @@
 <template>
-  <h2>{{ message }}</h2>
+  <v-layout align-center justify-center row fill-height>
+    <v-flex class="text-xs-center mt-4">
+      <h2 class="word">{{ message }}</h2>
+    </v-flex>
+  </v-layout>
 </template>
 
+<style scoped>
+  .word {
+    color: #ACB6E5;
+    background: -webkit-linear-gradient(0deg, #00F260, #0575E6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
 <script>
   export default {
     data() {
