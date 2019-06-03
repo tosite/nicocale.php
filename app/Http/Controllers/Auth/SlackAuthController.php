@@ -20,7 +20,6 @@ class SlackAuthController extends Controller
     const PERMISSION_SCOPE = [
         'channels:read',
         'chat:write:bot',
-        'emoji:read',
         'users.profile:write',
     ];
 
