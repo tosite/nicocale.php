@@ -31,7 +31,7 @@
             </thead>
             <tbody>
             <tr>
-              <th @click.stop="window.location.href=`/team-users/${me.user.team_user_id}/calendars/${yearAndMonth}`">
+              <th @click.stop="location(me.user.team_user_id)"  class="pointer">
                 <v-layout row>
                   <v-flex text-xs-center>
                     <v-avatar>
@@ -53,7 +53,7 @@
             </tr>
             <template v-for="user in members">
               <tr>
-                <th @click.stop="window.location.href=`/team-users/${user.user.team_user_id}/calendars/${yearAndMonth}`">
+                <th @click.stop="location(user.user.team_user_id)" class="pointer">
                   <v-layout row>
                     <v-flex text-xs-center>
                       <v-avatar size="32">
@@ -156,12 +156,6 @@
         return dayjs(date).format('YYYY年M月');
       },
     },
-    computed: {
-      yearAndMonth: function () {
-        let d = dayjs(this.currentMonth);
-        return `${d.format('YYYY')}/${d.format('M')}`;
-      },
-    },
     watch: {
       currentMonth: function () {
         if (dayjs(this.month).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
@@ -173,6 +167,11 @@
     methods: {
       emoji: function (emotion) {
         return (emotion == null) ? this.defaultEmotion.emoji : emotion.emoji;
+      },
+      location: function (teamUserId) {
+        let d = dayjs(this.currentMonth);
+        let ym = `${d.format('YYYY')}/${d.format('M')}`;
+        window.location.href = `/team-users/${teamUserId}/calendars/${ym}`;
       },
       openModal: function (emotion, day) {
         this.modalDate = day;
