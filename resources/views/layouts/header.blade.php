@@ -26,3 +26,13 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
 <link rel=canonical href="ニコカレ">
 
+<style>
+  [v-cloak] {
+    display: none;
+  }
+  .primary {
+    background: #00796B;
+    background: -webkit-linear-gradient(to right, #00796B, #00838F);
+    background: linear-gradient(to right, #00796B, #00838F) !important;
+  }
+</style>
