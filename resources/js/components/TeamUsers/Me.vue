@@ -40,30 +40,30 @@
                   <v-btn color="primary" flat @click="setChannel">通知する</v-btn>
                 </v-layout>
 
-                <v-layout>
-                  <v-flex xs3>
-                    <v-select
-                      v-model="remindHour"
-                      :items="[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]"
-                      item-text="name"
-                      item-value="id"
-                      label="時"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs3>
-                    <v-select
-                      v-model="remindMin"
-                      :items="['00', 10, 20, 30, 40, 50]"
-                      item-text="name"
-                      item-value="id"
-                      label="分"
-                    ></v-select>
-                  </v-flex>
-                  <v-flex xs6>
-                    <v-btn color="error" flat @click="unsetChannel">解除する</v-btn>
-                    <v-btn color="primary" flat @click="setRemind">設定する</v-btn>
-                  </v-flex>
-                </v-layout>
+                <!--                <v-layout>-->
+                <!--                  <v-flex xs3>-->
+                <!--                    <v-select-->
+                <!--                      v-model="remindHour"-->
+                <!--                      :items="[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]"-->
+                <!--                      item-text="name"-->
+                <!--                      item-value="id"-->
+                <!--                      label="時"-->
+                <!--                    ></v-select>-->
+                <!--                  </v-flex>-->
+                <!--                  <v-flex xs3>-->
+                <!--                    <v-select-->
+                <!--                      v-model="remindMin"-->
+                <!--                      :items="['00', 10, 20, 30, 40, 50]"-->
+                <!--                      item-text="name"-->
+                <!--                      item-value="id"-->
+                <!--                      label="分"-->
+                <!--                    ></v-select>-->
+                <!--                  </v-flex>-->
+                <!--                  <v-flex xs6>-->
+                <!--                    <v-btn color="error" flat @click="unsetChannel">解除する</v-btn>-->
+                <!--                    <v-btn color="primary" flat @click="setRemind">設定する</v-btn>-->
+                <!--                  </v-flex>-->
+                <!--                </v-layout>-->
               </div>
             </div>
             <v-divider class="mb-3 mt-2"></v-divider>
@@ -159,7 +159,9 @@
         this.setChannel();
       },
       setRemind: function () {
-        if (this.remindHour === '' || this.remindMin === '') { return; }
+        if (this.remindHour === '' || this.remindMin === '') {
+          return;
+        }
         let params = {remind_at: `${this.remindHour}:${this.remindMin}:00`};
         axios.put(`/api/v1/team-users/${this.teamUser.id}/reminders`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: 'リマインダーを設定しました。'};
