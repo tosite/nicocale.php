@@ -2,6 +2,10 @@
   <v-card>
     <v-card-title class="headline primary white--text" primary-title color="primary">
       {{ date | day }}
+      <v-spacer></v-spacer>
+      <v-btn dark icon @click="$emit('closeModal')" v-if="closeButton != false">
+        <v-icon>close</v-icon>
+      </v-btn>
     </v-card-title>
 
     <v-card-text>
@@ -60,7 +64,6 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="disabled" flat @click="$emit('closeModal')" v-if="closeButton != false">閉じる</v-btn>
       <v-btn color="green" outline @click="save(score['good'])">いい感じ</v-btn>
       <v-btn color="light-blue" outline @click="save(score['soso'])">まあまあ</v-btn>
       <v-btn color="amber darken-1" outline @click="save(score['bad'])">よくない</v-btn>
