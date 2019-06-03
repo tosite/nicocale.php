@@ -133,7 +133,6 @@
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
       this.selectChannel = this.settings.notify_channel;
-      console.log(this.settings);
     },
     methods: {
       closeSnackbar: function () {
@@ -162,7 +161,6 @@
       setRemind: function () {
         if (this.remindHour === '' || this.remindMin === '') { return; }
         let params = {remind_at: `${this.remindHour}:${this.remindMin}:00`};
-        console.log(params);
         axios.put(`/api/v1/team-users/${this.teamUser.id}/reminders`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: 'リマインダーを設定しました。'};
         }).catch(e => {
