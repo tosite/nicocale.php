@@ -5,7 +5,9 @@
       <v-layout row>
         <v-dialog v-model="pickerModal" max-width="290px">
           <template v-slot:activator="{ on }">
-            <h1>{{ subTeam.name }} - <small>{{ currentMonth | month }}</small></h1>
+            <h1>{{ subTeam.name }} -
+              <small>{{ currentMonth | month }}</small>
+            </h1>
             <v-btn color="primary" dark v-on="on" icon flat>
               <v-icon>calendar_today</v-icon>
             </v-btn>
@@ -14,44 +16,68 @@
         </v-dialog>
         <sub-team-info-modal :sub-team-id="subTeam.id"></sub-team-info-modal>
       </v-layout>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>ユーザー</th>
-          <template v-for="date in calendar">
-            <th>{{ date | day }}</th>
-          </template>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th>
-            <a :href="`/team-users/${me.user.team_user_id}/calendars/${yearAndMonth}`">
-              {{ me.user.user.name }}
-            </a>
-          </th>
-          <td v-for="(emotion, day) in me.emotions" :key="day">
+
+      <v-card style="overflow-x: scroll;" class="pa-2">
+
+        <v-card-text>
+          <table class="table">
+            <thead>
+            <tr>
+              <th style="min-width: 100px;"></th>
+              <template v-for="date in calendar">
+                <th>{{ date | day }}</th>
+              </template>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th @click.stop="window.location.href=`/team-users/${me.user.team_user_id}/calendars/${yearAndMonth}`">
+                <v-layout row>
+                  <v-flex text-xs-center>
+                    <v-avatar>
+                      <img :src="me.user.user.avatar">
+                    </v-avatar>
+                  </v-flex>
+                </v-layout>
+                <v-layout row>
+                  <v-flex>
+                    {{ me.user.user.name }}
+                  </v-flex>
+                </v-layout>
+              </th>
+              <td v-for="(emotion, day) in me.emotions" :key="day">
             <span @click="openModal(emotion, day)" class="pointer">
-              <emotion-popper :emotion="emotion" :size="48"></emotion-popper>
+              <emotion-popper :emotion="emotion" :size="40"></emotion-popper>
             </span>
-          </td>
-        </tr>
-        <template v-for="user in members">
-          <tr>
-            <th>
-              <a :href="`/team-users/${user.user.team_user_id}/calendars/${yearAndMonth}`">
-                {{ user.user.user.name }}
-              </a>
-            </th>
-            <template v-for="emotion in user.emotions">
-              <td>
-                <emotion-popper :emotion="emotion"></emotion-popper>
               </td>
+            </tr>
+            <template v-for="user in members">
+              <tr>
+                <th @click.stop="window.location.href=`/team-users/${user.user.team_user_id}/calendars/${yearAndMonth}`">
+                  <v-layout row>
+                    <v-flex text-xs-center>
+                      <v-avatar size="32">
+                        <img :src="user.user.user.avatar">
+                      </v-avatar>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex>
+                      {{ user.user.user.name }}
+                    </v-flex>
+                  </v-layout>
+                </th>
+                <template v-for="emotion in user.emotions">
+                  <td>
+                    <emotion-popper :emotion="emotion" :size="28"></emotion-popper>
+                  </td>
+                </template>
+              </tr>
             </template>
-          </tr>
-        </template>
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </v-card-text>
+      </v-card>
 
       <template>
         <div class="text-xs-center">
@@ -77,6 +103,18 @@
 <style scoped>
   .pointer {
     cursor: pointer;
+  }
+
+  .table {
+    border-collapse: collapse !important;
+  }
+
+  td, th {
+    padding: 5px;
+  }
+
+  .table tr:not(:last-child) td, .table tr:not(:last-child) th {
+    border-bottom: 1px solid #dddddd;
   }
 </style>
 
