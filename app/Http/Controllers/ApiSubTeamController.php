@@ -42,14 +42,14 @@ class ApiSubTeamController extends Controller
             ->get()
             ->keyBy('entered_on');
 
+        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
+
         $teamEmotions = \App\Emotion::teamId($mySubTeamUser->team_id)
-            ->where('user_id', '!=', $mySubTeamUser->user_id)
+            ->whereIn('user_id', $subTeamUsers->pluck('user_id'))
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
             ->groupBy('entered_on');
-
-        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
 
         $me = [];
         $me['user'] = $mySubTeamUser;
