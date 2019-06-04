@@ -3,7 +3,7 @@
 
 @section('jumbo-tron')
   <v-card color="primary" flat>
-    <v-card-text class="white--text display-4">
+    <v-card-text class="white--text display-3">
       <v-layout row wrap>
         <v-flex>
           NicoCale
