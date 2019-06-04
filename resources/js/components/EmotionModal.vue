@@ -64,9 +64,9 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="green" outline @click="save(score['good'])">いい感じ</v-btn>
-      <v-btn color="light-blue" outline @click="save(score['soso'])">まあまあ</v-btn>
-      <v-btn color="amber darken-1" outline @click="save(score['bad'])">よくない</v-btn>
+      <v-btn color="good" outline @click="save(score['good'])">いい感じ</v-btn>
+      <v-btn color="soso" outline @click="save(score['soso'])">まあまあ</v-btn>
+      <v-btn color="bad" outline @click="save(score['bad'])">よくない</v-btn>
     </v-card-actions>
   </v-card>
 </template>

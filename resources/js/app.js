@@ -20,6 +20,9 @@ Vue.use(Vuetify, {
         secondary: colors.red.lighten1,
         accent: colors.amber.base,
         disabled: colors.grey.base,
+        good: colors.green.base,
+        soso: colors.lightBlue.base,
+        bad: colors.amber.darken1,
     },
 });
 
