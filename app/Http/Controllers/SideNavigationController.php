@@ -14,7 +14,13 @@ class SideNavigationController extends Controller
         $subTeamIds = \App\SubTeamUser::me()->teamId($currentTeam->id)->pluck('sub_team_id')->toArray();
 
         $joinedSubTeamIds  = \App\SubTeamUser::teamId($currentTeam->id)->me()->pluck('sub_team_id');
-        $notJoinedSubTeams = \App\SubTeam::teamId($currentTeam->id)->whereNotIn('id', $joinedSubTeamIds)->get();
+
+        $allNotJoinedSubTeamIds = \App\SubTeam::teamId($currentTeam->id)->whereNotIn('id', $joinedSubTeamIds)->get(['id'])->pluck('id');
+        $existUserNotJoinedSubTeamIds = \App\SubTeamUser::whereIn('sub_team_id', $allNotJoinedSubTeamIds)
+            ->groupBy('sub_team_id')
+            ->get(['sub_team_id'])
+            ->pluck('sub_team_id');
+        $notJoinedSubTeams = \App\SubTeam::whereIn('id', $existUserNotJoinedSubTeamIds)->get();
 
         return [
             'user' => \Auth::user()->only(['id', 'name', 'avatar']),
