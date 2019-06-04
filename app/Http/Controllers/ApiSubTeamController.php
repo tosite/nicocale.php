@@ -42,14 +42,14 @@ class ApiSubTeamController extends Controller
             ->get()
             ->keyBy('entered_on');
 
+        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
+
         $teamEmotions = \App\Emotion::teamId($mySubTeamUser->team_id)
-            ->where('user_id', '!=', $mySubTeamUser->user_id)
+            ->whereIn('user_id', $subTeamUsers->pluck('user_id'))
             ->betweenEnteredOn($current->format('Ym'))
             ->with(['user'])
             ->get()
             ->groupBy('entered_on');
-
-        $subTeamUsers = \App\SubTeamUser::subTeamId($subTeamId)->where('user_id', '!=', $mySubTeamUser->user_id)->with(['user'])->get();
 
         $me = [];
         $me['user'] = $mySubTeamUser;
@@ -62,7 +62,12 @@ class ApiSubTeamController extends Controller
             $params = [];
             $params['user'] = $u;
             foreach ($calendar as $day) {
-                $params['emotions'][$day] = isset($teamEmotions[$day]) ? $teamEmotions[$day]->keyBy('user_id')[$u->user_id] : null;
+                if (!isset($teamEmotions[$day])) {
+                    $params['emotions'][$day] = null;
+                    continue;
+                }
+                $e = $teamEmotions[$day]->keyBy('user_id');
+                $params['emotions'][$day] = (!empty($e[$u->user_id])) ? $e[$u->user_id] : null;
             }
             $users[] = $params;
         }
