@@ -14,7 +14,7 @@
           <v-card-text>
             <p class="headline">Slack連携</p>
             <div>
-              <div v-if="!settings.slack_access">
+              <div v-if="!settings.slack_access || settings.slack_access == 0">
                 <p>
                   お使いのアカウントはまだSlackと連携されていないようです。<br>
                   連携することでステータスアイコンの変更・ステータスメッセージの変更・チャンネル通知などがご利用いただけます。<br>
