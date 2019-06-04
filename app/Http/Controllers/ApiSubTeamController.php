@@ -62,7 +62,12 @@ class ApiSubTeamController extends Controller
             $params = [];
             $params['user'] = $u;
             foreach ($calendar as $day) {
-                $params['emotions'][$day] = isset($teamEmotions[$day]) ? $teamEmotions[$day]->keyBy('user_id')[$u->user_id] : null;
+                if (!isset($teamEmotions[$day])) {
+                    $params['emotions'][$day] = null;
+                    continue;
+                }
+                $e = $teamEmotions[$day]->keyBy('user_id');
+                $params['emotions'][$day] = (!empty($e[$u->user_id])) ? $e[$u->user_id] : null;
             }
             $users[] = $params;
         }
