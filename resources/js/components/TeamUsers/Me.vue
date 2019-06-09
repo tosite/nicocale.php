@@ -29,6 +29,7 @@
                       v-model="status"
                       color="primary"
                       :label="`Slackのステータスを更新${(setStatus) ? 'する' : 'しない'}`"
+                      v-on:change="setStatus()"
                     ></v-switch>
                   </v-flex>
                   <v-flex xs12>
@@ -142,11 +143,6 @@
       this.radio = this.teamUser.user.emoji_set;
       this.selectChannel = this.settings.notify_channel;
       this.status = (!this.settings.set_status) ? false : true;
-    },
-    watch: {
-      status: function () {
-        this.setStatus();
-      },
     },
     methods: {
       closeSnackbar: function () {
