@@ -4,9 +4,12 @@
       <emoji :emoji="e.emoji" :size="localSize" slot="activator" :class="color" class="good emoji-line lighten-2" style="background-color: transparent !important;"></emoji>
       <span>{{ e.status_text }}</span>
     </v-tooltip>
-    <span v-else>
+    <template v-else-if="e.score != null">
+      <emoji :emoji="e.emoji" :size="localSize" :class="color" class="emoji-line lighten-2" style="background-color: transparent !important;"></emoji>
+    </template>
+    <template v-else>
       <emoji :emoji="e.emoji" :size="localSize"></emoji>
-    </span>
+    </template>
   </div>
 </template>
 
