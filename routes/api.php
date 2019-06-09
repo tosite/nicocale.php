@@ -22,3 +22,7 @@ Route::middleware('auth:api')->prefix('/v1')->group(function () {
     Route::post('emotions', 'EmotionController@store');
     Route::put('emotions/{emotionId}', 'EmotionController@update');
 });
+
+Route::middleware('api')->prefix('/v1')->group(function () {
+    Route::get('reminders', 'Api\ReminderController@reminder');
+});
