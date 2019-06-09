@@ -5,6 +5,21 @@ namespace App;
 
 class Slack extends SlackBase
 {
+    public static function oauthAccess($code) {
+        $instance = new self;
+        $params = [
+            'client_id' => env('SLACK_KEY'),
+            'client_secret' => env('SLACK_SECRET'),
+            'code' => $code,
+        ];
+        $query = $instance->to_raw_query($params);
+        $url = "{$instance->base_url}/oauth.access?{$query}";
+        $res = $instance->client->get($url);
+        $data = json_decode($res->getBody(), true);
+        if ($data["ok"] === false) throw new \Exception(json_encode($data));
+        return (object) $data;
+    }
+
     public function channelsList()
     {
         $res = $this->httpGet('channels.list');
@@ -17,16 +32,22 @@ class Slack extends SlackBase
         return $res['emoji']; // ['name' => 'png']
     }
 
-    public function usersIdentity()
-    {
-        $res = $this->httpGet('users.identity');
-        return (object)$res['user'];
-    }
+//    public function usersIdentity()
+//    {
+//        $res = $this->httpGet('users.identity');
+//        return (object)$res['user'];
+//    }
 
     public function teamInfo()
     {
         $res = $this->httpGet('team.info');
         return (object)$res['team'];
+    }
+
+    public function usersInfo($userId)
+    {
+        $res = $this->httpGet('users.info', "&user={$userId}");
+        return (object)$res['user'];
     }
 
     public function chatPostMessage($channel, $text, $emoji = ':smile:')

@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['prefix' => 'auth/slack'], function () {
-    Route::get('access',   'Auth\SlackAuthController@getPermission');
     Route::get('',         'Auth\SlackAuthController@redirectToProvider');
     Route::get('callback', 'Auth\SlackAuthController@handleProviderCallback');
     Route::get('logout',   'Auth\SlackAuthController@logout');

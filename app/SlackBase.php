@@ -11,7 +11,7 @@ abstract class SlackBase extends Model
     protected $token = '';
     protected $base_url = 'https://slack.com/api';
 
-    public function __construct($slack_token, array $attributes = [])
+    public function __construct($slack_token = '', array $attributes = [])
     {
         parent::__construct($attributes);
         $this->client = new Client;

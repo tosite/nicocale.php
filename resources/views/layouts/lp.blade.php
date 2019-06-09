@@ -13,7 +13,7 @@
       <v-spacer></v-spacer>
       <v-btn flat href="/login">ログイン</v-btn>
       <v-btn flat href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">お問い合わせ</v-btn>
-      <a href="https://slack.com/oauth/authorize?client_id=306106578305.492917770354&scope=users.profile:write,channels:read,chat:write:bot&redirect_uri={{ env('APP_URL') }}/login">
+      <a href="https://slack.com/oauth/authorize?client_id={{ env('SLACK_KEY') }}&scope=users:read,team:read,users.profile:write,channels:read,chat:write:bot&redirect_uri={{ env('APP_URL') }}/login">
         <img alt="Add to Slack" height="32" width="111" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x">
       </a>
     </v-toolbar>
