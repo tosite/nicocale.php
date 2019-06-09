@@ -37,4 +37,12 @@ class TeamUserController extends Controller
         $teamUser->set_status($params['set_status']);
         return response($teamUser, 200);
     }
+
+    public function skipHoliday(Put $request, $teamUserId)
+    {
+        $params = $request->only(['skip_holiday']);
+        $teamUser = \App\TeamUser::find($teamUserId);
+        $teamUser->skip_holiday($params['skip_holiday']);
+        return response($teamUser, 200);
+    }
 }
