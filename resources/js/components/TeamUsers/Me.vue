@@ -167,7 +167,6 @@
         this.remindHour = hms[0];
         this.remindMin = hms[1];
       }
-      console.log(this.settings);
       this.skipHoliday = this.settings.skip_holiday;
     },
     methods: {
