@@ -16,16 +16,6 @@ class TeamUserControllerTest extends TestCase
         $this->teamUser = \App\TeamUser::first();
     }
 
-    public function test_channel_データ不備()
-    {
-        $params = [
-            'notify_channel' => '',
-        ];
-        $res = $this->actingAs($this->teamUser->user, 'api')
-            ->json('PUT', "/api/v1/team-users/{$this->teamUser->id}/channels", $params);
-        $res->assertStatus(422);
-    }
-
     public function test_reminder_データ不備()
     {
         $params = [
