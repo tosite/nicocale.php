@@ -11,7 +11,7 @@ class TeamUserController extends Controller
     {
         $params = $request->only(['notify_channel']);
         $teamUser = \App\TeamUser::find($teamUserId);
-        $teamUser->notify_channel($params['notify_channel']);
+        $teamUser->notify_channel($params['notify_channel'] ?: '');
         if (!empty($params['notify_channel'])) {
             $user = $teamUser->user;
             $user->slackNotify()
@@ -26,7 +26,7 @@ class TeamUserController extends Controller
     {
         $params = $request->only(['remind_at', 'skip_holiday']);
         $teamUser = \App\TeamUser::find($teamUserId);
-        $teamUser->remind_at($params['remind_at']);
+        $teamUser->remind_at($params['remind_at'] ?: '');
         return response($teamUser, 200);
     }
 
@@ -35,6 +35,14 @@ class TeamUserController extends Controller
         $params = $request->only(['set_status']);
         $teamUser = \App\TeamUser::find($teamUserId);
         $teamUser->set_status($params['set_status']);
+        return response($teamUser, 200);
+    }
+
+    public function skipHoliday(Put $request, $teamUserId)
+    {
+        $params = $request->only(['skip_holiday']);
+        $teamUser = \App\TeamUser::find($teamUserId);
+        $teamUser->skip_holiday($params['skip_holiday']);
         return response($teamUser, 200);
     }
 }
