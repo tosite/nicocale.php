@@ -44,8 +44,8 @@ class ReminderController extends Controller
         $teamUserIds = \App\Setting::where('key', 'remind_at')
             ->whereBetween('value', [
                 // NOTE: バッチの実行時間の誤差を考慮し、±10分とする
-                $now->copy()->subMinute(10)->format('G:i:s'),
-                $now->copy()->addMinute(10)->format('G:i:s')
+                $now->copy()->subMinute(10)->format('H:i:s'),
+                $now->copy()->addMinute(10)->format('H:i:s')
             ])
             ->get(['team_user_id'])
             ->pluck('team_user_id');
