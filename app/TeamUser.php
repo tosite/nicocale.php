@@ -47,4 +47,5 @@ class TeamUser extends Model
     public function notify_channel($value = '') { return $this->setting('notify_channel', $value, 'string'); }
     public function remind_at($value = '')      { return $this->setting('remind_at', $value, 'string'); }
     public function skip_holiday($value = '')   { return $this->setting('skip_holiday', $value, 'bool'); }
+    public function set_status($value = '')     { return $this->setting('set_status', $value, 'bool'); }
 }

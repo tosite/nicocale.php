@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Http\Requests\TeamUsers\Put;
 
 class TeamUserController extends Controller
 {
-    public function channel(\App\Http\Requests\TeamUsers\Put $request, $teamUserId)
+    public function channel(Put $request, $teamUserId)
     {
         $params = $request->only(['notify_channel']);
         $teamUser = \App\TeamUser::find($teamUserId);
@@ -21,11 +22,19 @@ class TeamUserController extends Controller
         return response($teamUser, 200);
     }
 
-    public function reminder(\App\Http\Requests\TeamUsers\Put $request, $teamUserId)
+    public function reminder(Put $request, $teamUserId)
     {
         $params = $request->only(['remind_at', 'skip_holiday']);
         $teamUser = \App\TeamUser::find($teamUserId);
         $teamUser->remind_at($params['remind_at']);
+        return response($teamUser, 200);
+    }
+
+    public function status(Put $request, $teamUserId)
+    {
+        $params = $request->only(['set_status']);
+        $teamUser = \App\TeamUser::find($teamUserId);
+        $teamUser->set_status($params['set_status']);
         return response($teamUser, 200);
     }
 }
