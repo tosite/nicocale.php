@@ -25,6 +25,13 @@
                 <p>お使いのアカウントはSlackと連携されています。</p>
                 <v-layout wrap align-center>
                   <v-flex xs12>
+                    <v-switch
+                      v-model="status"
+                      color="primary"
+                      :label="`Slackのステータスを更新${(setStatus) ? 'する' : 'しない'}`"
+                    ></v-switch>
+                  </v-flex>
+                  <v-flex xs12>
                     <v-select
                       v-model="selectChannel"
                       :items="this.channels"
@@ -76,30 +83,30 @@
                 v-model="teamUser.user.bio"
               ></v-textarea>
 
-              <v-expansion-panel class="elevation-0">
-                <v-expansion-panel-content key="1">
-                  <template v-slot:header>
-                    <div>Emojiスキンを選択する</div>
-                  </template>
+<!--              <v-expansion-panel class="elevation-0">-->
+<!--                <v-expansion-panel-content key="1">-->
+<!--                  <template v-slot:header>-->
+<!--                    <div>Emojiスキンを選択する</div>-->
+<!--                  </template>-->
 
-                  <v-card>
-                    <v-radio-group v-model="radio">
-                      <v-radio
-                        v-for="set in emojiSet"
-                        :key="set"
-                        :value="set"
-                        color="primary"
-                      >
-                        <template v-slot:label>
-                          <emoji emoji="grin" :set="set" :size="32"></emoji>
-                          <emoji emoji="slightly_smiling_face" :set="set" :size="32"></emoji>
-                          <emoji emoji="disappointed_relieved" :set="set" :size="32"></emoji>
-                        </template>
-                      </v-radio>
-                    </v-radio-group>
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
+<!--                  <v-card>-->
+<!--                    <v-radio-group v-model="radio">-->
+<!--                      <v-radio-->
+<!--                        v-for="set in emojiSet"-->
+<!--                        :key="set"-->
+<!--                        :value="set"-->
+<!--                        color="primary"-->
+<!--                      >-->
+<!--                        <template v-slot:label>-->
+<!--                          <emoji emoji="grin" :set="set" :size="32"></emoji>-->
+<!--                          <emoji emoji="slightly_smiling_face" :set="set" :size="32"></emoji>-->
+<!--                          <emoji emoji="disappointed_relieved" :set="set" :size="32"></emoji>-->
+<!--                        </template>-->
+<!--                      </v-radio>-->
+<!--                    </v-radio-group>-->
+<!--                  </v-card>-->
+<!--                </v-expansion-panel-content>-->
+<!--              </v-expansion-panel>-->
 
               <v-btn color="primary" @click="updateUser">更新する</v-btn>
             </div>
@@ -120,6 +127,7 @@
       return {
         radio: 'apple',
         emojiSet: ['apple', 'google', 'twitter', 'emojione', 'messenger', 'facebook'],
+        status: false,
         selectChannel: '',
         remindHour: 8,
         remindMin: '00',
@@ -133,6 +141,12 @@
     created: function () {
       this.radio = this.teamUser.user.emoji_set;
       this.selectChannel = this.settings.notify_channel;
+      this.status = (!this.settings.set_status) ? false : true;
+    },
+    watch: {
+      status: function () {
+        this.setStatus();
+      },
     },
     methods: {
       closeSnackbar: function () {
@@ -173,7 +187,15 @@
         this.remindHour = '';
         this.remindMin = '';
         this.setRemind();
-      }
+      },
+      setStatus: function () {
+        let params = {set_status: this.status};
+        axios.put(`/api/v1/team-users/${this.teamUser.id}/set-status`, params).then(res => {
+          this.snackbar = {open: true, type: 'success', text: `Slackのステータスを更新${(this.status) ? 'します' : 'しません'}。`};
+        }).catch(e => {
+          alert('更新に失敗しました。');
+        });
+      },
     },
   }
 </script>
