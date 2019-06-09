@@ -10,7 +10,8 @@ class ReminderController extends Controller
     public function reminder()
     {
         $now = Carbon::now();
-        foreach ($this->remindTeamUserIds($now) as $teamUserId) {
+        $remindIds = $this->remindTeamUserIds($now);
+        foreach ($remindIds as $teamUserId) {
             $teamUser = \App\TeamUser::find($teamUserId);
             if (empty($channel = $teamUser->notify_channel())) {
                 continue;
@@ -22,7 +23,10 @@ class ReminderController extends Controller
             $slack = $teamUser->user->slackNotify();
             $slack->channel($channel)->attachments($this->attachments($teamUser))->send();
         }
-        return response(['ok']);
+        return response([
+            'status' => 'ok',
+            'ids' => $remindIds,
+        ]);
     }
 
     private function attachments($teamUser)
