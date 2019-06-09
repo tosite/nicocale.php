@@ -28,8 +28,8 @@
                     <v-switch
                       v-model="status"
                       color="primary"
-                      :label="`Slackのステータスを更新${(setStatus) ? 'する' : 'しない'}`"
-                      v-on:change="setStatus()"
+                      label="Slackのステータスを更新する"
+                      v-on:change="setStatus"
                     ></v-switch>
                   </v-flex>
                   <v-flex xs9>
@@ -78,6 +78,16 @@
                     <v-btn color="primary" flat icon @click="setRemind">
                       <v-icon>timer</v-icon>
                     </v-btn>
+                  </v-flex>
+                </v-layout>
+                <v-layout>
+                  <v-flex xs12>
+                    <v-switch
+                      v-model="skipHoliday"
+                      color="primary"
+                      label="休日はスキップする"
+                      v-on:change="setSkipHoliday"
+                    ></v-switch>
                   </v-flex>
                 </v-layout>
               </div>
@@ -140,6 +150,7 @@
         selectChannel: '',
         remindHour: '17',
         remindMin: '00',
+        skipHoliday: true,
         snackbar: {
           open: false,
           type: '',
@@ -151,6 +162,13 @@
       this.radio = this.teamUser.user.emoji_set;
       this.selectChannel = this.settings.notify_channel;
       this.status = (!this.settings.set_status) ? false : true;
+      if (this.settings.remind_at) {
+        const hms = this.settings.remind_at.split(':');
+        this.remindHour = hms[0];
+        this.remindMin = hms[1];
+      }
+      console.log(this.settings);
+      this.skipHoliday = this.settings.skip_holiday;
     },
     methods: {
       closeSnackbar: function () {
@@ -194,12 +212,19 @@
         this.setRemind();
       },
       setStatus: function () {
-        let params = {set_status: this.status};
-        axios.put(`/api/v1/team-users/${this.teamUser.id}/set-status`, params).then(res => {
+        axios.put(`/api/v1/team-users/${this.teamUser.id}/set-status`, {set_status: this.status}).then(res => {
           this.snackbar = {open: true, type: 'success', text: `Slackのステータスを更新${(this.status) ? 'します' : 'しません'}。`};
         }).catch(e => {
           alert('更新に失敗しました。');
         });
+      },
+      setSkipHoliday: function () {
+        axios.put(`/api/v1/team-users/${this.teamUser.id}/skip-holiday`, {skip_holiday: this.skipHoliday}).then(res => {
+          this.snackbar = {open: true, type: 'success', text: `休日をスキップ${(this.skipHoliday) ? 'します' : 'しません'}。`};
+        }).catch(e => {
+          alert('更新に失敗しました。');
+        });
+
       },
     },
   }
