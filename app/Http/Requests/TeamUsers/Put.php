@@ -16,8 +16,8 @@ class Put extends FormRequest
     {
         return [
             'set_status'     => 'boolean',
-            'notify_channel' => 'string',
-            'remind_at'      => 'date_format:G:i:s',
+            'notify_channel' => 'string|nullable',
+            'remind_at'      => 'nullable|date_format:G:i:s',
             'skip_holiday'   => 'boolean',
         ];
     }
