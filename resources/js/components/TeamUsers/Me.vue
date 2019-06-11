@@ -33,7 +33,7 @@
                       :disabled="btnLoading"
                     ></v-switch>
                   </v-flex>
-                  <v-flex xs9>
+                  <v-flex xs6 sm8>
                     <v-select
                       v-model="selectChannel"
                       :items="this.channels"
@@ -42,13 +42,9 @@
                       label="通知先チャンネル"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs3>
-                    <v-btn color="error" flat icon @click="unsetChannel" :loading="btnLoading">
-                      <v-icon>notifications_off</v-icon>
-                    </v-btn>
-                    <v-btn color="primary" flat icon @click="setChannel" :loading="btnLoading">
-                      <v-icon>notifications</v-icon>
-                    </v-btn>
+                  <v-flex xs6 sm4>
+                    <v-btn color="error" flat small @click="unsetChannel" :loading="btnLoading">解除</v-btn>
+                    <v-btn color="primary" flat small @click="setChannel" :loading="btnLoading">通知</v-btn>
                   </v-flex>
                 </v-layout>
 
@@ -71,14 +67,10 @@
                       label="分"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs3></v-flex>
-                  <v-flex xs3>
-                    <v-btn color="error" flat icon @click="unsetRemind" :loading="btnLoading">
-                      <v-icon>timer_off</v-icon>
-                    </v-btn>
-                    <v-btn color="primary" flat icon @click="setRemind" :loading="btnLoading">
-                      <v-icon>timer</v-icon>
-                    </v-btn>
+                  <v-flex sm2></v-flex>
+                  <v-flex xs6 sm4>
+                    <v-btn color="error" flat small @click="unsetRemind" :loading="btnLoading">解除</v-btn>
+                    <v-btn color="primary" flat small @click="setRemind" :loading="btnLoading">設定</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
