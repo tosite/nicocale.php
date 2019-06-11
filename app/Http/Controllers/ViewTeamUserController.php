@@ -55,7 +55,7 @@ class ViewTeamUserController extends Controller
         $channels = [];
 
         try {
-            $channels = $slack->channelsList();
+            $channels = collect($slack->conversationsList())->pluck('name')->sort()->values()->all();
         } catch (\Exception $e) {
             $teamUser->slack_access(false);
             $teamUser->save();
