@@ -5,17 +5,6 @@ namespace App;
 
 class Slack extends SlackBase
 {
-    public function channelsList()
-    {
-        $params = [
-            'exclude_archived' => true,
-            'exclude_members' => true,
-            'limit' => 2000,
-        ];
-        $res = $this->httpGet('channels.list', $this->to_raw_query($params));
-        return $res['channels']; // [0 => [...]]
-    }
-
     public function conversationsList()
     {
         $res = $this->httpGet('conversations.list', $this->to_raw_query(['exclude_archived' => true, 'limit' => 1000]));
