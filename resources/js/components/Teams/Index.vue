@@ -4,6 +4,7 @@
       <emotion-modal
         :team-user="teamUser"
         :emotion="emotion"
+        :loading="btnLoading"
         :date="date"
         :closeButton="false"
         @createEmotion="createEmotion"
@@ -21,6 +22,7 @@
     props: ['teamUser', 'date'],
     data() {
       return {
+        btnLoading: false,
         snackbar: {
           open: false,
           type: '',
@@ -50,22 +52,26 @@
         });
       },
       updateEmotion: function (emotionId, params) {
+        this.btnLoading = true;
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'}
         }).catch(e => {
           alert('更新に失敗しました。');
         }).finally(() => {
           this.emotionModal = false;
+          this.btnLoading = false;
           this.fetchEmotion();
         });
       },
       createEmotion: function (params) {
+        this.btnLoading = true;
         axios.post('/api/v1/emotions', params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '作成しました。'}
         }).catch(e => {
           alert('作成に失敗しました。');
         }).finally(() => {
           this.emotionModal = false;
+          this.btnLoading = false;
           this.fetchEmotion();
         });
       },

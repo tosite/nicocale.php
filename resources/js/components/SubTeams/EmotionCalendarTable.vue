@@ -86,6 +86,7 @@
               :team-user="me.user"
               :emotion="modalEmotion"
               :date="modalDate"
+              :loading="btnLoading"
               @createEmotion="createEmotion"
               @updateEmotion="updateEmotion"
               @closeModal="closeModal"
@@ -130,6 +131,7 @@
         dialog: false,
         pickerModal: false,
         currentMonth: null,
+        btnLoading: false,
         modalDate: null,
         modalEmotion: {
           emoji: ":bust_in_silhouette:",
@@ -199,22 +201,26 @@
         });
       },
       updateEmotion: function (emotionId, params) {
+        this.btnLoading = true;
         axios.put(`/api/v1/emotions/${emotionId}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'}
         }).catch(e => {
           alert('処理に失敗しました。');
         }).finally(() => {
           this.dialog = false;
+          this.btnLoading = false;
           this.fetchEmotion();
         });
       },
       createEmotion: function (params) {
+        this.btnLoading = true;
         axios.post('/api/v1/emotions', params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '作成しました。'}
         }).catch(e => {
           alert('処理に失敗しました。');
         }).finally(() => {
           this.dialog = false;
+          this.btnLoading = false;
           this.fetchEmotion();
         });
       },

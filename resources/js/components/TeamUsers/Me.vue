@@ -30,9 +30,10 @@
                       color="primary"
                       label="Slackのステータスを更新する"
                       v-on:change="setStatus"
+                      :disabled="btnLoading"
                     ></v-switch>
                   </v-flex>
-                  <v-flex xs9>
+                  <v-flex xs6 sm8>
                     <v-select
                       v-model="selectChannel"
                       :items="this.channels"
@@ -41,13 +42,9 @@
                       label="通知先チャンネル"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs3>
-                    <v-btn color="error" flat icon @click="unsetChannel">
-                      <v-icon>notifications_off</v-icon>
-                    </v-btn>
-                    <v-btn color="primary" flat icon @click="setChannel">
-                      <v-icon>notifications</v-icon>
-                    </v-btn>
+                  <v-flex xs6 sm4>
+                    <v-btn color="error" flat small @click="unsetChannel" :loading="btnLoading">解除</v-btn>
+                    <v-btn color="primary" flat small @click="setChannel" :loading="btnLoading">通知</v-btn>
                   </v-flex>
                 </v-layout>
 
@@ -70,14 +67,10 @@
                       label="分"
                     ></v-select>
                   </v-flex>
-                  <v-flex xs3></v-flex>
-                  <v-flex xs3>
-                    <v-btn color="error" flat icon @click="unsetRemind">
-                      <v-icon>timer_off</v-icon>
-                    </v-btn>
-                    <v-btn color="primary" flat icon @click="setRemind">
-                      <v-icon>timer</v-icon>
-                    </v-btn>
+                  <v-flex sm2></v-flex>
+                  <v-flex xs6 sm4>
+                    <v-btn color="error" flat small @click="unsetRemind" :loading="btnLoading">解除</v-btn>
+                    <v-btn color="primary" flat small @click="setRemind" :loading="btnLoading">設定</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-layout>
@@ -87,6 +80,7 @@
                       color="primary"
                       label="休日はスキップする"
                       v-on:change="setSkipHoliday"
+                      :disabled="btnLoading"
                     ></v-switch>
                   </v-flex>
                 </v-layout>
@@ -127,7 +121,7 @@
               <!--                </v-expansion-panel-content>-->
               <!--              </v-expansion-panel>-->
 
-              <v-btn color="primary" @click="updateUser">更新する</v-btn>
+              <v-btn color="primary" @click="updateUser" :loading="btnLoading">更新する</v-btn>
             </div>
           </v-card-text>
         </v-card>
@@ -151,6 +145,7 @@
         remindHour: '17',
         remindMin: '00',
         skipHoliday: true,
+        btnLoading: false,
         snackbar: {
           open: false,
           type: '',
@@ -174,14 +169,18 @@
         this.snackbar.open = false;
       },
       updateUser: function () {
+        this.btnLoading = true;
         let params = {bio: this.teamUser.user.bio, emoji_set: this.radio};
         axios.put(`/api/v1/users/${this.teamUser.user.id}`, params).then(res => {
           this.snackbar = {open: true, type: 'success', text: '更新しました。'};
         }).catch(e => {
           alert('通知に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       setChannel: function () {
+        this.btnLoading = true;
         let params = {notify_channel: this.selectChannel,};
         axios.put(`/api/v1/team-users/${this.teamUser.id}/channels`, params).then(res => {
           this.snackbar = {
@@ -191,6 +190,8 @@
           };
         }).catch(e => {
           alert('更新に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       unsetChannel: function () {
@@ -198,11 +199,14 @@
         this.setChannel();
       },
       setRemind: function () {
+        this.btnLoading = true;
         const remind_at = (!this.remindHour && !this.remindMin) ? '' : `${this.remindHour}:${this.remindMin}:00`;
         axios.put(`/api/v1/team-users/${this.teamUser.id}/reminders`, {remind_at: remind_at}).then(res => {
           this.snackbar = {open: true, type: 'success', text: `リマインダー${(!remind_at) ? 'の設定を解除しました' : 'を設定しました'}。`};
         }).catch(e => {
           alert('更新に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       unsetRemind: function () {
@@ -211,19 +215,24 @@
         this.setRemind();
       },
       setStatus: function () {
+        this.btnLoading = true;
         axios.put(`/api/v1/team-users/${this.teamUser.id}/set-status`, {set_status: this.status}).then(res => {
           this.snackbar = {open: true, type: 'success', text: `Slackのステータスを更新${(this.status) ? 'します' : 'しません'}。`};
         }).catch(e => {
           alert('更新に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       setSkipHoliday: function () {
+        this.btnLoading = true;
         axios.put(`/api/v1/team-users/${this.teamUser.id}/skip-holiday`, {skip_holiday: this.skipHoliday}).then(res => {
           this.snackbar = {open: true, type: 'success', text: `休日をスキップ${(this.skipHoliday) ? 'します' : 'しません'}。`};
         }).catch(e => {
           alert('更新に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
-
       },
     },
   }
