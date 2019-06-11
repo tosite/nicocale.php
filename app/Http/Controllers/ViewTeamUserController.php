@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Http\Request;
 
 class ViewTeamUserController extends Controller
@@ -58,7 +59,8 @@ class ViewTeamUserController extends Controller
             # NOTE:
             # collect([0 => 2, 1 => 1, 3 => 0])->sort() => [3 => 0, 1 => 1, 0 => 2]
             # となるので values()->all() で再度採番し直している
-            $channels = collect($slack->conversationsList())->pluck('name')->sort()->values()->all();
+            $channels = collect($slack->conversationsList())->map(function ($item) { return collect($item)
+                ->only('id', 'name')->toArray(); })->sortBy('name')->values()->all();
         } catch (\Exception $e) {
             $teamUser->slack_access(false);
             $teamUser->save();
