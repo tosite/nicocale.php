@@ -64,9 +64,9 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="good" outline @click="save(score['good'])">いい感じ</v-btn>
-      <v-btn color="soso" outline @click="save(score['soso'])">まあまあ</v-btn>
-      <v-btn color="bad" outline @click="save(score['bad'])">よくない</v-btn>
+      <v-btn color="good" outline :loading="loading" @click="save(score['good'])">いい感じ</v-btn>
+      <v-btn color="soso" outline :loading="loading" @click="save(score['soso'])">まあまあ</v-btn>
+      <v-btn color="bad"  outline :loading="loading" @click="save(score['bad'])">よくない</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -79,7 +79,7 @@
 
 <script>
   export default {
-    props: ['teamId', 'date', 'emotion', 'teamUser', 'closeButton'],
+    props: ['teamId', 'date', 'emotion', 'teamUser', 'closeButton', 'loading'],
     data() {
       return {
         picker: false,
