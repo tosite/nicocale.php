@@ -34,7 +34,7 @@
             </v-list-tile-content>
 
             <v-list-tile-action>
-              <v-btn icon ripple>
+              <v-btn icon ripple :loading="loading">
                 <v-icon color="grey lighten-1" @click.stop="$emit('createSubTeamUser', user.id)">add_circle</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -51,7 +51,7 @@
 
 <script>
   export default {
-    props: ['users', 'subTeam'],
+    props: ['users', 'subTeam', 'loading'],
     data() {
       return {
         search: '',
