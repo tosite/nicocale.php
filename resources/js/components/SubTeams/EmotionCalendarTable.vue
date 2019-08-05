@@ -163,7 +163,8 @@
         if (dayjs(this.month).format('YYYY-MM') == dayjs(this.currentMonth).format('YYYY-MM')) {
           return;
         }
-        window.location.href = `/sub-teams/${this.subTeam.id}/calendars/${this.yearAndMonth}`;
+        const yearAndMonth = dayjs(this.currentMonth).format('YYYY/M')
+        window.location.href = `/sub-teams/${this.subTeam.id}/calendars/${yearAndMonth}`;
       },
     },
     methods: {
