@@ -44,6 +44,7 @@
                     <not-joined-user-tab
                       :users="notJoinedUsers"
                       :sub-team="subTeam"
+                      :loading="btnLoading"
                       @createSubTeamUser="createSubTeamUser"
                     ></not-joined-user-tab>
                   </v-card>
@@ -54,6 +55,7 @@
                     <setting-tab
                       :sub-team="subTeam"
                       :sub-team-user="subTeamUser"
+                      :loading="btnLoading"
                       @updateSubTeam="updateSubTeam"
                       @deleteSubTeamUser="deleteSubTeamUser"
                     ></setting-tab>
@@ -93,6 +95,7 @@
         notJoinedUsers: null,
         subTeam: null,
         subTeamUser: null,
+        btnLoading: false,
         snackbar: {
           open: false,
           type: '',
@@ -115,33 +118,37 @@
         });
       },
       createSubTeamUser(userId) {
-        axios.post(`/api/v1/sub-team-users`, {sub_team_id: this.subTeam.id, user_id: userId})
-          .then(res => {
-            this.snackbar = {open: true, type: 'success', text: 'ユーザーを追加しました。'};
-            this.fetchParams();
-          }).catch(e => {
+        this.btnLoading = true;
+        axios.post(`/api/v1/sub-team-users`, {sub_team_id: this.subTeam.id, user_id: userId}).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'ユーザーを追加しました。'};
+          this.fetchParams();
+        }).catch(e => {
           alert('ユーザーの追加に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       updateSubTeam() {
-        axios.put(`/api/v1/sub-teams/${this.subTeam.id}`, this.subTeam)
-          .then(res => {
-            this.snackbar = {open: true, type: 'success', text: 'チームを更新しました。'};
-            window.location.reload();
-          })
-          .catch(e => {
-            alert('チームの更新に失敗しました。');
-          });
+        this.btnLoading = true;
+        axios.put(`/api/v1/sub-teams/${this.subTeam.id}`, this.subTeam).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'チームを更新しました。'};
+          window.location.reload();
+        }).catch(e => {
+          alert('チームの更新に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
+        });
       },
       deleteSubTeamUser() {
-        axios.delete(`/api/v1/sub-team-users/${this.subTeamUser.id}`)
-          .then(res => {
-            this.snackbar = {open: true, type: 'success', text: 'チームから退出しました。'};
-            window.location.href = '/teams';
-          })
-          .catch(e => {
-            alert('チームからの退出に失敗しました。');
-          })
+        this.btnLoading = true;
+        axios.delete(`/api/v1/sub-team-users/${this.subTeamUser.id}`).then(res => {
+          this.snackbar = {open: true, type: 'success', text: 'チームから退出しました。'};
+          window.location.href = '/teams';
+        }).catch(e => {
+          alert('チームからの退出に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
+        });
       },
     },
     mounted() {

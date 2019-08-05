@@ -14,7 +14,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="$emit('updateSubTeam')">更新する</v-btn>
+        <v-btn color="primary" flat @click="$emit('updateSubTeam')" :loading="loading">更新する</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -24,7 +24,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="error" flat @click="$emit('deleteSubTeamUser')">チームから退出する</v-btn>
+        <v-btn color="error" flat @click="$emit('deleteSubTeamUser')" :loading="loading">チームから退出する</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -33,7 +33,7 @@
 
 <script>
   export default {
-    props: ['subTeam', 'subTeamUser'],
+    props: ['subTeam', 'subTeamUser', 'loading'],
     data() {
       return {}
     },

@@ -19,7 +19,7 @@ class EmotionController extends Controller
         $emotion = \App\Emotion::create($params);
         $this->notifySlack($emotion, '登録');
 
-        if ($emotion->teamUser->slack_access())
+        if ($emotion->teamUser->set_status())
         {
             $this->setSlackStatus($emotion);
         }
@@ -38,7 +38,7 @@ class EmotionController extends Controller
         $emotion->fill($params)->save();
         $this->notifySlack($emotion, '更新');
 
-        if ($emotion->teamUser->slack_access())
+        if ($emotion->teamUser->set_status())
         {
             $this->setSlackStatus($emotion);
         }

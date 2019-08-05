@@ -14,6 +14,7 @@ class ViewSubTeamController extends Controller
         $current       = new Carbon("{$year}-{$month}-1");
         $calendar      = $this->createDateList($current->format('Ym'));
         $mySubTeamUser = \App\SubTeamUser::subTeamId($subTeamId)->me()->with(['user'])->first();
+        if (empty($mySubTeamUser)) { return redirect()->to('/teams', 301); }
 
         $myEmotions = \App\Emotion::teamUserId($mySubTeamUser->team_user_id)
             ->betweenEnteredOn($current->format('Ym'))
