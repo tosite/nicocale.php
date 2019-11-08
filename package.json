@@ -12,20 +12,20 @@
     "devDependencies": {
         "axios": "^0.19",
         "bootstrap": "^4.3.1",
-        "cross-env": "^5.1",
+        "cross-env": "^5.2.1",
         "jquery": "^3.4.1",
-        "laravel-mix": "^4.0.15",
+        "laravel-mix": "^4.1.4",
         "lodash": "^4.17.15",
-        "popper.js": "^1.15.0",
+        "popper.js": "^1.16.0",
         "resolve-url-loader": "^2.3.2",
-        "sass": "^1.20.1",
-        "sass-loader": "^7.1.0",
+        "sass": "^1.23.3",
+        "sass-loader": "^7.3.1",
         "vue": "^2.6.10",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "dayjs": "^1.8.14",
+        "dayjs": "^1.8.17",
         "emoji-mart-vue": "^2.6.6",
-        "vuetify": "^1.5.14"
+        "vuetify": "^1.5.20"
     }
 }
