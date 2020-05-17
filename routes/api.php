@@ -1,11 +1,10 @@
 <?php
 
-Route::group(["middleware" => "guest:api"], function () {
-    Route::post("/login", "ApiController@login");
-    Route::get("/me", "ApiController@me");
+Route::post('me', function() {
+    return response()->json(auth('api')->user());
 });
 
-Route::middleware('auth:api')->prefix('/v1')->group(function () {
+Route::middleware('api')->prefix('/v1')->group(function () {
     Route::get('side-navigations', 'SideNavigationController@index')->name('api_side_navigations.index');
     Route::get('sub-teams/{subTeamId}/info-modals', 'Api\SubTeamController@infoModals');
     Route::get('sub-teams/{subTeamId}/calendars/{year}/{month}', 'Api\SubTeamController@calendar');

@@ -3,7 +3,7 @@
 <head>
   @include('layouts.header')
 </head>
-<body class="ma-0">
+<body class="ma-0" id="body" jwt_token="{{ session('jwt_token') }}">
 <div id="app" v-cloak>
   <v-app>
     <side-nav></side-nav>

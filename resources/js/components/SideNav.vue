@@ -124,7 +124,8 @@
             </v-list-tile-title>
           </v-list-tile>
 
-          <v-list-tile href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">
+          <v-list-tile
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeBSlQiP55vjp8MTmd8X3GVNn_aWIkToagXXgDfaGRKJZ1RNg/viewform">
             <v-list-tile-title class="text-xs-center">
               お問い合わせ
             </v-list-tile-title>
@@ -267,18 +268,37 @@
         this.snackbar.open = false;
       },
       fetchSideNav: function () {
-        axios.get('/api/v1/side-navigations').then((res) => {
-          this.user = res.data.user;
-          this.teams = res.data.teams;
-          this.subTeams = res.data.subTeams;
-          this.currentTeam = res.data.currentTeam;
-          this.newSubTeam.team_id = this.currentTeam.id;
-          this.notJoinedSubTeams = res.data.notJoinedSubTeams;
-        }).catch((e) => {
-          alert('読み込み時にエラーが発生しました。');
-        }).finally(() => {
-          this.loading = false;
+        const token = document.getElementById('body').getAttribute('jwt_token');
+        console.log(token);
+        axios.post(
+          `/api/me`,
+          {},
+          {
+            headers: {Authorization: `Bearer ${token}`}
+          }
+        ).then(res => {
+          // axios.get(`/api/v1/team-users/${this.teamUser.id}/emotions`, { headers: {Authorization: `Bearer ${token}`}}).then(res => {
+          // if (res.data != false) {
+          //   this.emotion = res.data;
+          // }
+          console.log(res.data);
+        }).catch(e => {
+          alert('エラーが発生しました。');
         });
+        // const token = document.getElementById('body').getAttribute('jwt_token');
+        // console.log(token, document.getElementById('body'));
+        // axios.get('/api/v1/side-navigations', { headers: {Authorization: `Bearer ${token}`}}).then((res) => {
+        //   this.user = res.data.user;
+        //   this.teams = res.data.teams;
+        //   this.subTeams = res.data.subTeams;
+        //   this.currentTeam = res.data.currentTeam;
+        //   this.newSubTeam.team_id = this.currentTeam.id;
+        //   this.notJoinedSubTeams = res.data.notJoinedSubTeams;
+        // }).catch((e) => {
+        //   alert('読み込み時にエラーが発生しました。');
+        // }).finally(() => {
+        //   this.loading = false;
+        // });
       },
       createSubTeam: function () {
         this.btnLoading = true;

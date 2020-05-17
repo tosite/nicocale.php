@@ -43,13 +43,16 @@
         this.snackbar.open = false;
       },
       fetchEmotion: function () {
-        axios.get(`/api/v1/team-users/${this.teamUser.id}/emotions`).then(res => {
-          if (res.data != false) {
-            this.emotion = res.data;
-          }
-        }).catch(e => {
-          alert('エラーが発生しました。');
-        });
+        // const token = document.getElementById('body').getAttribute('jwt_token');
+        // console.log(token, document.getElementById('body'));
+        // axios.post(`/api/me`, { headers: {Authorization: `Bearer ${token}`}}, {}).then(res => {
+        // // axios.get(`/api/v1/team-users/${this.teamUser.id}/emotions`, { headers: {Authorization: `Bearer ${token}`}}).then(res => {
+        //   if (res.data != false) {
+        //     this.emotion = res.data;
+        //   }
+        // }).catch(e => {
+        //   alert('エラーが発生しました。');
+        // });
       },
       updateEmotion: function (emotionId, params) {
         this.btnLoading = true;
