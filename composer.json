@@ -16,6 +16,7 @@
         "laravel/tinker": "^1.0",
         "moontoast/math": "^1.1",
         "mpociot/socialite-slack": "^1.2",
+        "olssonm/l5-very-basic-auth": "^6.3",
         "rap2hpoutre/laravel-log-viewer": "^1.6"
     },
     "require-dev": {
