@@ -76,3 +76,11 @@ function slack_notify($result)
     curl_exec($ch);
     curl_close($ch);
 }
+
+function _build()
+{
+    require __DIR__ . '/../vendor/autoload.php';
+    chdir(realpath(__DIR__ . '/..'));
+    exec('php -d memory_limit=2G composer install --no-dev');
+
+}
