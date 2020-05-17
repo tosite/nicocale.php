@@ -9,7 +9,7 @@ class ViewTeamController extends Controller
     public function index()
     {
         $teamUser = \App\TeamUser::me()->first();
-        return redirect()->route('sub_teams.index', ['team_id' => $teamUser->team_id]);
+        return redirect()->route('sub_teams.index', ['teamId' => $teamUser->team_id]);
     }
 
     public function show($teamId)
