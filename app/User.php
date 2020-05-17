@@ -5,20 +5,18 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
-use Laravel\Passport\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens,
-    Notifiable;
+    use Notifiable;
 
     // プライマリキー
-    protected $keyType      = 'string';
-    public    $incrementing = false;
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     // コンストラクタを追加
-    public function __construct (array $attributes = [])
+    public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->attributes['id'] = Str::orderedUuid();
@@ -42,22 +40,22 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function slack ()
+    public function slack()
     {
         return new \App\Slack($this->slack_token);
     }
 
-    public function slackNotify ()
+    public function slackNotify()
     {
         return new \App\SlackNotify($this->slack_token);
     }
 
-    public function teamUsers ()
+    public function teamUsers()
     {
         return $this->hasMany('App\TeamUser', 'user_id', 'id');
     }
 
-    public function emotions ()
+    public function emotions()
     {
         return $this->hasMany('App\Emotion', 'user_id', 'id');
     }
