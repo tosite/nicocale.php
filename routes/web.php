@@ -1,5 +1,7 @@
 <?php
 
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 Route::group(['prefix' => 'auth/slack'], function () {
     Route::get('access',   'Auth\SlackAuthController@getPermission');
     Route::get('',         'Auth\SlackAuthController@redirectToProvider');
