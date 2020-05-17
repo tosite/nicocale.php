@@ -16,16 +16,6 @@ class TeamUserControllerTest extends TestCase
         $this->teamUser = \App\TeamUser::first();
     }
 
-    public function test_channel_データ不備()
-    {
-        $params = [
-            'notify_channel' => '',
-        ];
-        $res = $this->actingAs($this->teamUser->user, 'api')
-            ->json('PUT', "/api/v1/team-users/{$this->teamUser->id}/channels", $params);
-        $res->assertStatus(422);
-    }
-
     public function test_reminder_データ不備()
     {
         $params = [
@@ -45,6 +35,18 @@ class TeamUserControllerTest extends TestCase
         $res = $this->actingAs($this->teamUser->user, 'api')
             ->json('PUT', "/api/v1/team-users/{$this->teamUser->id}/reminders", $params);
         $res->assertStatus(200);
+        $this->assertSame($this->teamUser->remind_at(), '12:00:00');
+    }
+
+    public function test_set_status_成功()
+    {
+        $params = [
+            'set_status' => true,
+        ];
+        $res = $this->actingAs($this->teamUser->user, 'api')
+            ->json('PUT', "/api/v1/team-users/{$this->teamUser->id}/set-status", $params);
+        $res->assertStatus(200);
+        $this->assertTrue($this->teamUser->set_status());
     }
 
 }

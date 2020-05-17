@@ -15,8 +15,9 @@ class Put extends FormRequest
     public function rules()
     {
         return [
-            'notify_channel' => 'string',
-            'remind_at'      => 'date_format:G:i:s',
+            'set_status'     => 'boolean',
+            'notify_channel' => 'string|nullable',
+            'remind_at'      => 'nullable|date_format:G:i:s',
             'skip_holiday'   => 'boolean',
         ];
     }
@@ -24,6 +25,7 @@ class Put extends FormRequest
     public function attributes()
     {
         return [
+            'set_status'     => 'Slackステータス更新',
             'notify_channel' => '通知チャンネル',
             'remind_at'      => 'リマインド',
             'skip_holiday'   => '休日スキップ',

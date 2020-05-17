@@ -166,7 +166,7 @@
                   </v-list-tile-content>
 
                   <v-list-tile-action>
-                    <v-btn icon ripple @click.stop="createSubTeamUser(subTeam.id)">
+                    <v-btn icon ripple @click.stop="createSubTeamUser(subTeam.id)" :loading="btnLoading">
                       <v-icon color="grey lighten-1">add_circle</v-icon>
                     </v-btn>
                   </v-list-tile-action>
@@ -195,7 +195,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="disabled" flat @click="cancel">閉じる</v-btn>
-              <v-btn color="primary" flat @click="createSubTeam">作成する</v-btn>
+              <v-btn color="primary" flat @click="createSubTeam" :loading="btnLoading">作成する</v-btn>
             </v-card-actions>
           </v-card>
         </v-tab-item>
@@ -237,6 +237,7 @@
         notJoinedSubTeams: [],
         user: {},
         loading: true,
+        btnLoading: false,
         newSubTeam: {
           name: '',
           bio: '',
@@ -280,16 +281,19 @@
         });
       },
       createSubTeam: function () {
+        this.btnLoading = true;
         axios.post(`/api/v1/sub-teams`, this.newSubTeam).then(res => {
           this.snackbar = {open: true, type: 'success', text: 'チームを作成しました。'};
           this.createSubTeamUser(res.data.id, false);
         }).catch(e => {
           alert('チーム作成に失敗しました。');
         }).finally(() => {
+          this.btnLoading = false;
           this.dialog = false;
         });
       },
       createSubTeamUser: function (subTeamId, notify = true) {
+        this.btnLoading = true;
         let params = {sub_team_id: subTeamId, user_id: this.user.id};
         axios.post(`/api/v1/sub-team-users`, params).then(res => {
           if (notify) {
@@ -298,6 +302,8 @@
           this.fetchSideNav();
         }).catch(e => {
           alert('処理に失敗しました。');
+        }).finally(() => {
+          this.btnLoading = false;
         });
       },
       cancel: function () {
