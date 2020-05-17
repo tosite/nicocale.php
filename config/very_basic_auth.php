@@ -1,14 +1,7 @@
 <?php
-
-    /**
-     * Configuration for the "HTTP Very Basic Auth"-middleware
-     */
     return [
-        // Username
-        'user'              => 'admin',
-
-        // Password
-        'password'          => 'sYVU64EY',
+        'user'              => env('BASIC_USER'),
+        'password'          => env('BASIC_PASSWORD'),
 
         // Environments where the middleware is active. Use "*" to protect all envs
         'envs'              => [
