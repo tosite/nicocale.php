@@ -50,6 +50,7 @@ class SlackAuthController extends Controller
             $authUser = $this->firstOrCreateUser($user);
             $token = auth('api')->login($authUser);
             session(['jwt_token' => $token]);
+            auth('web')->login($authUser);
             if ($authUser->slack_token !== $user->token) {
                 $authUser->slack_token = $user->token;
                 $authUser->save();
